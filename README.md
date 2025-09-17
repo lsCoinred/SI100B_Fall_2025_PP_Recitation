@@ -48,7 +48,7 @@
 
 ## 写好slides之后
 
-直接push你的更新，等待渲染，几分钟之后你的slides会在 https://teafrogsf.github.io/SI100B_Spring_2025_Python/ 出现。
+直接push你的更新，等待渲染，几分钟之后你的slides会在 https://si100b-25fall.github.io/SI100B_Fall_2025_PP_Recitation/ 出现。
 
 ## FAQ
 
@@ -60,4 +60,4 @@
 
 我们可以尝试写一个新的主题一起用。需要修改assets/custom.css，有意戳我。
 
-> This document is written by Yuhan Cao. The workflow is developed by Hengyu Ai and Zebang He. Many thanks for their contribution.
+> This document is written by Yuhan Cao. The workflow is developed by Hengyu Ai and Zebang He. This project is modified by Coinred5965 for SI100B 2025 Fall. Many thanks for their contribution.

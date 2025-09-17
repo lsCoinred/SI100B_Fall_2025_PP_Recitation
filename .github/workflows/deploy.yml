@@ -29,12 +29,12 @@ jobs:
             
             touch index.md
             echo "---" >index.md
-            echo "title: 欢迎来到 SI 100B Spring 2025" >>index.md
+            echo "title: 欢迎来到 SI 100B Fall 2025" >>index.md
             echo "theme: simple" >>index.md
             echo "highlightTheme: github" >>index.md
             echo "css: assets/custom.css" >>index.md
             echo "---" >>index.md
-            echo "## SI 100B Spring 2025 Slides Collection" >>index.md
+            echo "## SI 100B Fall 2025 Slides Collection" >>index.md
             echo >>index.md
             
             echo "<div style=\"column-count:2; column-gap:0px; padding: 1vh; word-break: break-word\">" >>index.md
@@ -42,6 +42,7 @@ jobs:
             
             count=0
             find ./materials -name '*.md' \
+              ! -path './materials/Example/*.md' \
               ! -exec grep -q 'marp: true' {} \; \
               -print | sort | while read -r file; do
             
@@ -68,13 +69,13 @@ jobs:
             
             echo >>index.md
             echo "---" >>index.md
-            echo "## SI 100B Spring 2025 Notebooks Collection" >>index.md
+            echo "## SI 100B Fall 2025 Notebooks Collection" >>index.md
             
             find . -name "*.ipynb" | sort | while read -r file; do
             
               echo "Processing $file"
               pure_path="${file//.\//\/}"
-              echo "- [$(basename "${file%.md}")](https://nbviewer.org/github/teafrogsf/SI100B_Spring_2025_Python/blob/main$pure_path)" >>index.md
+              echo "- [$(basename "${file%.md}")](https://nbviewer.org/github/SI100B-25Fall/SI100B_Fall_2025_PP_Recitation/blob/main$pure_path)" >>index.md
             
             done
             

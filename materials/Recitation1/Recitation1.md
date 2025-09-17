@@ -1,5 +1,5 @@
 ---
-title: SI100B_Fall_2024_Recitation_1
+title: SI100B_Fall_2025_Recitation_1
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
@@ -7,9 +7,9 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
-    lecture: SI100B Fall 2024 Recitation 1
+    lecture: SI100B Fall 2025 Recitation 1
     title: 环境配置 & 如何使用搜索引擎解决问题
-    detail: SI100B 2024 Staff | 2024-09-19
+    detail: SI100B 2025 Staff | 2025-09-19
 makeThanks: true
 ---
 
