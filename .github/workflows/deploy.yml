@@ -75,7 +75,7 @@ jobs:
             
               echo "Processing $file"
               pure_path="${file//.\//\/}"
-              echo "- [$(basename "${file%.md}")](https://nbviewer.org/github/SI100B-25Fall/SI100B_Fall_2025_PP_Recitation/blob/main$pure_path)" >>index.md
+              echo "- [$(basename "${file%.md}")](https://nbviewer.org/github/SI100B-25Fall/SI100B_Fall_2025_PP_Recitation/tree/main$pure_path)" >>index.md
             
             done
             
