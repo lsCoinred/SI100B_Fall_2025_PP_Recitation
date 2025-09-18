@@ -116,9 +116,8 @@ makeThanks: true
 - 安装软件包、环境管理…等一系列可能的问题
 
 - 助教**只能对前述的 Anaconda + Jupyter Notebook + VS Code 环境提供帮助**
-  - 对于其他自行安装的环境，由于情况较多，助教很可能无法提供有效帮助
-
-- 如果要安装前述的环境并卸载其他环境，建议卸载完成后先重启再进行安装
+  - 对于其他自行安装的环境，由于情况较多，助教很可能无法提供帮助
+  - 如果要卸载自行安装的环境并按照本教程配置环境，建议卸载完成后**先重启**再进行安装
 
 <!--v-->
 
@@ -150,7 +149,7 @@ makeThanks: true
 
   - 如果你访问的是首页 (www.anaconda.com) ，那么先点击页面上方 "Free Download"，跳转后再点击 "Skip Registration" 灰色小字，方能看到下载按钮
 
-- 如果下载速度很慢或不能下载，则可选择国内镜像下载，如 [清华大学镜像站](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
+- 如果速度很慢或不能下载，可选择国内镜像下载，如 [清华大学镜像站](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&O=D)
 
 <img src="images/anaconda_download.png" width="50%" style="display: block; margin: 0 auto;">
 
@@ -194,18 +193,16 @@ makeThanks: true
 <!--v-->
 
 ## 安装后的常见问题
-> 安装后在终端输入 `python`，仍然提示找不到或是弹出了微软应用商店
+> 安装后在终端输入 `python`，提示找不到（或弹出微软应用商店的 Python 下载页面）
 
-在一般的终端中，Anaconda 环境不启用。
+在一般终端中，Anaconda 环境不启用。
 
-解决方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，在弹出的终端窗口中输入指令即可
-
-- VS Code 会在打开项目时让你选择一个环境并自动激活，基本不用手动配置
+- 解决方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入即可
+- VS Code 会在打开项目时让你选择一个环境并自动激活，不需要上述方法
   - 使用 VS Code 内置的终端即可（按 `Ctrl + J` 显示/隐藏）
-
-- 另有一种方法：将 Anaconda 环境添加到系统环境变量（PATH）
-  - 这会在所有终端中启用 Anaconda 环境
-  - 但之后发现这样做会导致 Python 环境变量混乱，因此现在我们不使用此方法
+- 另外的方法：将 Anaconda 环境添加到系统环境变量（PATH）
+  - 在所有终端中启用 Anaconda 环境
+  - 这样做会导致 Python 环境变量混乱，我们不推荐此方法
 
 <!--s-->
 
@@ -296,13 +293,17 @@ makeThanks: true
 
 <!--v-->
 
-## 关于作业 (Homework)
+## 关于作业和考试
 
 本学期 SI100B 的 Python 编程 (Python Programming) 部分共有 3 次作业
 
 - 成绩通过在线评判机（Online Judge，简称 OJ）进行评判；
 
-- 详情将在第一次作业发布时（预计下周）公布
+- 详情将在第一次作业发布时（计划下周五）公布
+
+Python 编程部分共有 1 次考试
+
+- 暂定为上机测试，详情在期中前公布
 
 <!--v-->
 
@@ -315,7 +316,6 @@ makeThanks: true
 ##### **Recall:**
 
 - **Do s:** all work should be done **individually and independently**
-
 - **Don't s:**
   - **copy** from the web or others (**including AI tools**);
   - **give or expose** your code to others;
@@ -354,22 +354,23 @@ makeThanks: true
 
 - CN Bing 国内版/百度（仅适合搜索中文社区内容，如“百度贴吧”）
 
+- 百度等中文搜索引擎，编程相关的结果存在较多 AI 洗稿和无意义回答，请注意甄别
+
 <!--v-->
 
 ## 如何搜索——关键词
 
-- 搜索一大段描述文字，结果通常不尽人意的
-  - 搜索引擎不是有分词功能吗？
-  - 长句子分词后也有很多杂音
+- 搜索一大段描述文字，结果通常不尽人意
+  - 搜索引擎有分词功能，但效果有限
+  - 长句子即便分词后也有很多杂音
 
-- 清除冗余
-  - “我该怎么用工具 x 做出 y?” `->` “x y”
-  - 用空格来分隔关键词，视情况选择具体的还是更抽象的关键词
+- 清除冗余：搜索 “我该怎么用工具 x 做出 y?” `->` 搜索 “x y”
+  - 空格分隔关键词，视情况选择具体的还是更抽象的关键词
 
 - 根据搜索结果调整关键词
-  - 结果可能不包含一部分关键词 `->` 去掉这些关键词
-  - 结果给了你新的启发 `->` 加入相关关键词
-  - 根据结果不断迭代
+  - 结果不应包含某些关键词，那就去掉；
+  - 结果给了你新的启发，那就加入相关的关键词；
+  - 根据结果不断迭代：
     - 内容太老旧 `->` 限制搜索时间/加年份关键词/加软件版本号
     - 名字一样，但是不是你要搜的领域的东西 `->` 加上领域关键词
     - ......
@@ -401,7 +402,7 @@ makeThanks: true
 
 - Microsoft Copilot / GitHub Copilot
 - ChatGPT 
-- 现在上科大同学可以免费使用 GenAI 平台：https://genai.shanghaitech.edu.cn
+- 上科大同学可免费使用校内的 GenAI 平台：https://genai.shanghaitech.edu.cn
 
 - 课程中（可能）会教学如何使用 AI 工具，如辅助编程
   - 再次提醒：用 AI 代写作业**违反课程规定！**
