@@ -223,12 +223,12 @@
 ## 安装后的常见问题
 > 安装后在终端输入 `python`，提示找不到（或弹出微软应用商店的 Python 下载页面）
 
-在一般终端中，Anaconda 环境不启用。
+一般的终端默认不启用 Anaconda 环境
 
 - 解决方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入即可
-- VS Code 会在打开项目时让你选择一个环境并自动激活，不需要上述方法
-  - 使用 VS Code 内置的终端即可（按 `Ctrl + J` 显示/隐藏）
-- 另外的方法：将 Anaconda 环境添加到系统环境变量（PATH）
+- 对于 VS Code，打开项目时会让你选择一个 Python 环境并自动激活
+  - 如果选择 Anaconda 的环境，那么使用 VS Code 的内置终端即可（按 `Ctrl + J` 显示/隐藏），不必再使用上面提到的终端
+- 另一种方法 **（不推荐）**：将 Anaconda 环境添加到系统环境变量（PATH）
   - 在所有终端中启用 Anaconda 环境
   - 这样做会导致 Python 环境变量混乱，我们不推荐此方法
 
