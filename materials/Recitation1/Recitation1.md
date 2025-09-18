@@ -8,58 +8,129 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
     lecture: SI100B Fall 2025 Recitation 1
-    title: 环境配置 & 如何使用搜索引擎解决问题
+    title: 环境配置 & 搜索信息的正确姿势
     detail: SI100B 2025 Staff | 2025-09-19
 makeThanks: true
 ---
 
-# 配置开始前的说明
-
-<!--v-->
-### 推荐阅读
-
-[你缺失的那门计算机课](https://www.criwits.top/missing/) 新手向，计算机快速上手
-
-[MIT: Missing Semester](https://missing-semester-cn.github.io/) 进阶向，需要配置好 Bash 环境
+# 在开始之前……
 
 <!--v-->
 
-## 我们将要配置什么？
+## 有关计算机基本操作的推荐阅读
 
-在本教程中，我们将配置一套可以用于 SI100B 课程的环境： Anaconda + Jupyter Notebook + VS Code
+[你缺失的那门计算机课](https://www.criwits.top/missing/) 入门：计算机快速上手
 
-</br>
-
-- Anaconda：一个 Python 发行版，提供了**包管理、环境管理**等非常方便的功能
-  - 这里我们并没有选取 `python.org` 的 Python 安装包，是因为 Anaconda 提供了更好的环境管理功能
-  - Miniconda 也是不错的选择，体积更小
-  - Anaconda = Python + conda + 已预装的大量包
-- Jupyter Notebook：一个交互式笔记本，即在一个文档里运行代码，可以融合文本、公式、图像等多种元素
-- VS Code：~~最好的~~代码编辑器，拥有丰富的插件生态，支持多种编程语言
+[MIT: Missing Semester](https://missing-semester-cn.github.io/) 进阶：需配置好 Bash 环境
 
 <!--v-->
 
-## ⚠️：不要安装多个 Python
+## 小调查
+
+有多少人在暑假上过 SI100+ 这门“先导课”？
+
+- 如果上过，那么你可能已配置好和本次习题课所说的一致的编程环境
+- 为保险起见，仍然建议你跟着听一遍
+
+如果你在正课上自己做了动手尝试环节…
+- 那么你可能已安装了一个独立 Python 环境（`python.org` 或微软商店上下载的）
+- 如果是这样，请务必按本节课所述的配置教程进行
+
+
+<!--v-->
+
+## 配置编程环境
+
+在本教程中，我们将配置一套可用于 SI100B 课程的环境：
+
+### Anaconda + Jupyter Notebook + VS Code
+
+<!--v-->
+
+### Anaconda + Jupyter Notebook + VS Code
+
+- Anaconda 是一个 Python *发行版* (distribution)
+  - Anaconda = Python + `conda` + 预装的软件包
+  - `conda` 是现代的 Python 环境管理器
+    - 提供 **软件包批量管理、环境管理** 等功能
+    - 稍后会解释为什么需要环境管理
+
+- **不使用** `python.org` 或微软商店的独立安装包：Anaconda 提供了统一的**环境管理**功能
+
+- 缺点：预装大量软件包，体积很大（~4 GiB），在配置低的机器上性能不佳
+  - 派生的 Miniconda 也是不错的选择：体积更小，更轻量
+
+<!--v-->
+
+### Anaconda + Jupyter Notebook + VS Code
+
+- Jupyter Notebook：一个交互式笔记本
+  - 在一个文档里运行代码，可以融合文本、公式、图像等多种元素
+  - 非常适合撰写数据分析报告
+  - 课程中极有可能会用到！
+
+- Visual Studio Code：一个文本编辑器，
+  - 体验极佳，优点在于丰富的插件生态，因而支持多种编程语言（包括 Python！）
+  - 其本身**并不是 IDE（集成开发环境）**；不过，安装各类插件后可拥有近似于 IDE 的功能
+
+<!--v-->
+
+## 不要安装多个 Python！
 
 <div style=" margin-top: 10px; margin-right: 10px;" markdown="1">
 <img src="images/python_environment.png" width="55%" style="float: right;">
-
 <br/>
 
-- 不同的项目可能需要不同的 Python 版本
-- 不同的 Python 版本又可能需要不同版本的库
-- 有没有工具可以让我们在不同的 Python 环境之间自由切换？
+- 同一台机器上的不同项目：
+  - 使用的 Python 版本不同
+  - 对应使用的软件包/库不同
+
+- 直接安装在一起，极有可能相互干扰（如右图）
+
+- 如何构造相互隔离的 Python 软件包环境？
 
 </div>
 
 <!--v-->
 
-## 可能遇到的问题
+## 正确方法：使用环境管理器
 
-- 检查你的用户名是否为英文，中文用户名可能导致安装软件时出现问题
-  - 打开终端，输入 `whoami`, 输出中不应该包含中文字符
-- 我们将在 Windows 11 操作系统下演示，如果你使用其他操作系统，可以询问使用对应操作系统的助教
-- 如果你遇到任何问题，请在 Piazza 或 Office Hour 求助，助教们都乐意帮助你 🥰
+**环境管理器**：用于管理不同的 Python 环境，如 `conda`, `venv`
+
+- 环境之间互相隔离，互不干扰，且可通过命令快速切换
+
+- 各个 Homework 和 Project 可能使用不同的环境，因此强烈建议使用环境管理器
+- 如之前所述， Anaconda 使用 `conda` 这一环境管理器
+  - 将在安装 Anaconda 时简单教学：如何创建和使用环境
+
+<!--v-->
+
+## 配置环境**前**的常见问题
+
+> “我照着教程装了 PyCharm，它自带了一个 Python”  
+> “我从 python.org / 微软商店 下载安装了一个 Python”
+
+这些当然能正常使用，但**不建议在这门课中**使用它们
+- 安装软件包、环境管理…等一系列可能的问题
+
+- 助教**只能对前述的 Anaconda + Jupyter Notebook + VS Code 环境提供帮助**
+  - 对于其他自行安装的环境，由于情况较多，助教无法提供帮助
+
+<!--v-->
+
+## 配置环境时的常见问题
+
+- **用户名应当为全英文**
+  - 中文用户名可能导致安装软件时出现问题
+  - 打开终端，输入 `whoami` 并按回车执行，输出中不应包含中文字符
+
+    - 可在程序集或搜索框中搜索“终端”或类似词语，以打开终端
+
+- 所有步骤均在**干净的 Windows 11** 操作系统下演示
+
+  - 对于 macOS/Linux 等其他操作系统，步骤基本一致；如遇到问题，可询问使用对应操作系统的助教（现场可能就有）
+
+- 如果遇到其他任何问题，也欢迎在 Piazza 上发帖，或在 Office Hour 期间向助教求助！
 
 <!--s-->
 
