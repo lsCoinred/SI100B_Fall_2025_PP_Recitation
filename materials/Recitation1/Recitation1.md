@@ -196,12 +196,29 @@ makeThanks: true
 
 一般的终端默认不启用 Anaconda 环境
 
-- 解决方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入即可
-- 对于 VS Code，打开项目时会让你选择一个 Python 环境并自动激活
-  - 如果选择 Anaconda 的环境，那么使用 VS Code 的内置终端即可（按 `Ctrl + J` 显示/隐藏），不必再使用上面提到的终端
-- 另一种方法 **（不推荐）**：将 Anaconda 环境添加到系统环境变量（PATH）
+- **（不推荐）**：将 Anaconda 环境添加到系统环境变量（PATH）
   - 在所有终端中启用 Anaconda 环境
   - 这样做会导致 Python 环境变量混乱，我们不推荐此方法
+
+- 临时方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入；
+
+- 永久解决方法：为所有的用户终端启用 Anaconda
+
+<!--v-->
+
+## 安装后：为用户终端启用 Anaconda
+
+Windows 操作系统的方法：
+
+1. 打开 Anaconda PowerShell Prompt
+2. 输入 `conda init powershell` 并回车执行
+3. 关闭并重新打开 VS Code 及其内置终端
+4. 如提示“在此系统上禁止运行脚本”，则以管理员身份运行终端，并执行 `Set-ExecutionPolicy RemoteSigned` 以允许本地脚本执行
+
+<img src="images/set_exec_policy.png" width="60%" style="display: block; margin: 0 auto;">
+
+
+- macOS 和 Linux 操作系统的方法与此不同，可自行搜索或是询问助教
 
 <!--s-->
 
