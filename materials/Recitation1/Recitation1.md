@@ -443,7 +443,7 @@ Python 编程部分共有 1 次考试
 
 <!--s--> 
 
-# Python 程序运行的背后：计算机基本构成和运行原理
+# （A班）Python 程序运行的背后：计算机基本构成和运行原理
 
 <!--v-->
 
@@ -505,84 +505,154 @@ Python 编程部分共有 1 次考试
 
 ## Imperative vs. Declarative
 
-- 命令式编程(Imperative)：告诉计算机如何做(How)来达到结果？程序员拥有更高的自由度，但需要耗费心智管理每一步的状态.
+- 命令式 (Imperative) 编程：告诉计算机要怎么做 (How)
+  - 程序员拥有更高的自由度，但需要管理每一步的状态，工作量大
   ```python
+  # 求数组 arr 中所有元素的和
   total = 0
   for i in arr:
     total += i
   ```
-- 声明式编程(Declarative): 声明我们想要的结果(What)？程序员只需专注业务逻辑，细节已经由别的程序员完成了。交给编译器或者解释器去思考 How。
+- 声明式 (Declarative) 编程：声明我们想要的结果 (What)
+  - 具体实现由其他人完成并交给编译器或解释器来处理
+  - 程序员只需专注于目标本身的逻辑
   ```python
-  total = sum(arr)
+  # 求数组 arr 中所有元素的和
+  total = sum(arr) # 他人已实现一个求和的功能，拿来用即可
   ```
+
+<!--v-->
+
+## Computers are Machines that Executing Algorithms
+
+计算机是执行算法的机器
+
+- 算法 (Algorithm) : 需要按次序执行的一系列计算操作
+
+  - 相当于食谱/制作配方（只不过有时很复杂）
+
+  - 本课程涉及的算法均为简单的逻辑
+    - 一般难度的算法: CS 101 算法与数据结构
+
+- 计算机的架构: 冯·诺依曼 (Von Neumann)
+  - Fixed Program (固定程序) vs. Stored Program (存储程序): 
+      
+    程序不可再修改 vs. 程序可再修改
+
+  - 架构图: Memory 内存, Control Unit 控制单元, Arithmetic Logic Unit 算术逻辑单元, Input 输入, Output 输出
 
 <!--v-->
 
 ## Syntax & Semantics
 
-- 句法(syntax): 句子的形式或结构
-  - 词位(lexeme): 最基本的语法单位(eg. I, dog, hugs，+, =)
-  - token：描述词位的种类(eg. keywords，operators)
-- 语义(semantics): 句子的含义
-- 无语法和语义错误不代表程序按照预想的执行
+- 句法 (syntax) : 句子的形式或结构
+
+  - 词位 (lexeme) : 最基本的语法单位(eg. I, dog, hugs，+, =)
+
+  - token: 描述词位的种类 (eg. keywords，operators)
+
+- 语义 (semantics) : 句子含义
+
+- 无语法错误和无静态语义错误：静态分析通过
+
+  - 这**不代表**程序能按照预想的执行
+
+  - “运行的时候没有红字报错，但出来的结果就是不对”
+
   - 语义难以准确传递：甲方/题目 -> 程序员 -> 代码
 
 <!--v-->
 
-## 类型转换
+## 类型转换 (Type Conversion)
 
-- 显式转换(Explicit conversion): 需要手动指定转换类型例如: `str()`,`int()`,`float()`
-- 隐式转换(Implicit conversion): Python解释器完成自动转换
-  - 向上转换类型，以防止数据丢失
+- 显式 (Explicit) 转换: 需要手动指定转换类型
+  - e.g. `str()`,`int()`,`float()`
+
+- 隐式 (Implicit) 转换: 在解析时自动转换
+  - “不按照预想的执行”：“怎么输出都跟了个 .0？”
+
+  - 通常向上转换类型，以防止数据丢失
   ```python
     num1 = 2
     num2 = 12.2
     res = num1 + num2
-    print("Data type of res: ", type(res)) # Data type of res:  <class 'float'>
-    print("Value of res: ", res) # Value of res:  14.2
+
+    print("Data type of res: ", type(res)) # Output: <class 'float'>
+
+    print("Value of res: ", res) # Output: Value of res: 14.2
   ```
-  - 数据类型并不总是兼容
+
+<!--v-->
+
+## 类型转换 (Type Conversion) 续
+- 隐式 (Implicit) 转换是某些不同类型数据能够“兼容”的原因
+
+  - 并非所有数据类型都互相兼容
+
   ```python
     num1 = "2"
     num2 = 3
-    print(num1 + num2) # TypeError: unsupported operand type(s) for +: 'int' and 'str'
+    print(num1 + num2) 
+    # TypeError: unsupported operand type(s) for +: 'int' and 'str'
   ```
 
 <!--v-->
 ## 字符串
-- Python 内置字符串类型名为 `str`.
+- Python 内置字符串的类型为 `str`.
+
 - 字面量可以使用单引号或双引号 `''`, `""`, 使用三引号可跨越多行 `'''`, `"""`
   ```python
   multi = """It was the best of times.
   It was the worst of times."""
   ```
-- 空字符串`''` 在布尔上下文中被认为是 false. 其他常见被视为 false 的值有 `None`,`0`,`[]`,`{}`
+
+- 空字符串`''` 在布尔上下文中被认为是 false
+  - 其他常见被视为 false 的值有 `None`,`0`,`[]`,`{}`
   ```python
   #检查空字符串
   if not myString:
      ...
   ```
-- 切片：`[start:stop:step]`, 如果索引过大，会被截断为字符串长度
+
+<!--v-->
+## 字符串（续）
+
+- 切片：`[start:stop:step]`
+  - `start`: 起始索引位置（Python 索引以 0 起始！）
+  - `stop`: 终止索引位置（不包含）
+  - `step`: 步长
+  - 如索引超出字符串长度，会限制在长度内
   ```python 
-  s = "hello"
-  print(s[1:100]) # ello
-  print(s[100:]=='') # True
+  s = "0123456789"
+
+  print(s[1:4]) # Output: 123
+
+  print(s[1:100]) # Output: 123456789
+
+  print(s[1:10:3]) # Output: 147
+
+  print(s[100:]=='') # Output: True
   ```
 
 <!--v-->
 ## 格式化字符串
-- 使用格式化字符串(f-string)提高代码可读性，便于打印调试信息
+- 使用格式化字符串 (f-string) 可提高代码可读性，以及便于打印调试信息
   ```python
-  # 控制浮点数显示
+  # 控制浮点数显示的小数位数
   value = 2.791514
-  print(f'approximate value = {value:.2f}')  # approximate value = 2.79
+  print(f'approximate value = {value:.2f}')  
+  # Output: approximate value = 2.79
 
-  #支持表达式插入
+  # 格式化字符串支持表达式插入
   width = 10
   height = 5
-  area_message = f"The area is {width * height}." # The area is 50.
+  area_message = f"The area is {width * height}." 
+  # Output: The area is 50.
   ```
 <!--s-->
-# 答疑时间
 
-GL;HF
+## 答疑时间：课堂知识和环境配置
+
+- 下周预计会布置第一次作业，请务必配置好编程环境
+- 下周开始，A/B 班习题课的内容难度等将可能有差异，还请留意
+- Good Luck!
