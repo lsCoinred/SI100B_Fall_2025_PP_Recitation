@@ -650,12 +650,12 @@ Windows 系统：
   It was the worst of times."""
   ```
 
-- 空字符串`''` 在布尔上下文中被认为是 false
-  - 其他常见被视为 false 的值有 `None`,`0`,`[]`,`{}`
+- 在布尔类型中，空字符串 `''` 被当作 `False`
+  - 其他常见的被视为 `False` 的值：`None`, `0`, `[]`, `{}`
   ```python
-  #检查空字符串
-  if not myString:
-     ...
+  # the statement executes only if myString is not empty
+  if not myString: 
+     statement
   ```
 
 <!--v-->
@@ -675,7 +675,7 @@ Windows 系统：
 
   print(s[1:10:3]) # Output: 147
 
-  print(s[100:]=='') # Output: True
+  print(s[100:]=='') # Output: True (is an empty string)
   ```
 
 <!--v-->
@@ -757,9 +757,7 @@ Windows 系统：
 
 <!--v-->
 
-## 条件分支
-
-`if-(elif)-else` 结构
+## 条件分支：`if`, `elif`, `else`
 
 示例：猜数字
 ```python
@@ -770,9 +768,9 @@ guess = int(input("Enter an integer: "))
 if guess == number:
     print("Congratulations, you guessed it.")
 elif guess < number:
-    print("No, it is a little higher than that.")
+    print("No, it is a little bigger than that.")
 else:
-    print("No, it is a little lower than that.")
+    print("No, it is a little smaller than that.")
 ```
 
 <!--v-->
@@ -831,8 +829,8 @@ else:
 
 ```python
 while condition:
-  statements
-  ...
+    statements
+    ...
 ```
 
 - **注意：** `while` **仅在每次开始执行** `statement` 时才检查 `condition`
@@ -840,6 +838,7 @@ while condition:
 - 设置合理的条件，以避免出现异常情况：
   - 死循环：检查 `condition` 时总是为 `True`，循环无限进行，不会停止
   - 无效循环：首次进入循环时检查 `condition` 为 `False`，没有执行其中语句就退出了
+
 
 <!--v-->
 
@@ -854,6 +853,49 @@ for i in range(5): # range(5) is a list [0,1,2,3,4]
 
 for i in "hello":
     print(i)
+```
+
+<!--v-->
+
+## 循环：循环控制
+
+- `break`：立即跳出当前的循环体，继续执行循环体之后的语句
+
+- `continue`：立即跳过当前循环体的剩余语句，继续进行下一次循环
+
+```python
+a = 0
+while a >= 0: 
+    print("new loop starts, a =", a)
+    if a > 1024:
+        break # jump to print("break out of while loop")
+    elif a > 512:
+        a = a + 2
+        continue # jump to print("new while loop start")
+    
+    print("a <= 512")
+    a = a + 4
+
+print("break out of while loop")
+```
+
+<!--v-->
+
+示例：猜数字（循环直到猜对）
+```python
+# Guess number
+number = 13
+guess = int(input("Enter an integer: "))
+
+while True: 
+    # loop until guessed
+    if guess == number:
+        print("Congratulations, you guessed it.")
+        break # break loop if succeed
+    elif guess < number:
+        print("No, it is a little bigger than that.")
+    else:
+        print("No, it is a little smaller than that.")
 ```
 
 <!--s-->
