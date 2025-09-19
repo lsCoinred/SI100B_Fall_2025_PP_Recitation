@@ -215,16 +215,16 @@ makeThanks: true
 
 一般的终端默认不启用 conda 的功能
 
-- **不推荐**将 Anaconda 添加到系统环境变量（PATH）
+- **不推荐**将 Anaconda 直接添加到系统环境变量（PATH）
   - 这样做会导致环境变量混乱
 
 - 临时方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入指令
 
-- 永久解决方法：为用户终端启用 conda
+- 永久方法：为用户终端环境启用 conda
 
 <!--v-->
 
-## 安装后：为用户终端启用 conda
+## 安装后：为用户终端环境启用 conda
 
 Windows 系统：
 1. 打开 Anaconda PowerShell Prompt
