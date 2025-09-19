@@ -334,9 +334,7 @@ Windows 系统：
 
 - 详情将在第一次作业发布时（计划下周五）公布
 
-Python 编程部分共有 1 次考试
-
-- 暂定为上机测试，详情在期中前公布
+另外还有 1 次考试，预计在期中前后通知
 
 <!--v-->
 
@@ -344,7 +342,9 @@ Python 编程部分共有 1 次考试
 
 请每位同学**独立**完成作业：如发现有抄袭行为，将按学校规定处理。
 
-不要让 ChatGPT 等大模型替你完成作业！这不仅违反了规定，还违背了作业的目的：回顾和练习。
+不要让 ChatGPT 等 AI 大模型替你完成题目！
+
+- 不仅违反规定，还违背作业的目的：回顾和练习。
 
 ##### **Recall:**
 
@@ -434,8 +434,8 @@ Python 编程部分共有 1 次考试
 **常用站点**
 
 - Microsoft Copilot / GitHub Copilot
-- ChatGPT 
-- 上科大同学可免费使用校内的 GenAI 平台：https://genai.shanghaitech.edu.cn
+- ChatGPT、DeepSeek,、通义千问 等专门对话的 AI 
+- 上科大同学可免费使用校内 GenAI 平台：https://genai.shanghaitech.edu.cn
 
 - 课程中（可能）会教学如何使用 AI 工具，如辅助编程
   - 再次提醒：用 AI 代写作业**违反课程规定！**
@@ -443,19 +443,20 @@ Python 编程部分共有 1 次考试
 <!--v-->
 ## 如何正确使用对话大模型
 
-**向大模型提问的正确方式**
+- **向大模型提问的正确方式**
 
-- 搜索引擎的“关键词”式搜索不一定合适
-- 用更加详细的方式描述
-- 任何要求都要写清楚
-- 有些时候，说“不应该怎样”反而会加强错误
+  - 搜索引擎的“关键词”式搜索不一定合适
+  - 用更加详细的方式描述
+  - 任何要求都要写清楚
+  - 有些时候，说“不应该怎样”反而会加强错误
 
-**什么适合问大模型？**
+- **什么适合问大模型？**
 
-- 概览性问题
+  - 概览性问题 “请总结/简要介绍…”
 
-- 已有大量数据的问题
-  - 大模型可能出现幻觉，给出错误数据或不存在的证据
+  - 已有大量数据的问题/常识 “Python的循环体通常有哪些？”
+    - **注意：**大模型可能出现幻觉，给出错误数据或不存在的证据
+      - 编造某些具体数据、参考文献等
 
 
 <!--s--> 
@@ -481,7 +482,7 @@ Python 编程部分共有 1 次考试
 </div>
 
 <!--v-->
-## 拓展内容：程序是什么
+## 拓展：程序是什么
 
 - 在计算机的最底层，所有东西都是**二进制**表示
 
@@ -500,7 +501,7 @@ Python 编程部分共有 1 次考试
 - 程序的工作：由给定的输入计算对应的输出，相当于数学上的**函数**
 
 <!--v-->
-## 拓展内容：程序是什么（续）
+## 拓展：程序是什么（续）
 
 - Python 是一种 解释型语言 (Interpreted Language)
   - 我们编写的代码文本文件称**脚本 (Script)** ，终端调用的 `python` 称为**解释器 (Interpreter)**
@@ -509,7 +510,7 @@ Python 编程部分共有 1 次考试
   - 相对地，有 编译型语言 (Compiled Language)
     - 程序需要先全部翻译为机器码，然后才能执行，执行效率比前者更高
 
-- 一些程序不一定能直接执行，但包含许多可被其他程序重复使用的代码
+- 一些程序不一定能直接执行，但包含许多可被其他程序重复使用的代码  
   - 称为**库 （Library）**
   - 可能是文本形式的代码（如 Python module），也可能是二进制的机器码（如 C++ 的动态链接库）
   - Python 中，打包好的库常以 Python 软件包的形式安装和使用
@@ -541,7 +542,7 @@ Python 编程部分共有 1 次考试
   
 <!--s-->
 
-# 课堂知识回顾
+# 课堂知识回顾 1
 
 <!--v-->
 
@@ -630,8 +631,7 @@ Python 编程部分共有 1 次考试
 
 ## 类型转换 (Type Conversion) 续
 - 隐式 (Implicit) 转换是某些不同类型数据能够“兼容”的原因
-
-  - 并非所有数据类型都互相兼容
+  - 并非所有数据类型都互相“兼容”
 
   ```python
     num1 = "2"
@@ -695,8 +695,175 @@ Python 编程部分共有 1 次考试
   ```
 <!--s-->
 
+# 课堂知识回顾 2
+
+<!--v-->
+
+## 基本输入和输出 
+- 输入/输出 (Input/Output) 简写为 I/O
+
+- Python 内置了许多函数来实现这点
+  - `input()`: 从标准输入 (stdin) 获取数据
+  - `print()`: 打印到标准输出 (stdout)
+    - 终端就属于符合标准输入和输出的一类
+
+<!--v-->
+
+### `input` 输入
+
+- `input()` 如果有参数，则会先打印出来再接受输入
+  - 编程作业时要注意，否则容易意外输出
+
+- `input()`输入的数据总是为字符串，即使输入是纯数字
+  ```python-REPL
+  >>> s = input("Please input s:") 
+  Please input s:100 # printed its argument first
+  >>> type(s)
+  <class 'str'> # type of input is always string
+  ```
+
+<!--v-->
+
+### `print` 输出
+
+`print` 的多种用法（以下 `x = 1.5`）
+  - 基本：打印字符串
+    - `print("Hello, world!")`
+  - 多个参数将连接起来，默认在中间加空格：
+    - `print("x = ", x)` 输出 `x = 1.5`
+  - 前面提及的格式化字符串
+    - `print(f"x = {x}")` 输出 `x = 1.5`
+    - `print(f"x = {x:.2f}")` 输出 `x = 1.50`
+    - `print("x={}".format(x))` 输出 `x = 1.5`
+
+上面这些已经足够使用了
+- 想查看更具体的用法：[官方文档页面](https://docs.python.org/zh-cn/3/reference/lexical_analysis.html#string-and-bytes-literals) 。
+
+<!--v-->
+
+## 逻辑判断
+
+- **逻辑运算符** 运算结果是一个布尔型 (`bool`) ：`True` 或 `False`（注意大小写）
+
+- `==` 等于 **注意和赋值运算符 `=` 区分**
+  - `var = value` 是赋值运算
+  - `expression1 == expression2` 是逻辑运算（是否相等） 
+
+- `!=` 不等于
+- `>` 大于
+- `<` 小于
+- `>=` 大于等于
+- `<=` 小于等于
+
+<!--v-->
+
+## 条件分支
+
+`if-(elif)-else` 结构
+
+示例：猜数字
+```python
+# Guess number
+number = 13
+guess = int(input("Enter an integer: "))
+
+if guess == number:
+    print("Congratulations, you guessed it.")
+elif guess < number:
+    print("No, it is a little higher than that.")
+else:
+    print("No, it is a little lower than that.")
+```
+
+<!--v-->
+
+### 拓展：Match-case Statement
+
+- 于 **Python 3.10** 引入，类似 C/C++ 的 `switch case`结构
+
+- 将一个变量与不同的**字面值**（Literal，即明文写在代码中的值）匹配
+
+- 从上到下依次将变量与每个 `case` 的值比较
+  - 一旦匹配到某个 `case` 就执行对应的语句，且不再往后检查剩余的 `case` 
+  - 如果没有任何 `case` 匹配，则执行最后的默认情况 `_`
+
+  ```python
+  light_color = input("Enter a traffic light color")
+  match light_color:
+      case "red":
+          print("Red: Stop")
+      case "yellow":
+          print("Yellow: Caution")
+      case "green":
+          print("Green: Go")
+      case _:
+          print("Invalid color")
+  ```
+
+<!--v-->
+
+### 拓展：Match-case Statement
+
+- Match-case Statement 还可用于绑定 (bind) 变量
+  - 对一个值进行绑定，类似于为它们再取一个名
+
+- 示例：`point` 是形如 `(i,j)` 的一对数字
+
+  ```python
+  match point:
+      case (0, 0):
+          print("Origin")
+      case (0, y):
+          print(f"Y={y}") # this case: bind the second element to y 
+      case (x, 0): 
+          print(f"X={x}") # this case: bind the first element to x
+      case (x, y):
+          print(f"X={x}, Y={y}") 
+      case _:
+          raise ValueError("Not a point")
+  ```
+
+- 相关 Python 规范：[PEP636](https://peps.python.org/pep-0636/)
+
+<!--v-->
+
+## 循环：`while`
+
+```python
+while condition:
+  statements
+  ...
+```
+
+- **注意：** `while` **仅在每次开始执行** `statement` 时才检查 `condition`
+
+- 设置合理的条件，以避免出现异常情况：
+  - 死循环：检查 `condition` 时总是为 `True`，循环无限进行，不会停止
+  - 无效循环：首次进入循环时检查 `condition` 为 `False`，没有执行其中语句就退出了
+
+<!--v-->
+
+## 循环：`for`
+`for` 循环体通常用于遍历 (Traverse) 一个**序列** (Sequence) 或其他可迭代 (iterable) 对象
+- 本课程中常见的序列包括 字符串 (String)、列表 (List)、元组 (Tuple) 等，后面课程会全部讲到
+
+
+```python
+for i in range(5): # range(5) is a list [0,1,2,3,4]
+    print(i)
+
+for i in "hello":
+    print(i)
+```
+
+<!--s-->
+
 ## 答疑时间：课堂知识和环境配置
 
-- 下周预计会布置第一次作业，请务必配置好编程环境
-- 下周开始，A/B 班习题课的内容难度等将可能有差异，还请留意
-- Good Luck!
+- 考虑到录制质量问题，习题课一般无录播，但会在 BlackBoard 平台上传 Slides 
+
+- 下周习题课预计会讲解基本的代码编写风格 (Coding Style)，帮助养成习惯
+
+- 第一次作业预计在下周布置，届时请务必配置好编程环境
+
+- **Good Luck!**
