@@ -218,28 +218,47 @@
 
 <img src="images/anaconda_name_env.png" width="40%" style="display: block; margin: 0 auto;">
 
+- Anaconda 内置一个不可删除的 `base` 环境
+  - 包含 Anaconda 运行所需的基本软件包和配置
+  - 创建新环境时，默认以 `base` 为模板
+  - **非常不推荐**直接用 `base` 环境开发或安装新软件包
+    - 会使软件包环境混乱，可能导致版本兼容问题
+    - 建议至少新建一个环境，用新环境来开发
+
+<!--v-->
+
+## 创建一个新的 Python 环境
+
+- 使用环境前需要激活：在终端执行 `conda activate si100`
+- conda 会提示目前正在使用哪个 Python 环境
+  ```powershell
+  # 由 base 环境切换到 si100 环境
+  (base) PS D:\si100\test> conda activate si100
+  (si100) PS D:\si100\test> 
+  ```
+
 <!--v-->
 
 ## 安装后的常见问题
-> 安装后在终端输入 `python`，提示找不到（或弹出微软应用商店的 Python 下载页面）
+> 安装后在终端输入 `conda` 或 `python`，提示找不到（或弹出微软应用商店的 Python 下载页面）
 
-一般的终端默认不启用 Anaconda 环境
+一般的终端默认不启用 conda 的功能
 
-- **不推荐**将 Anaconda 环境添加到系统环境变量（PATH）
+- **不推荐**将 Anaconda 添加到系统环境变量（PATH）
   - 这样做会导致环境变量混乱
 
 - 临时方法：打开上面提到的 Anaconda Powershell Prompt / Anaconda Prompt，并在此弹出的终端窗口中输入指令
 
-- 永久解决方法：为用户终端启用 Anaconda
+- 永久解决方法：为用户终端启用 conda
 
 <!--v-->
 
-## 安装后：为用户终端启用 Anaconda
+## 安装后：为用户终端启用 conda
 
 Windows 系统：
 1. 打开 Anaconda PowerShell Prompt
 2. 输入 `conda init powershell` 并回车执行
-3. 关闭并重新打开 VS Code 及其内置终端
+3. 关闭并重新打开 VS Code 及其所有内置终端
 4. 如果提示“在此系统上禁止运行脚本”，则以管理员身份运行终端，并执行 `Set-ExecutionPolicy RemoteSigned` 以允许本地脚本执行
 
 <img src="images/set_exec_policy.png" width="60%" style="display: block; margin: 0 auto;">
