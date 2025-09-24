@@ -13,12 +13,13 @@ makeTitle:
 makeThanks: true
 ---
 
+
 # Homework & Online Judge
 
 <!--v-->
 
 - Homework1 已发布
-- 截止日期 10月3日10:AM
+- 截止日期 10月9日 21:00
 - OJ网址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/ ) 网址IP为学校内网，如若想在校外访问，在 egate 平台上使用上科大 VPN 来访问学校内网。
 - 账号：我们为每一位同学用学校邮箱([name2025@shanghaitech.edu.cn](mailto:name2025@shanghaitech.edu.cn))提前注册了账号，用户名为name2025，可以使用忘记密码功能用自己的邮箱重置密码。
 
@@ -49,14 +50,160 @@ makeThanks: true
 <!--v-->
 ## 作业中的Hint解释
 
-### Q2
-
-> 待作业出来后更新
+### Q1
+- 使用 `f'{j}×{i}={i*j:2}'` 来固定每个表达式的宽度；
+- 可以通过判断 `int(n)` 和 `n` 之间是否相等（是否存在舍入误差）来判断输入的值是否是整数。
 
 ```python
-print(int('F', 16)) 
-print('{:X}'.format(31))
+a = float(inp)
+if int(a) == a:
+  print("a is an int!")
 ```
+<!--v-->
+## 作业中的Hint解释
+### Q5
+中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。以 `abbaeae` 为例：
+
+Part 1: 查找奇数长度回文串
+
+
+| 中心 | 找到的回文串 | 目前为止回文串的总数 |
+|:---:|:---:|:---:|
+| `s[0]` (`a`) | `a` | 1 |
+| `s[1]` (`b`) | `b` | 2 |
+| `s[2]` (`b`) | `b` | 3 |
+| `s[3]` (`a`) | `a`  | 4 |
+| `s[4]` (`e`) | `e`和 `aea` | 6 |
+| `s[5]` (`a`) | `a`和 `eae`| 8 |
+| `s[6]` (`e`) | `e` | 9 |
+
+
+<!--v-->
+### Q5
+中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。以 `abbaeae` 为例：
+Part 2: 查找偶数长度的回文串
+
+| 中心 | 找到的回文串 | 目前为止回文串的总数 |
+| :------------------: | :------------------: | :--------------: |
+| (`a-b`) | (None, `a` != `b`)  | 9 
+| (`b-b`) | `bb`,  `abba`   | 11 |
+| (`b-a`) | (None, `b` != `a`)  | 11 |
+| (`a-e`) | (None, `a` != `e`)  | 11 |
+|  (`e-a`) | (None, `e` != `a`)  | 11 |
+|  (`a-e`) | (None, `a` != `e`)  | 11 |
+
+
+<!--s-->
+# 知识回顾
+
+<!--v-->
+## GUESS-and-CHECK
+**详尽枚举法**(exhaustive enumeration)，适用于：
+- 可以猜测（guess）解的值；
+- 可以检查（check）解是否正确；
+- 可以一直猜测，直到找到解或猜出所有值；
+
+**求平方根问题**
+- 给定一个整型变量`x`，看看是否存在另一个整型变量是它的平方根;
+- 具体地说，我们可以先猜测平方根是 0，然后是 1，然后是 2，以此类推...
+- 如果 `x` 是完全平方数，我们最终会找到它的根，然后就可以停下来（观察猜测的平方）;
+
+<img src="images/square_root.png" width="75%" style="float: middle;">
+
+<!--v-->
+## GUESS-and-CHECK
+**求平方根问题**
+
+如果 `x` 不是完全平方数？
+- 我们需要知道什么时候停止；
+- Use algebra：如果猜测的平方大于 x，那么就可以停止；
+<img src="images/square_root_1.png" width="75%" style="float: middle;">
+
+如果 `x` 是负数呢？
+- 在输出最终答案之前需要对其进行判断；
+<img src="images/square_root_2.png" width="75%" style="float: middle;">
+
+<!--v-->
+## GUESS-and-CHECK
+**求平方根问题**
+<img src="images/square_root_3.png" width="75%" style="float: middle;">
+> BIG IDEA: Booleans can be used as signals that something happened
+
+
+
+<!--v-->
+## GUESS-and-CHECK
+**While 循环 VS For 循环**
+> BIG IDEA: Nesting loops can be slow. Use them only when necessary.
+<img src="images/square_root_4.png" width="75%" style="float: middle;">
+
+<!--v-->
+## 二进制数
+<img src="images/binary.png" width="75%" style="float: middle;">
+
+> Operations on some floats introduces a very small error. The small error can have a big effect if operations are done many times!
+
+<!--v-->
+## 二进制数
+- “浮点数”指的是这些数字在计算机中的存储方式。
+- 它取决于计算机硬件，而非编程语言实现。数字（以及其他所有事物）都表示为0/1的位序列。计算机硬件基于能够有效地将信息存储为 0 或 1 并以此表示进行算术运算的方法构建。
+
+<!--v-->
+## 将二进制数转成十进制
+
+考虑以下示例：
+ $$ x = 1910 = 1 \times 24 + 0 \times 23 + 0 \times 22 + 1 \* 21 + 1 \* 20 = 10011 $$
+- 如果我们取 x 对 2 的余数 (x%2)，则得  到最后一位二进制位。
+- 如果我们再将 x 除以 2 (x//2)，则所有位都会右移。
+- $ x//2 = 1 \times 23 + 0 \times 22 + 0 \times 21 + 1 \times 20 = 1001 $
+-  继续进行连续除法；余数得到下一位，依此类推。
+
+```python
+result = '' 
+if num == 0:
+  result = '0' 
+while num > 0:
+  result = str(num%2) + result
+  num = num//2
+```
+
+<!--v-->
+## 分数表示
+- 十进制：$ 3/8 = 0.375 = 3 \times 10^{-1} + 7*10^{-2} + 5 \times 10^{-3} $ 
+- 二进制：如果我们可以乘以足够大的 2 的幂，将其变成整数，则可以转换为二进制，然后除以相同的 2 的幂来恢复
+1. $ 0.375 \times 2^3 = 3_{10} $
+2. 将 3 转成二进制：$11_2$
+3. 除以 $2^3$ （小数点左移3位得到） $0.011_2$
+
+> 如果不存在整数 $p$ 使得 $x \times 2^p$ 为整数，则内部表示始终是近似值，比如 0.000101010010101....
+
+<!--v-->
+## 浮点数
+浮点数是一对整数（有效数字和以 2 为底的指数）
+- $ (1,1) \rightarrow 1 \times2^1 \rightarrow  10_2 \rightarrow  2.0 $ 
+- $ (1,-1) \rightarrow 1 \times 2^{-1}  \rightarrow  0.1_2 \rightarrow 0.5 $
+- $ (125, -2) \rightarrow 125 \times 2^{-2} \rightarrow 11111.01_2 \rightarrow 31.25$ 
+
+使用有限的一组数位来表示可能无限的一组数位:
+- 有效数字的最大位数决定了数字的表示精度。
+- 大多数现代计算机使用 32 位来表示浮点数，Python 浮点数使用 64 位。
+- 如果一个数字用超过 32 位的二进制数表示，则会对该数字进行四舍五入，错误将出现在第 32 位。
+
+<!--v-->
+## 浮点数
+```python
+x=0
+for i in range(10):
+  x += 0.125
+print(x == 1.25)
+```
+程序的输出结果是：`True`
+
+
+**切勿使用 `==` 来测试浮点数**:
+- 而是测试它们之间的差异是否在较小的范围内
+- 打印出来的值并不总是内存中的值
+- 设计使用浮点数的算法时需要谨慎
 
 <!--s-->
 # IO
