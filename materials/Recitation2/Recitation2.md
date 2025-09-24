@@ -17,17 +17,23 @@ makeThanks: true
 # Homework & Online Judge
 
 <!--v-->
+ ## Homework & Online Judge
+- Homework 1 已发布
+  - 截止日期 10 月 9 日 21:00（另外留有 15 分钟缓冲）
 
-- Homework1 已发布
-- 截止日期 10月9日 21:00
-- OJ网址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/ ) 网址IP为学校内网，如若想在校外访问，在 egate 平台上使用上科大 VPN 来访问学校内网。
-- 账号：我们为每一位同学用学校邮箱([name2025@shanghaitech.edu.cn](mailto:name2025@shanghaitech.edu.cn))提前注册了账号，用户名为name2025，可以使用忘记密码功能用自己的邮箱重置密码。
+- OJ 地址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/)
+  - 该地址为学校内网，如想在校外访问，请先使用上科大 VPN 来访问学校内网（具体可在 egate 平台上查询）。
+
+- 账号：我们为每一位同学用学校邮箱 **name2025@shanghaitech.edu.cn** 提前注册了账号，用户名为name2025
+  - 首次使用时，请点击**忘记密码**，用自己的邮箱设置新密码
 
 <!--v-->
 
 ## 作业提交
 
-<img src="images/homework_submit_1.png" width="75%" style="float: middle;">
+- 建议使用“在线编程模式”，可以自测（运行自己的test case）
+
+<img src="images/homework_submit_1.png" width="70%" style="float: middle;">
 
 <!--v-->
 
@@ -38,14 +44,17 @@ makeThanks: true
 <!--v-->
 ## 作业提交
 
-<img src="images/homework_submit_3.png" width="100%" style="float: middle;">
+<img src="images/homework_submit_3.png" width="75%" style="float: middle;">
 
 
 <!--v-->
-## 学术诚信
-- 对作业中所有提交过的程序查重（不仅仅是每道题目的最后一次提交）
-- 禁止使用AI工具直接生成作业代码
-- 保护好自己的代码
+## 学术诚信提示
+- 对作业中**所有**提交过的程序查重，不仅仅是每道题目的最后一次提交
+
+- 禁止使用 AI 工具生成作业代码
+
+- 保护好自己的代码！
+  - 无法界定谁抄袭和谁被抄袭，双方均会受到同等惩罚
 
 <!--v-->
 ## 作业中的Hint解释
@@ -60,7 +69,6 @@ if int(a) == a:
   print("a is an int!")
 ```
 <!--v-->
-## 作业中的Hint解释
 ### Q5
 中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。以 `abbaeae` 为例：
 
@@ -295,7 +303,7 @@ match point:
   case _:
     raise ValueError("Not a point")
 ```
-- 更多用法查阅 [PEP363](https://peps.python.org/pep-0636/)
+- 更多用法查阅 [PEP636](https://peps.python.org/pep-0636/)
 
 <!--s-->
 # 循环
@@ -307,6 +315,10 @@ while condition:
   statement
 ```
 避免无限循环，确保循环条件最终为 False。
+
+- 我的程序停不下来了！
+  - 在运行程序的终端里按 `Ctrl+C` 组合键可以强行停止
+  - Python 会报出错误 `KeyboardInterrupt`
 
 <!--v-->
 ## for 循环
