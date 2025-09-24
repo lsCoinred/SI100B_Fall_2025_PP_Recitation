@@ -4,7 +4,7 @@ separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
 highlightTheme: github
-css: ../../assets/custom.css
+css: assets/custom.css
 autoTitlePage: true
 makeTitle:
     lecture: SI100B Fall 2025 Recitation 2
