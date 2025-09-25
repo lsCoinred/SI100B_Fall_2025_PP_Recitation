@@ -25,20 +25,27 @@ makeThanks: true
 - OJ 地址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/)
   - 该地址为学校内网，如想在校外访问，请先使用上科大 VPN 来访问学校内网（具体可在 egate 平台上查询）。
 
-- 账号：我们为每一位同学用学校邮箱 **name2025@shanghaitech.edu.cn** 提前注册了账号，用户名为name2025
+- 账号：我们为每一位同学用学校邮箱提前注册了账号，如zhangsan2025@shanghaitech.edu.cn，用户名为zhangsan2025
   - 首次使用时，请点击**忘记密码**，用自己的邮箱设置新密码
 
 <!--v-->
 
 ## 作业提交
 
-- 建议使用“在线编程模式”，可以自测（运行自己的test case）
-
 <img src="images/homework_submit_1.png" width="70%" style="float: middle;">
+
+<!--v-->
+## 作业提交
+
+- 建议使用“在线编程模式”，可以直接提交，也可进行自测（方便用自己的测试用例测试程序，**不计分，不影响成绩**）
+
+<img src="images/image-20250925145324008.png" width="70%" style="float: middle;">
 
 <!--v-->
 
 ## 作业提交
+
+- 直接提交代码
 
 <img src="images/homework_submit_2.png" width="75%" style="float: middle;">
 
@@ -55,7 +62,7 @@ makeThanks: true
 - 禁止使用 AI 工具生成作业代码
 
 - 保护好自己的代码！
-  - 无法界定谁抄袭和谁被抄袭，双方均会受到同等惩罚
+  - 无法界定谁抄袭和谁被抄袭，涉及的双方均会受到同等惩罚
 
 <!--v-->
 ## 作业中的Hint解释
