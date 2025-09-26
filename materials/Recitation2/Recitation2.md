@@ -8,7 +8,7 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
     lecture: SI100B Fall 2025 Recitation 2
-    title: L2, L3 课堂复习 & HW/OJ 简介
+    title: L2, L3, L4 课堂复习 & HW/OJ 简介
     detail: SI100B 2025 Staff | 2025-09-26
 makeThanks: true
 ---
@@ -38,8 +38,19 @@ makeThanks: true
 <!--v-->
 ## 作业提交
 
-<img src="images/homework_submit_3.png" width="100%" style="float: middle;">
 
+<img src="images/homework_submit_3.png" width="100%" style="float: middle;">
+<!--v-->
+
+## 补充知识点
+### 字符串的 `split()` 方法
+```python
+s = "SI 100B"
+a,b = s.split(" ")
+print(a) # "SI"
+print(b) # "100B"
+print(s.split(" ")) # ["SI","100B"]
+```
 
 <!--v-->
 ## 学术诚信
@@ -204,6 +215,116 @@ print(x == 1.25)
 - 而是测试它们之间的差异是否在较小的范围内
 - 打印出来的值并不总是内存中的值
 - 设计使用浮点数的算法时需要谨慎
+
+<!--v-->
+## 近似方法
+- 之前我们使用枚举法来估计平方根，但它可能是不准确的；
+- 如果 $x$ 不是完全平方数，那么通常不可能找到满足此关系的精确 $r$；
+- 需要找到方法来处理穷举法无法测试所有可能值的事实，因为可能的答案集合原则上是无限的;
+- 需要找到近似的方法使我们的答案“足够接近”理想答案。
+<img src="images/square_root_5.png" width="75%" style="float: middle;">
+
+<!--v-->
+## 近似方法
+一个足够好的答案：
+- 找到一个 $r$，使得 $r*r$ 和 $x$ 之间的距离在给定的（较小）距离内
+- 使用 epsilon：给定 $x$，我们想要找到 $r$，使得 $|𝑟^2-x|<𝜀$
+
+算法:
+1. 从一个已知的较小猜测值开始 $g$;
+2. 每次猜测增加一个小值 $a$, 得到新的猜测值 $g$;
+3. 检查 $g^2$ 是否足够接近 $x$（在 𝜀 范围内）;
+4. 继续猜测，直到得到与实际答案足够接近的答案;
+
+近似和 GUESS-And-CHECK 的不同：
+- 我们每次以一个很小的量递增；
+- 当足够接近时停止（但并不是完全精确的）
+
+<!--v-->
+## 近似方法
+在近似的过程中可能会超过给定的范围（epsilon），所以你需要另一个结束条件！
+```python
+if abs(guess**2 - x) >= epsilon:
+  print('Failed on square root of', x)
+else:
+  print(guess, 'is close to square root of', x)
+```
+如果现在它停止了，但打印 Failed，因为它超出了给定的范围，你需要尝试更小的增长值(increment)。
+
+<!--v-->
+## 二分搜索
+Background
+- 假设我把一张一百美元的钞票贴在教科书（共448页）的某一页上，你来猜测它在第几页上，在假设每次猜测我都会告诉你答案是正确、过低还是过高，是否能在8次或者更少次数猜中它在第几页？
+
+二分搜索
+1. 猜测区间的中点；
+2. 如果不是答案，则检查答案是否大于或小于中点；
+3. 更改区间；
+4. 重复上述步骤; 
+<!--v-->
+## 算法比较
+二分搜索 VS 穷举法
+- 穷举搜索在每一步中将搜索的空间从 N 减少到 N-1;
+- 二分搜索将需要搜索的空间从 N 减少到 N/2;
+
+GUESS-AND-CHECK VS 二分搜索
+- 逐个迭代检查答案与可能的猜测数量呈线性关系；
+- 通过猜测中间点来检查答案与可能的猜测数量呈对数关系；
+- 对数算法效率更高；
+
+<!--v-->
+## 二分搜索求平方根
+- 假设我们知道答案在 0 到 x 之间；
+- 我们不必从 0 开始穷举尝试，而是选择一个介于这个范围中间的数字；
+- 如果我们幸运的话，这个答案就足够接近了；
+<img src="images/BisectionSearch_1.png" width="75%" style="float: middle;">
+
+
+
+- 如果不够接近，猜测值是太大还是太小？如果 $g^2 > x$，则知道 $g$ 太大；所以现在搜索:
+<img src="images/BisectionSearch_2.png" width="75%" style="float: middle;">
+
+<!--v-->
+## 二分搜索求平方根
+- 如果这个新的 $g$ 满足 $g^2 < x$，那么知道的就太小了；所以现在搜索
+<img src="images/BisectionSearch_3.png" width="75%" style="float: middle;">
+
+- 如果下一个 $g$ 满足 $g^2 < x$，则知道太小；因此现在搜索:
+<img src="images/BisectionSearch_4.png" width="75%" style="float: middle;">
+
+不断重复，直到 $g$ 和正确答案足够接近！
+
+<!--v-->
+## 二分搜索求平方根
+
+示例代码
+```python
+x = 54321
+epsilon = 0.01
+num_guesses = 0
+low = 0
+high = x
+guess = (high + low)/2.0
+while abs(guess**2 - x) >= epsilon:
+  if guess**2 < x : 
+    low = guess
+  else:
+    high = guess
+  guess = (high + low)/2.0
+  num_guesses += 1
+print('num_guesses =', num_guesses) 
+print(guess, 'is close to square root of', x)
+```
+
+
+<!--v-->
+## 二分搜索求平方根
+在每个阶段，二分搜索将搜索值的范围减少一半!
+> 二分搜索利用了该问题的特性。
+> 1) 搜索空间具有有序性;
+> 2) 我们可以判断猜测值是过高还是过低;
+
+
 
 <!--s-->
 # IO
