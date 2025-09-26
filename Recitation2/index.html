@@ -42,29 +42,43 @@
 </div></div>
 
 <!--v-->
+ ## Homework & Online Judge
+- Homework 1 已发布
+  - 截止日期 (Deadline) 10 月 9 日 21:00（另留有 15 分钟缓冲）
+  - **不允许迟交和截止后提交**；如有特殊情况，请单独联系老师并提供佐证材料
 
-- Homework1 已发布
-- 截止日期 10月9日 21:00
-- OJ网址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/ ) 网址IP为学校内网，如若想在校外访问，在 egate 平台上使用上科大 VPN 来访问学校内网。
-- 账号：我们为每一位同学用学校邮箱([name2025@shanghaitech.edu.cn](mailto:name2025@shanghaitech.edu.cn))提前注册了账号，用户名为name2025，可以使用忘记密码功能用自己的邮箱重置密码。
+- OJ 地址: [http://10.15.21.133/d/SI100B_2025_Autumn/](http://10.15.21.133/d/SI100B_2025_Autumn/)
+  - 该地址为学校内网，如想在校外访问，请先使用上科大 VPN 来访问学校内网（具体可在 egate 平台上查询）。
+
+- 账号：我们为每一位同学用学校邮箱提前注册了账号，如zhangsan2025@shanghaitech.edu.cn，用户名为zhangsan2025
+  - 首次使用时，请点击**忘记密码**，用自己的邮箱设置新密码
 
 <!--v-->
 
 ## 作业提交
 
-<img src="images/homework_submit_1.png" width="75%" style="float: middle;">
+<img src="images/homework_submit_1.png" width="70%" style="float: middle;">
+
+<!--v-->
+## 作业提交
+
+- 建议使用“在线编程模式”，可以直接提交，也可进行自测（方便用自己的测试用例测试程序，**不计分，不影响成绩**）
+
+<img src="images/image-20250925145324008.png" width="70%" style="float: middle;">
 
 <!--v-->
 
 ## 作业提交
 
-<img src="images/homework_submit_2.png" width="75%" style="float: middle;">
+- 直接提交代码
+
+<img src="images/homework_submit_2.png" width="70%" style="float: middle;">
 
 <!--v-->
 ## 作业提交
 
-
-<img src="images/homework_submit_3.png" width="100%" style="float: middle;">
+<img src="images/homework_submit_3.png" width="75%" style="float: middle;">
+  
 <!--v-->
 
 ## 补充知识点
@@ -78,27 +92,44 @@ print(s.split(" ")) # ["SI","100B"]
 ```
 
 <!--v-->
-## 学术诚信
-- 对作业中所有提交过的程序查重（不仅仅是每道题目的最后一次提交）
-- 禁止使用AI工具直接生成作业代码
-- 保护好自己的代码
+## 作业评分和学术诚信提示
+- 学生在某道题目的得分**仅取决于学生在此题目上<u>最后一次提交的程序得分</u>**
+
+- 实际作业分数为：在当次作业**截止时间前**，在 OJ 系统上**提交并评测完成后**显示的作业分数
+  - 注：不接受任何除 OJ 系统之外的作业提交
+
+- 对作业中**所有**提交过的程序查重，不仅仅是每道题目的最后一次提交
+
+- 禁止使用 AI 工具生成作业代码
+
+- 保护好自己的代码！
+  - 无法界定谁抄袭和谁被抄袭，涉及的双方均会受到同等惩罚
 
 <!--v-->
 ## 作业中的Hint解释
 
 ### Q1
-- 使用 `f'{j}×{i}={i*j:2}'` 来固定每个表达式的宽度；
+- 在 `print` 时固定每个表达式的宽度：`f'{j}x{i}={i*j:2}'` 
+
 - 可以通过判断 `int(n)` 和 `n` 之间是否相等（是否存在舍入误差）来判断输入的值是否是整数。
 
-```python
-a = float(inp)
-if int(a) == a:
-  print("a is an int!")
-```
+  ```python
+  a = float(inp)
+  if int(a) == a:
+    print("a is an int!")
+  ```
+
+  - 注：四舍五入一般使用 `round(number[, ndigits])`
 <!--v-->
 ## 作业中的Hint解释
+
 ### Q5
-中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。以 `abbaeae` 为例：
+
+中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。
+
+<!--v-->
+
+以 `abbaeae` 为例：
 
 Part 1: 查找奇数长度回文串
 
@@ -115,8 +146,9 @@ Part 1: 查找奇数长度回文串
 
 
 <!--v-->
-### Q5
-中心扩展法：将每个字符或相邻字符之间的空隙视为回文串的潜在中心。向外对称扩展（左右）；每当找到匹配的字符时，就识别出一个新的回文子串——继续扩展。扫描所有可能的中心一次，并累加总数。以 `abbaeae` 为例：
+
+以 `abbaeae` 为例：
+
 Part 2: 查找偶数长度的回文串
 
 | 中心 | 找到的回文串 | 目前为止回文串的总数 |
@@ -226,8 +258,8 @@ while num > 0:
 
 使用有限的一组数位来表示可能无限的一组数位:
 - 有效数字的最大位数决定了数字的表示精度。
-- 大多数现代计算机使用 32 位来表示浮点数，Python 浮点数使用 64 位。
-- 如果一个数字用超过 32 位的二进制数表示，则会对该数字进行四舍五入，错误将出现在第 32 位。
+- 大多数现代计算机使用 32 位来表示浮点数；Python 浮点数使用 64 位
+- 如果一个数字用超过 32 位的二进制数表示，则会对该数字进行四舍五入，32 位开始会出现误差
 
 <!--v-->
 ## 浮点数
@@ -237,12 +269,12 @@ for i in range(10):
   x += 0.125
 print(x == 1.25)
 ```
-程序的输出结果是：`True`
+输出：`True`
 
 
-**切勿使用 `==` 来测试浮点数**:
-- 而是测试它们之间的差异是否在较小的范围内
-- 打印出来的值并不总是内存中的值
+**切勿使用 `==` 来判断浮点数相等**:
+- 应当比较它们的**差**是否在某个极小范围内
+- 打印出的值并非总是内存中的值
 - 设计使用浮点数的算法时需要谨慎
 
 <!--v-->
@@ -349,7 +381,7 @@ print(guess, 'is close to square root of', x)
 <!--v-->
 ## 二分搜索求平方根
 在每个阶段，二分搜索将搜索值的范围减少一半!
-> 二分搜索利用了该问题的特性。
+> 使用二分搜索的前提是，目标问题具有以下特性：
 > 1) 搜索空间具有有序性;
 > 2) 我们可以判断猜测值是过高还是过低;
 
@@ -453,7 +485,7 @@ match point:
   case _:
     raise ValueError("Not a point")
 ```
-- 更多用法查阅 [PEP363](https://peps.python.org/pep-0636/)
+- 更多用法，请查阅 [PEP 636](https://peps.python.org/pep-0636/)
 
 <!--s-->
 <div class="middle center"><div style="width: 100%">
@@ -510,7 +542,9 @@ while True:
 </div></div>
 <!--v-->
 ## 为什么要有良好的代码风格？
-**“There are only two hard things in Computer Science: cache invalidation and naming things” ---Phil Karlton**
+> There are only two hard things in Computer Science: cache invalidation and naming things.
+>
+>  ---Phil Karlton
 - 方便自己检查 bug
 - 方便合作者阅读代码
 - 阅读/写出赏心悦目的代码能让人心情愉悦
