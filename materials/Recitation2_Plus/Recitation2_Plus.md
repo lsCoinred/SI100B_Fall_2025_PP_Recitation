@@ -13,11 +13,10 @@ makeTitle:
 makeThanks: true
 ---
 
-# Hint: 十进制 ↔ 二进制转换
+## Hint: 十进制 ↔ 二进制转换
 
-<!--v-->
 
-## 权重记忆法
+### 权重记忆法
 
 - 每一位二进制位的权重是 2 的幂：`… 64, 32, 16, 8, 4, 2, 1`
 - 小数点右侧继续减半：`0.5, 0.25, 0.125, …`
@@ -47,7 +46,7 @@ makeThanks: true
 - 浮点数存储只能近似这个值，因此有精度损失
 
 <!--v-->
-# Hint: 用 math.isclose() 判断浮点数相等
+## Hint: 用 math.isclose() 判断浮点数相等
 ```python
 import math
 
@@ -59,7 +58,7 @@ print(math.isclose(0.1 + 0.2, 0.3))
 ```
 
 <!--v-->
-# Hint: 永远不要使用浮点数来表示钱
+## Hint: 永远不要使用浮点数来表示钱
 
 - 推荐方法一：使用整数存储最小货币单位
     - 不用"元"作单位，而是用"分"作单位
@@ -81,12 +80,12 @@ print(Decimal('0.1') + Decimal('0.2') == Decimal('0.3'))
 
 <!--s-->
 
-# Hint: 把 “ = ” 运算符理解为 “起名字”
+## Hint: 把 “ = ” 运算符理解为 “起名字”
 <img src="images/name-binding.png" width="50%" style="display:block;margin:32px  12px;"/>
 
 <!--s-->
 
-# Hint: 优先使用 for 循环
+## Hint: 优先使用 for 循环
 
 - while 循环：当条件为真时重复执行
 - for 循环：遍历集合中每个元素
@@ -208,7 +207,7 @@ print(list(range(5, 1, -1)))
 
 <!--s-->
 
-# Hint: input() 永远是字符串
+## Hint: input() 永远是字符串
 
 - 记得自行转换为需要的类型
 
@@ -220,7 +219,7 @@ print(f"明年你 {age + 1} 岁")
 
 <!--v-->
 
-# Hint: print 技巧
+## Hint: print 技巧
 
 - print() 可以接受多个参数，默认用空格隔开
 ```python
