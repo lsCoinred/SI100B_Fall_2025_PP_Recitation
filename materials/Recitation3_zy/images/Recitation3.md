@@ -55,7 +55,7 @@ Python允许链式比较，这是它的一大特色！ 与许多其他编程语�
 3. 更加Pythonic 参考[python的设计哲学](https://realpython.com/ref/glossary/pythonic/)
 
 <!--v-->
-## 错误点评
+## 代码点评
 比较让人疑惑的写法: 退出程序为什么要使用exit？为什么不能使用分支控制程序行为？
 ```
 import sys
