@@ -1,5 +1,5 @@
 ---
-title: SI100B_Fall_2025_Recitation_2
+title: SI100B_Fall_2025_Recitation_3
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
@@ -7,7 +7,7 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
-    lecture: SI100B Fall 2025 Recitation 2
+    lecture: SI100B Fall 2025 Recitation 3
     title: L4 课堂复习 & HW1 讲解
     detail: SI100B 2025 Staff | 2025-10-10
 makeThanks: true
