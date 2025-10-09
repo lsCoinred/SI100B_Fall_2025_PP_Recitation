@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>SI100B_Fall_2025_Recitation_2</title>
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./dist/reset.css" />
+  <link rel="stylesheet" href="./dist/reveal.css" />
+  <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+  <link rel="stylesheet" href="./css/highlight/github.css" />
+
+  <link rel="stylesheet" href="./_assets/assets/custom.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown data-separator="<!--s-->" data-separator-vertical="<!--v-->">
+        <textarea data-template>
+            
+<p style="font-size: 16px; color: #999; margin:5px; position: absolute;"><a href="..">Homepage</a> | <a href="?print-pdf">Printable Version</a></p>
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;">
+  <div style="text-align: center; padding: 40px; background-color: white; border: 2px solid rgb(0, 63, 163); border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+    <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px; color: #333;">SI100B Fall 2025 Recitation 2</h1>
+    <p style="font-size: 24px; color: #666;">L4 课堂复习 & HW1 讲解</p>
+    <p style="font-size: 16px; color: #999; margin-top: 20px; margin-bottom:5px">SI100B 2025 Staff | 2025-10-10</p>
+  </div>
+</div>
+
+<!--s-->
+
+
+
+<div class="middle center"><div style="width: 100%">
+
+# 作业讲解
+
+</div></div>
+<!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# problem 1
+
+</div></div>
+
+判断是否是数字，判断是否是合法的  
+知识点：条件语句、循环语句、输入输出、内置函数isdigit，join  
+## 标准答案
+```
+n = input()
+if not n.isdigit():
+    print("Invalid")
+
+n=int(n)    
+if 0 < n and n < 10:
+    for i in range(1, n + 1):
+        row = '\t'.join(f'{j}x{i}={i*j:2}' for j in range(1, i + 1))
+        print(row)
+else:
+    print("Invalid")
+```
+<!--v-->
+## 优化1:链式比较（拓展）
+把if 0 < n and n < 10: 改成 if 0 < n < 10:  
+Python允许链式比较，这是它的一大特色！ 与许多其他编程语言不同：
+## 链式写法
+```
+0 < n < 10           # ✓ 合法且推荐
+1 < x <= 5 < y < 10  # ✓ 完全合法
+```
+## 等价的传统写法
+```
+0 < n and n < 10                    # ✓ 也可以
+1 < x and x <= 5 and 5 < y and y < 10  # ✓ 冗长
+```
+优势：
+1. 可读性更好，更接近数学表达式
+2. 性能更高，中间变量只求值一次
+3. 更加Pythonic 参考[python的设计哲学](https://realpython.com/ref/glossary/pythonic/)
+
+<!--v-->
+## 错误点评
+比较让人疑惑的写法: 退出程序为什么要使用exit？为什么不能使用分支控制程序行为？
+```
+import sys
+sys.exit()
+```
+```
+num=input()
+try:
+    num = float(num)
+except ValueError:
+    print('Invalid')
+    exit()
+```
+<!--v-->
+## Q1暴露出的一些问题 
+
+1. 不看提示中的f"{j}x{i}={i*j:2}"，也没看special hint，不关注题目给的样例，不看题目是大忌，之后题目难起来容易被卡死
+
+2. 存在一些命名不规范的问题，有些变量命名过多且没有注释辅助理解
+
+3. 题目是为了帮助你们理解编程的基本概念，暴力查表不利于练习编程能力
+
+4. 再次强调，input里面不要自己放东西，OJ会将之视为输出并让所有测试点全错
+
+5. 再次强调，**不要**依赖AI！**不要**使用AI完成你们的题目！
+
+<!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# problem 4
+
+</div></div>
+## 标准答案
+```
+a = float(input())
+guess = a / 2
+for _ in range(20):
+    guess = (guess + a / guess) / 2
+print("{0:.20f}".format(guess))
+```
+
+<!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# problem 5
+
+</div></div>
+## 标准答案
+```
+s = input()
+n = len(s)
+cnt = 0
+
+for c in range(n):
+    l = r = c
+    while l >= 0 and r < n and s[l] == s[r]:
+        cnt += 1
+        l -= 1
+        r += 1
+
+for c in range(n - 1):
+    l, r = c, c + 1
+    while l >= 0 and r < n and s[l] == s[r]:
+        cnt += 1
+        l -= 1
+        r += 1
+
+print(cnt)
+```
+<!--v-->
+## 知识点1：尽量使用内置的方法（拓展）
+这一算法运行时间会比较长，但是可以通过测试点
+```
+s = input()
+n = len(s)
+count = 0
+for i in range(n):
+    for j in range(i, n):
+        if s[i:j+1] == s[i:j+1][::-1]:
+            count += 1
+print(count)
+```
+而下面这一算法将会超时
+```
+s = input()
+n = len(s)
+count = 0
+for i in range(n):
+    for j in range(i, n):
+        for k in range((j - i + 1) // 2):
+            if s[i + k] != s[j - k]:
+                break
+        else:
+            count += 1
+print(count)
+```
+虽然从**理论时间复杂度**的角度看，这两种暴力算法**都是 O(n³) 级别**的，但**在实际运行中，算法1会比算法2快得多**。
+
+原因在于 **Python 解释器的工作方式** 和 **底层代码的实现语言**。
+
+<!--v-->
+### 核心原因：C语言实现 vs. Python循环
+
+#### 算法1: `s[i:j+1] == s[i:j+1][::-1]`
+这个操作看起来很简单，但在幕后，Python 正在做几件效率极高的事情：
+1.  **`s[i:j+1]` (切片)**: 这是一个单一的操作。Python 的底层实现（用C语言编写）会快速地在内存中定位并复制出这一段子字符串。这是一个高度优化的 C 操作。
+2.  **`[::-1]` (反转)**: 同样，对一个字符串进行反转也是一个单一的、由优化的C代码执行的操作。它会创建一个新的、反转后的字符串。
+3.  **`==` (比较)**: 两个字符串的比较也是在C语言层面完成的，它会逐字节地快速比较内存中的数据。
+
+**关键点**：整个回文检查被打包成了一行代码，Python 解释器将这些任务“委托”给了它内部编译好的、速度极快的C语言代码库去执行。这几乎没有 Python 解释器本身的开销。
+
+#### 算法2: `for k in range(...)`
+这个算法通过一个显式的 `for` 循环来逐个比较字符：
+1.  **Python `for` 循环**: 这个循环是在 Python 解释器层面运行的。对于循环的每一次迭代，解释器都需要做很多额外的工作：
+    *   更新循环变量 `k`。
+    *   计算索引 `i + k` 和 `j - k`。
+    *   进行数组边界检查。
+    *   获取 `s[i + k]` 的值。
+    *   获取 `s[j - k]` 的值。
+    *   执行 `if` 判断。
+    *   如果条件不满足，执行 `break`。
+2.  **解释器开销 (Interpreter Overhead)**: 每一步操作都要经过 Python 解释器的处理。这种“解释”本身是有成本的，它远比直接执行编译好的C代码要慢。当字符串很长时，这个 `k` 循环会被执行成千上万次，每次迭代的微小开销累加起来就变得非常巨大。
+
+---
+
+### 一个形象的比喻
+
+*   **算法1** 就像你告诉一位专业的图书管理员（C语言代码）：“请帮我把这摞书（子字符串）复制一份，再把复制的那份倒序排列，然后告诉我这两摞书是否完全一样。” 管理员用他最熟练、最高效的方法一次性完成了任务。
+*   **算法2** 就像你自己（Python解释器）来做这件事。你先拿起第一本书和最后一本书，比较一下；然后拿起第二本书和倒数第二本书，比较一下…… 你每比较一次，都需要思考、计算位置、再动手，这个过程中的“思考和准备”时间（解释器开销）远远超过了“比较”本身。
+
+### 结论
+
+这个例子完美地展示了一个在 Python (以及许多其他高级语言) 中非常重要的编程原则：
+
+**尽可能利用语言内置的、经过高度优化的函数和操作来处理批量数据，而不是自己用显式的循环去实现。**
+
+虽然两种算法的扩展趋势（scaling）是一样的（都是立方级增长），但由于实现方式的不同，算法1的“常数因子”要远远小于算法2，导致在实际运行中表现出巨大的性能差异。
+
+
+<!--v-->
+## 知识点2：时间复杂度（扩展）
+### 核心思想
+
+**时间复杂度** 不是用来测量程序运行究竟要花“多少秒”，而是用来描述**一个程序的运行时间会随着处理数据量的增加，而增长得有多“快”**。
+
+它是一种预测，帮助我们判断一个算法在处理大数据时，会不会变得慢得离谱。
+
+---
+
+### 用“做菜”来打比方
+
+假设你是一位厨师，你的任务是为客人准备晚餐。在这里：
+*   **算法**：就是你的“操作”。
+*   **输入大小 (n)**：就是你要招待的“客人数量”。
+*   **时间复杂度**：就是你的操作有多复杂，特别是当客人数量 (n) 增加时，你的工作量会如何变化。
+
+现在我们来看几种不同“时间复杂度”的操作：
+
+#### 1. O(1) — 常数时间 (最快的)
+
+**操作：“尝一下汤的味道。”**
+
+*   **分析**：不管你是为 1 位客人做汤，还是为 1000 位客人做汤，你“尝一口”这个动作花费的时间是**完全一样**的。它不随客人数量 (n) 的变化而变化。
+*   **在代码中**：这就像从数组中获取第一个元素 `array[0]`。无论数组有多大，这个操作都一样快。
+*   **特点**：性能极高，是理想情况。
+
+---
+
+#### 2. O(n) — 线性时间 (优秀的)
+
+**操作：“为每一位客人削一个苹果。”**
+
+*   **分析**：
+    *   如果来了 1 位客人 (n=1)，你削 1 个苹果。
+    *   如果来了 10 位客人 (n=10)，你削 10 个苹果。
+    *   你的工作量和客人数量 (n) **成正比**，是线性增长的。
+*   **在代码中**：这就像一个简单的 `for` 循环，遍历数组中的每一个元素。
+    ```python
+    for item in my_list:
+        print(item)
+    ```
+*   **特点**：非常常见且高效的算法。当数据量增加一倍时，耗时也大约增加一倍。
+
+---
+
+#### 3. O(n²) — 平方时间 (要警惕！)
+
+**操作：“请每一位客人都和所有其他客人握一次手。”**
+
+*   **分析**：
+    *   来了 2 位客人 (n=2)：A和B握手，共 1 次。
+    *   来了 3 位客人 (n=3)：A和B，A和C，B和C，共 3 次。
+    *   来了 10 位客人 (n=10)：大约需要 45 次握手。
+    *   你的工作量随着客人数量 (n) 的增加，**急剧增长**！这个增长速度是 `n * n` 级别的。
+*   **在代码中**：这通常对应着**嵌套循环**，即一个循环里面还有另一个循环。
+    ```python
+    for item_a in my_list:
+        for item_b in my_list:
+            # 做一些比较...
+    ```
+*   **特点**：在处理小数据时可能没问题，但一旦数据量变大（比如 n > 1000），程序就会变得**极其缓慢**，甚至卡死。
+
+---
+
+<!--v-->
+### “大O表示法”是什么？
+
+我们用来描述时间复杂度的 `O(...)` 叫做**大O表示法 (Big O Notation)**。
+
+*   **O** 的意思是 “Order of”（...的量级），你可以把它理解为“大约是...这个级别的”。
+*   括号里的 **n** 代表输入数据的大小。
+
+所以：
+*   **O(n)** 读作“O of n”，意思是时间复杂度和 `n` 是一个量级（线性关系）。
+*   **O(n²)** 读作“O of n square”，意思是时间复杂度和 `n`的平方是一个量级（平方关系）。
+
+**大O表示法会忽略常数**。比如 `O(2n)` 和 `O(n)` 都被认为是 `O(n)`，因为它描述的是**增长趋势**，而不是精确的公式。为 2n 个客人削苹果和为 n 个客人削苹果，它们的“增长模式”是一样的。
+
+## 知识点3：算法优化（困难、拓展）
+**“直观来说，优化算法的过程就是剔除冗余操作的过程，同时也是一种对于空间与时间的平衡。”**
+
+### 第一部分：剔除冗余操作 —— 让每一步都算数
+
+这部分是优化的**核心目标**。一个低效的算法，其本质就是做了很多“无用功”或“重复功”。优化的过程，就是像一个侦探，找出这些不必要的计算，并用更聪明的方式绕开它们。
+
+我们可以用熟悉的 **“回文子串计数”** 问题来审视这个过程：
+
+*   **暴力解法 (O(n³)) - 冗余的极致：**
+    1.  **冗余的子串生成**：通过 `s[i:j+1]` 生成所有可能的子串。
+    2.  **冗余的回文检查**：对于每一个子串，都**从头到尾**比较一次进行计数。
+    
+
+*   **中心扩展法 (O(n²)) - 第一次剔除：**
+    *   **剔除了什么？** 它剔除了“生成子串再检查”这个步骤。它不再生成独立的子串，而是聪明地固定一个中心，向两边扩展。这避免了反复创建子串对象的开销，是一次巨大的进步。
+    *   *冗余依然存在：* 算法仍然是“失忆”的。当它处理字符串 `abacaba` 时，它以中间的 `c` 为中心扩展，得到了 `abacaba`。但它并不能利用这个信息来帮助后续的计算。在以右侧的`b`为中心时，其实`aba`这个回文串已经在左侧计算过一次了，但是中心对称法并不知晓。
+
+*   **Manacher's 算法 (O(n)) - 继续剔除冗余：**
+    *   **剔除了什么？** 它通过引入 `p` 数组（记忆）和 `right` 最右边界（划定已知区域），**彻底剔除了重复的对称性探索**。
+    *   **核心操作**：`p[i] = min(right - i, p[i_mirror])` 这一行代码，就是“剔除冗余”的完美体现。它在说：“别急着从头比较！让我先查查我的记忆（`p`数组），看看关于 `i` 的对称点 `i_mirror`，我们已经知道了什么。利用这些已知信息，我们可以直接跳过一大段已经验证过的回文部分。”
+    *   **结论**：Manacher's 算法的全部精髓，就是建立一个**记忆系统**，让算法记住自己探索过的区域的对称特性，从而避免对同一段字符进行重复的回文验证。
+
+---
+
+<!--v-->
+### 第二部分：空间与时间的平衡 —— 天下没有免费的午餐
+
+这部分是优化的**现实代价**。想要跑得更快（优化时间），通常需要借助更多的辅助工具，而这些工具需要占用地方（消耗空间/内存）。
+
+**“空间换时间”** 是最经典的平衡策略。
+
+继续看我们的例子：
+
+*   **中心扩展法 (O(n²) 时间, O(1) 空间):**
+    *   这个算法非常“节俭”。除了几个用于循环和计数的变量，它几乎不需要任何额外的内存空间。
+    *   **代价是什么？** 代价就是它没有“记忆”，所以只能一遍又一遍地进行比较，花费了大量的时间。
+
+*   **Manacher's 算法 (O(n) 时间, O(n) 空间):**
+    *   为了达到惊人的线性时间，它付出了空间的代价。
+    *   **空间花在哪？**
+        1.  `t` 数组：创建了一个长度约为 `2n` 的新字符串。
+        2.  `p` 数组：创建了一个长度约为 `2n` 的整数数组，这就是它的“记忆体”。
+    *   **如何平衡？** 它通过投资 O(n) 的内存空间，来存储每次计算的关键结果（回文半径）。正是这个“记忆体”的存在，才使得算法能够剔除冗余操作，将时间复杂度从 O(n²) 压到 O(n)。**它用空间投资，换取了时间的巨大回报。**
+#### 算法 1: 暴力解法 (O(n^3))
+```
+def count_palindromic_substrings_brute_force(s: str) -> int:
+    n = len(s)
+    count = 0
+    for i in range(n):
+        for j in range(i, n):
+            substring = s[i : j + 1]
+            if substring == substring[::-1]:
+                count += 1
+    return count
+```
+#### 算法 2: 中心扩展法 (O(n^2))
+```
+def count_palindromic_substrings_expand_around_center(s: str) -> int:
+    n = len(s)
+    count = 0
+    if n == 0: return 0
+    for i in range(n):
+        # 奇数长度
+        l, r = i, i
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1; l -= 1; r += 1
+        # 偶数长度
+        l, r = i, i + 1
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1; l -= 1; r += 1
+    return count
+```
+#### 算法 3: Manacher's 算法 (O(n))
+```
+def count_palindromic_substrings_manacher(s: str) -> int:
+    t = '#'.join('^{}$'.format(s))
+    n = len(t)
+    p = [0] * n
+    center, right = 0, 0
+    count = 0
+    for i in range(1, n - 1):
+        if i < right:
+            p[i] = min(right - i, p[2 * center - i])
+        while t[i + 1 + p[i]] == t[i - 1 - p[i]]:
+            p[i] += 1
+        if i + p[i] > right:
+            center, right = i, i + p[i]
+        count += (p[i] + 1) // 2
+    return count
+```
+
+<!--s-->
+
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;   ">
+  <div style="text-align: center; padding: 40px; background-color: white; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+    <div style="display: inline-block; padding: 20px 40px; border-radius: 10 px; margin-bottom: 20px;">
+      <h1 style="font-size: 48px; font-weight: bold; margin: 0; color: rgb(16, 33, 89)">Thanks for Listening</h1>
+    </div>
+    <p style="font-size: 24px; color: #666; margin: 0;">Any questions?</p>
+  </div>
+</div>
+          </textarea>
+      </section>
+    </div>
+  </div>
+
+  <script src="./dist/reveal.js"></script>
+
+  <script src="./mermaid/dist/mermaid.min.js"></script>
+
+  <script src="./plugin/markdown/markdown.js"></script>
+  <script src="./plugin/highlight/highlight.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script src="./plugin/notes/notes.js"></script>
+  <script src="./plugin/math/math.js"></script>
+  <!-- Font awesome is required for the chalkboard plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom controls plugin is used to for opening and closing annotation modes. -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+  <!-- Chalkboard plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: false,
+      width: 1000,
+      pdfSeparateFragments: false,
+      transition: 'slide',
+      transitionSpeed: 'fast',
+      slideNumber: "c/t",
+      highlight: {
+        highlightOnLoad: false
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath.KaTeX,
+        RevealChalkboard,
+        RevealCustomControls,
+      ],
+      customcontrols: {
+        controls: [
+          {
+            icon: '<i class="fa fa-pen-square"></i>',
+            title: 'Toggle chalkboard (B)',
+            action: 'RevealChalkboard.toggleChalkboard();'
+          },
+          {
+            icon: '<i class="fa fa-pen"></i>',
+            title: 'Toggle notes canvas (C)',
+            action: 'RevealChalkboard.toggleNotesCanvas();'
+          }
+        ]
+      },
+      chalkboard: {
+        // add configuration here
+      },
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"_":["./materials/Recitation3_zy/images/Recitation3.md"],"static":"static/Recitation3","template":"./assets/reveal.html","preprocessor":"./assets/preproc.js","scripts":"assets/menu/menu.js,assets/inject.js"}, queryOptions);
+  </script>
+
+  <script src="./_assets/assets/menu/menu.js"></script>
+  <script src="./_assets/assets/inject.js"></script>
+
+  <script>
+    Reveal.initialize(options);
+    Reveal.addEventListener('ready', function (event) {
+      const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+      const hlp = Reveal.getPlugin('highlight');
+      blocks.forEach(hlp.highlightBlock);
+    });
+  </script>
+
+  <script>
+    const mermaidOptions = extend({ startOnLoad: false }, {});
+    mermaid.startOnLoad = false;
+    mermaid.initialize(mermaidOptions);
+    const cb = function (event) {
+      mermaid.init(mermaidOptions, '.stack.present > .present pre code.mermaid');
+      mermaid.init(mermaidOptions, '.slides > .present:not(.stack) pre code.mermaid');
+    }
+    Reveal.addEventListener('ready', cb);
+    Reveal.addEventListener('slidetransitionend', cb);
+  </script>
+</body>
+
+</html>
