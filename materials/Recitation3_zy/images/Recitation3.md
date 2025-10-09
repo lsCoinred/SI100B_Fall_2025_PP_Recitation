@@ -81,6 +81,161 @@ except ValueError:
 5. 再次强调，**不要**依赖AI！**不要**使用AI完成你们的题目！
 
 <!--s-->
+# problem 2
+
+线性插值计算  
+知识点：多行输入、浮点数运算、格式化输出  
+
+## 标准答案
+```python
+x1 = float(input())
+y1 = float(input())
+x2 = float(input())
+y2 = float(input())
+x = float(input())
+
+y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)
+
+print(f"{y:.2f}")
+```
+
+<!--v-->
+## 浮点数格式化输出
+
+Python提供了多种方式来格式化浮点数的输出。
+
+### 使用 f-string
+```python
+y = 34.0
+print(f"{y:.2f}")  # 输出: 34.00
+```
+
+### 使用 .format()
+```python
+print("{:.2f}".format(y))  # 输出: 34.00
+```
+
+### 使用 % 格式化
+```python
+print("%.2f" % y)  # 输出: 34.00
+```
+
+### 使用 round() 函数
+```python
+print(round(y, 2))  # 输出: 34.0（注意：不会补零！）
+```
+
+<!--v-->
+## 常见错误
+
+### 运算符优先级错误
+```python
+# 错误写法
+y = y1 + y2 - y1 / x2 - x1 * (x - x1)
+```
+正确应该使用括号明确优先级：
+```python
+y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)
+```
+
+### 没有转换类型
+```python
+x1 = input()  # 这是字符串！
+y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)  # 会报错
+```
+必须使用 `float(input())` 进行类型转换。
+
+<!--s-->
+# problem 3
+
+生成菱形图案  
+知识点：循环嵌套、字符串重复、空格填充、对称性  
+
+## 标准答案
+```python
+h = int(input())  
+w = int(input()) 
+c = input()      
+
+middle = h // 2
+max_chars = 1 + middle * w
+
+for i in range(middle + 1):
+    num_chars = 1 + i * w
+    num_spaces = (max_chars - num_chars) // 2
+    print(" " * num_spaces + c * num_chars)
+
+for i in range(middle - 1, -1, -1):
+    num_chars = 1 + i * w
+    num_spaces = (max_chars - num_chars) // 2
+    print(" " * num_spaces + c * num_chars)
+```
+
+<!--v-->
+## 知识点：字符串重复操作
+
+Python中可以用 `*` 运算符重复字符串：
+
+```python
+print("-" * 3)    # 输出: ---
+print(" " * 5)    # 输出: 5个空格
+print("AB" * 2)   # 输出: ABAB
+```
+
+<!--v-->
+## 知识点：range() 
+
+### 正向遍历（上半部分）
+```python
+for i in range(middle + 1):  # i: 0, 1, 2
+    # 生成上半部分和中间行
+```
+
+### 反向遍历（下半部分）
+```python
+for i in range(middle - 1, -1, -1):  # i: 1, 0
+    # 生成下半部分（对称）
+```
+
+**注意**：`range(start, stop, step)`
+- `start`：起始值（包含）
+- `stop`：结束值（**不包含**）
+- `step`：步长（可以为负数）
+
+<!--v-->
+## 常见错误
+
+### 下半部分包含了中间行
+```python
+# 错误：从 middle 开始，而不是 middle - 1
+for i in range(middle, -1, -1):
+    ...
+```
+结果：中间行会被打印两次！
+
+### 空格计算错误
+```python
+# 错误：用 middle - i 计算空格
+num_spaces = middle - i
+```
+这只适用于 w=2 的情况，不具有通用性。
+
+<!--v-->
+## 优化思路
+
+可以使用一个循环生成整个菱形：
+```python
+for i in range(h):
+    # 计算当前行到中间的距离
+    distance = abs(i - middle)
+    num_chars = max_chars - distance * w
+    num_spaces = (max_chars - num_chars) // 2
+    print(" " * num_spaces + c * num_chars)
+```
+
+
+
+<!--s-->
 # problem 4
 ## 标准答案
 ```
