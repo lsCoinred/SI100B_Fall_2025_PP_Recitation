@@ -89,7 +89,7 @@ except ValueError:
 知识点：多行输入、浮点数运算、格式化输出  
 
 ## 标准答案
-```python
+```
 x1 = float(input())
 y1 = float(input())
 x2 = float(input())
@@ -107,23 +107,23 @@ print(f"{y:.2f}")
 Python提供了多种方式来格式化浮点数的输出。
 
 ### 使用 f-string
-```python
+```
 y = 34.0
 print(f"{y:.2f}")  # 输出: 34.00
 ```
 
 ### 使用 .format()
-```python
+```
 print("{:.2f}".format(y))  # 输出: 34.00
 ```
 
 ### 使用 % 格式化
-```python
+```
 print("%.2f" % y)  # 输出: 34.00
 ```
 
 ### 使用 round() 函数
-```python
+```
 print(round(y, 2))  # 输出: 34.0（注意：不会补零！）
 ```
 
@@ -131,17 +131,17 @@ print(round(y, 2))  # 输出: 34.0（注意：不会补零！）
 ## 常见错误
 
 ### 运算符优先级错误
-```python
+```
 # 错误写法
 y = y1 + y2 - y1 / x2 - x1 * (x - x1)
 ```
 正确应该使用括号明确优先级：
-```python
+```
 y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)
 ```
 
 ### 没有转换类型
-```python
+```
 x1 = input()  # 这是字符串！
 y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)  # 会报错
 ```
@@ -154,7 +154,7 @@ y = y1 + (y2 - y1) / (x2 - x1) * (x - x1)  # 会报错
 知识点：循环嵌套、字符串重复、空格填充、对称性  
 
 ## 标准答案
-```python
+```
 h = int(input())  
 w = int(input()) 
 c = input()      
@@ -178,7 +178,7 @@ for i in range(middle - 1, -1, -1):
 
 Python中可以用 `*` 运算符重复字符串：
 
-```python
+```
 print("-" * 3)    # 输出: ---
 print(" " * 5)    # 输出: 5个空格
 print("AB" * 2)   # 输出: ABAB
@@ -188,13 +188,13 @@ print("AB" * 2)   # 输出: ABAB
 ## 知识点：range() 
 
 ### 正向遍历（上半部分）
-```python
+```
 for i in range(middle + 1):  # i: 0, 1, 2
     # 生成上半部分和中间行
 ```
 
 ### 反向遍历（下半部分）
-```python
+```
 for i in range(middle - 1, -1, -1):  # i: 1, 0
     # 生成下半部分（对称）
 ```
@@ -208,7 +208,7 @@ for i in range(middle - 1, -1, -1):  # i: 1, 0
 ## 常见错误
 
 ### 下半部分包含了中间行
-```python
+```
 # 错误：从 middle 开始，而不是 middle - 1
 for i in range(middle, -1, -1):
     ...
@@ -216,7 +216,7 @@ for i in range(middle, -1, -1):
 结果：中间行会被打印两次！
 
 ### 空格计算错误
-```python
+```
 # 错误：用 middle - i 计算空格
 num_spaces = middle - i
 ```
@@ -226,7 +226,7 @@ num_spaces = middle - i
 ## 优化思路
 
 可以使用一个循环生成整个菱形：
-```python
+```
 for i in range(h):
     # 计算当前行到中间的距离
     distance = abs(i - middle)
