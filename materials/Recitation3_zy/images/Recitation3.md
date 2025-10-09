@@ -17,6 +17,7 @@ makeThanks: true
 <!--s-->
 # problem 1
 
+<!--v-->
 判断是否是数字，判断是否是合法的  
 知识点：条件语句、循环语句、输入输出、内置函数isdigit，join  
 ## 标准答案
@@ -24,14 +25,14 @@ makeThanks: true
 n = input()
 if not n.isdigit():
     print("Invalid")
-
-n=int(n)    
-if 0 < n and n < 10:
-    for i in range(1, n + 1):
-        row = '\t'.join(f'{j}x{i}={i*j:2}' for j in range(1, i + 1))
-        print(row)
 else:
-    print("Invalid")
+    n = int(n)    
+    if 0 < n < 10:
+        for i in range(1, n + 1):
+            row = '\t'.join(f'{j}x{i}={i*j:2}' for j in range(1, i + 1))
+            print(row)
+    else:
+        print("Invalid")
 ```
 <!--v-->
 ## 优化1:链式比较（拓展）
@@ -47,6 +48,7 @@ Python允许链式比较，这是它的一大特色！ 与许多其他编程语�
 0 < n and n < 10                    # ✓ 也可以
 1 < x and x <= 5 and 5 < y and y < 10  # ✓ 冗长
 ```
+<!--v-->
 优势：
 1. 可读性更好，更接近数学表达式
 2. 性能更高，中间变量只求值一次
@@ -82,6 +84,7 @@ except ValueError:
 
 <!--s-->
 # problem 4
+<!--v-->
 ## 标准答案
 ```
 a = float(input())
@@ -93,6 +96,7 @@ print("{0:.20f}".format(guess))
 
 <!--s-->
 # problem 5
+<!--v-->
 ## 标准答案
 ```
 s = input()
@@ -128,6 +132,7 @@ for i in range(n):
             count += 1
 print(count)
 ```
+<!--v-->
 而下面这一算法将会超时
 ```
 s = input()
@@ -157,6 +162,7 @@ print(count)
 
 **关键点**：整个回文检查被打包成了一行代码，Python 解释器将这些任务“委托”给了它内部编译好的、速度极快的C语言代码库去执行。这几乎没有 Python 解释器本身的开销。
 
+<!--v-->
 #### 算法2: `for k in range(...)`
 这个算法通过一个显式的 `for` 循环来逐个比较字符：
 1.  **Python `for` 循环**: 这个循环是在 Python 解释器层面运行的。对于循环的每一次迭代，解释器都需要做很多额外的工作：
@@ -167,15 +173,18 @@ print(count)
     *   获取 `s[j - k]` 的值。
     *   执行 `if` 判断。
     *   如果条件不满足，执行 `break`。
+<!--v-->
 2.  **解释器开销 (Interpreter Overhead)**: 每一步操作都要经过 Python 解释器的处理。这种“解释”本身是有成本的，它远比直接执行编译好的C代码要慢。当字符串很长时，这个 `k` 循环会被执行成千上万次，每次迭代的微小开销累加起来就变得非常巨大。
 
 ---
 
+<!--v-->
 ### 一个形象的比喻
 
 *   **算法1** 就像你告诉一位专业的图书管理员（C语言代码）：“请帮我把这摞书（子字符串）复制一份，再把复制的那份倒序排列，然后告诉我这两摞书是否完全一样。” 管理员用他最熟练、最高效的方法一次性完成了任务。
 *   **算法2** 就像你自己（Python解释器）来做这件事。你先拿起第一本书和最后一本书，比较一下；然后拿起第二本书和倒数第二本书，比较一下…… 你每比较一次，都需要思考、计算位置、再动手，这个过程中的“思考和准备”时间（解释器开销）远远超过了“比较”本身。
 
+<!--v-->
 ### 结论
 
 这个例子完美地展示了一个在 Python (以及许多其他高级语言) 中非常重要的编程原则：
@@ -264,9 +273,11 @@ print(count)
 
 **大O表示法会忽略常数**。比如 `O(2n)` 和 `O(n)` 都被认为是 `O(n)`，因为它描述的是**增长趋势**，而不是精确的公式。为 2n 个客人削苹果和为 n 个客人削苹果，它们的“增长模式”是一样的。
 
+<!--v-->
 ## 知识点3：算法优化（困难、拓展）
 **“直观来说，优化算法的过程就是剔除冗余操作的过程，同时也是一种对于空间与时间的平衡。”**
 
+<!--v-->
 ### 第一部分：剔除冗余操作 —— 让每一步都算数
 
 这部分是优化的**核心目标**。一个低效的算法，其本质就是做了很多“无用功”或“重复功”。优化的过程，就是像一个侦探，找出这些不必要的计算，并用更聪明的方式绕开它们。
@@ -308,6 +319,7 @@ print(count)
         1.  `t` 数组：创建了一个长度约为 `2n` 的新字符串。
         2.  `p` 数组：创建了一个长度约为 `2n` 的整数数组，这就是它的“记忆体”。
     *   **如何平衡？** 它通过投资 O(n) 的内存空间，来存储每次计算的关键结果（回文半径）。正是这个“记忆体”的存在，才使得算法能够剔除冗余操作，将时间复杂度从 O(n²) 压到 O(n)。**它用空间投资，换取了时间的巨大回报。**
+<!--v-->
 #### 算法 1: 暴力解法 (O(n^3))
 ```
 def count_palindromic_substrings_brute_force(s: str) -> int:
@@ -320,6 +332,7 @@ def count_palindromic_substrings_brute_force(s: str) -> int:
                 count += 1
     return count
 ```
+<!--v-->
 #### 算法 2: 中心扩展法 (O(n^2))
 ```
 def count_palindromic_substrings_expand_around_center(s: str) -> int:
@@ -337,6 +350,7 @@ def count_palindromic_substrings_expand_around_center(s: str) -> int:
             count += 1; l -= 1; r += 1
     return count
 ```
+<!--v-->
 #### 算法 3: Manacher's 算法 (O(n))
 ```
 def count_palindromic_substrings_manacher(s: str) -> int:
