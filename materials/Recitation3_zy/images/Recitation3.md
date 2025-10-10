@@ -319,7 +319,7 @@ for i in range(h):
 <!--s-->
 # Problem 4
 <!--v-->
-## 标准答案
+## 标准答案（之一）
 ```python
 a = float(input())
 guess = a / 2
@@ -331,7 +331,7 @@ print("{0:.20f}".format(guess))
 <!--s-->
 # Problem 5
 <!--v-->
-## 标准答案
+## 标准答案（之一）
 ```python
 s = input()
 n = len(s)
