@@ -717,7 +717,133 @@ def count_palindromic_substrings_manacher(s: str) -> int:
 
 </div></div>
 
+<!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# Function basis
+
+</div></div>
+
 <!--v-->
+## 1. 什么是函数？一个简单的例子
+
+我们来看一个非常直观的需求：判断一个整数是不是偶数。
+
+如果不使用函数，我们可能会写这样的代码：
+
+```python
+"""
+Input: i, a positive int
+Returns True if i is even, otherwise False
+"""
+i = 4 # 假设我们要判断的数是 4
+if i % 2 == 0:
+    print(True)
+else:
+    print(False)
+```
+
+这段代码可以工作，但如果我们想判断另一个数，比如 5，我们就得把代码再抄一遍。这非常低效。函数就是为了解决这个问题而生的。我们可以把这个判断逻辑打包成一个函数。
+
+<!--v-->
+## 2. 如何编写一个函数
+
+编写一个函数遵循固定的语法结构。我们以上面的“判断偶数”为例，把它写成一个函数。
+
+*   **问题是什么？** 给定一个正整数 `i`，我想知道它是否为偶数。
+*   **明确输入和输出。**
+    *   **输入 (Input):** 一个正整数，我们叫它 `i`。
+    *   **输出 (Returns):** 如果 `i` 是偶数，就返回布尔值 `True`；否则，返回 `False`。
+
+根据这个思路，我们就可以写出函数的“骨架”和它的“说明书”（也就是文档字符串，docstring）。
+
+```python
+def is_even(i):
+    """
+    Input: i, a positive int
+    Returns True if i is even, otherwise False
+    """
+    # 函数的具体实现代码将在这里
+```
+
+**语法解析：**
+*   `def`: 这是定义 (define) 函数的关键字，告诉 Python：“嘿，我要创建一个新函数了！”
+*   `is_even`: 这是我们给函数起的名字。函数名应该清晰地描述函数的功能，通常使用小写字母和下划线（蛇形命名法）。
+*   `(i)`: 括号里的是**形式参数 (formal parameters)**。它们是函数在内部使用的变量名，相当于加工厂里等待接收原材料的“容器”。
+*   `:`: 冒号表示函数头部结束，接下来是缩进的函数体。
+*   `"""..."""`: 三引号包裹的内容是**文档字符串 (docstring)**。它不是必需的，但**强烈推荐**编写。它就像电器的说明书，解释了这个函数是干什么的、需要什么输入、会返回什么输出。这是非常好的编程习惯。
+
+<!--v-->
+## 3. 一个完整的函数示例
+
+```python
+def is_even(i):
+    """
+    Input: i, a positive int
+    Returns True if i is even, otherwise False
+    """
+    return i % 2 == 0
+```
+
+<!--v-->
+## 4. 如何调用（Invoke）函数
+我们创建了函数这个“工具”，现在就要使用它。使用函数的过程称为**调用 (call)** 或 **调用 (invoke)**。
+
+调用非常简单：**函数名 + 括号 + 实际参数**。
+
+```python
+def is_even(i):
+    """
+    Input: i, a positive int
+    Returns True if i is even, otherwise False
+    """
+    return i % 2 == 0
+
+# 调用 is_even 函数，并传入实际参数 3
+result1 = is_even(3)  # is_even(3) 会返回 False，所以 result1 的值是 False
+
+# 调用 is_even 函数，并传入实际参数 8
+result2 = is_even(8)  # is_even(8) 会返回 True，所以 result2 的值是 True
+
+print(result1)  # 输出: False
+print(result2)  # 输出: True
+```
+
+**【重要】** 函数的定义和调用是两个独立的过程。**函数内部的代码，只有在函数被调用时才会执行。**
+
+<!--v-->
+## 5. 函数调用时，背后发生了什么？
+
+让我们通过 `is_even(3)` 这个调用来分解一下 Python 内部的执行流程：
+
+1.  **绑定 (Binding):** Python 看到 `is_even(3)` 这个调用。它会暂时创建一个属于这个函数调用的“工作空间”（我们后面会称之为“作用域”或“环境”）。然后，它会将函数定义中的形式参数 `i` 与调用时提供的实际参数 `3` **绑定**在一起。在这个工作空间里，`i` 就代表了值 `3`。
+
+    ```
+    def is_even( i ):      <-- 形式参数 i
+        ...
+
+    is_even( 3 )          <-- 实际参数 3
+
+    在函数内部，i 的值被绑定为 3。
+    ```
+
+2.  **执行 (Execution):** Python 开始执行函数体内的代码。在我们的例子中，就是执行 `return i % 2 == 0`。因为 `i` 已经被绑定为 `3`，所以这行代码就等价于 `return 3 % 2 == 0`。
+    *   `3 % 2` 的结果是 `1`。
+    *   `1 == 0` 的结果是 `False`。
+    *   所以，函数最终要返回的值是 `False`。
+
+3.  **返回 (Return):** `return` 关键字会将 `False` 这个值“送出”函数。整个函数调用表达式 `is_even(3)` 会被它的返回值 `False` 所**替代**。
+
+    ```python
+    # 原始代码
+    print(is_even(3))
+
+    # Python 执行 is_even(3) 后，这个调用被返回值替代
+    # 于是代码在概念上变成了：
+    print(False)
+    ```
+
+<!--s-->
 <div class="middle center"><div style="width: 100%">
 
 # Function
@@ -847,7 +973,180 @@ SUSTech()
 print("外面的人", which_li_hua) # 高考英语卷中
 ```
 
+<!--s-->
+<div class="middle center"><div style="width: 100%">
 
+# Scope
+
+</div></div>
+
+<!--v-->
+## 程序作用域 (Program Scope / Global Scope)
+
+当我们不在任何函数内部，直接写代码时，这些代码就位于**全局作用域**中。这里定义的变量称为**全局变量**。
+
+```python
+# 全局作用域
+a = 3
+b = 4
+c = a + b
+```
+变量 `a`, `b`, `c` 都存在于全局作用域这个大的“工作台”上。
+
+<!--v-->
+## 函数作为“黑盒子”
+
+当我们定义一个函数时，比如 `is_even`，实际上是在全局作用域中创建了一个**函数对象**。你可以把它想象成我们在工作台上造好了一个工具，并给它贴上了 `is_even` 的标签。这个工具本身是一段代码，此时它还没有运行。
+
+```python
+# 全局作用域
+def is_even(i):
+    print("inside is_even")
+    return i % 2 == 0
+
+# 全局作用域中的变量
+a = is_even(3)
+b = is_even(10)
+```
+
+**核心思想：**
+*   **隔离性**：每个函数调用都有自己独立的作用域。函数内部的变量（如参数`i`）与外部的变量是隔离的，互不干扰。这就是为什么函数被称为“黑盒子”。
+*   **生命周期**：局部作用域是临时的，随着函数调用的结束而销毁。
+
+<!--v-->
+## 变量访问规则 (LEGB)
+
+当代码中使用一个变量时，Python 如何查找它的值？它会按照一个顺序来搜索，这个顺序被称为 **LEGB 规则**：
+
+1.  **L (Local)**：首先在**局部作用域**（函数内部）查找。
+2.  **E (Enclosing)**：如果在局部找不到，会去**嵌套函数的父函数作用域**查找（我们今天没深入讲嵌套，但要知道有这一层）。
+3.  **G (Global)**：如果还找不到，就去**全局作用域**查找。
+4.  **B (Built-in)**：最后，如果全局作用域也没有，就去 Python 的**内建作用域**查找（比如 `print`, `len` 等函数）。
+
+<!--v-->
+## 几个例子
+
+```python
+x = 5  # 全局变量 x
+
+# 示例 1: 在函数内部创建同名局部变量
+def f(y):
+    x = 1      # L: 创建了一个新的局部变量 x，值为 1
+    x += 1     # 修改的是这个局部 x，它变成 2
+    print(x)   # 打印局部 x，输出 2
+
+f(x)  # 调用函数 f
+print(x) # 打印全局 x，它从未被修改，输出 5
+# 输出:
+# 2
+# 5
+```
+
+<!--v-->
+```python
+x = 5  # 全局变量 x
+
+# 示例 2: 在函数内部读取全局变量
+def g(y):
+    print(x)      # L: 局部没有x, E: 没有嵌套, G: 找到了全局x，值为5
+    print(x + 1)  # 再次找到全局x，计算 5 + 1
+
+g(x)
+print(x)
+# 输出:
+# 5
+# 6
+# 5
+```
+
+<!--v-->
+```python
+x = 5 # 全局变量 x
+
+# 示例 3: 试图修改全局变量（会出错！）
+def h(y):
+    # 当 Python 编译这个函数时，看到 `x += 1` (即 x = x + 1)
+    # 它会认为 x 是一个局部变量。
+    # 但是在执行 `x + 1` 时，这个局部的 x 还没有被赋值。
+    x += 1 # Error!
+
+h(x)
+print(x)
+# 输出:
+# UnboundLocalError: local variable 'x' referenced before assignment
+```
+**小结**：函数内部可以**读取**全局变量，但不能直接**修改**它。如果你试图在函数内对一个全局变量进行赋值操作，Python会默认你正在创建一个新的**局部**变量。
+
+<!--v-->
+## 默认参数 (Default Parameters)
+
+有时候，一个函数的某个参数在大多数情况下都会使用一个固定的值。比如，在求平方根的函数中，我们可能需要一个表示精度的参数 `epsilon`，它通常是 `0.01`。为了方便，我们可以给它一个**默认值**。
+
+```python
+# epsilon 是一个普通参数
+def bisection_root(x, epsilon):
+    # ... 函数体 ...
+
+# 每次调用都必须提供 epsilon
+bisection_root(123, 0.01)
+bisection_root(4, 0.01)
+
+# 使用默认参数
+def bisection_root_new(x, epsilon=0.01):
+    # ... 函数体 ...
+
+# 调用时可以不提供 epsilon，它会自动使用默认值 0.01
+bisection_root_new(123)
+
+# 也可以提供一个不同的值来覆盖默认值
+bisection_root_new(123, 0.0001)
+```
+
+<!--v-->
+## 一些细则
+
+*   在函数定义时，**所有默认参数必须放在所有非默认参数（位置参数）的后面**。
+    ```python
+    def my_func(a, b=10): # 正确
+        pass
+    def my_func(a=10, b): # 错误! SyntaxError
+        pass
+    ```
+*   调用函数时，可以使用**关键字参数 (Keyword Arguments)**来指定为哪个参数传值，这样可以不按顺序。
+    ```python
+    bisection_root_new(x=123, epsilon=0.1)
+    bisection_root_new(epsilon=0.1, x=123) # 使用关键字参数时，顺序不重要
+    ```
+*   但是，位置参数必须在关键字参数的前面。
+    ```python
+    bisection_root_new(123, epsilon=0.1) # 正确
+    bisection_root_new(epsilon=0.1, 123) # 错误! SyntaxError
+    ```
+
+<!--v-->
+## 一切皆对象
+
+在 Python 中，**一切皆对象**。整数是一个对象，字符串是一个对象，函数也不例外！这意味着函数可以像其他任何数据类型一样被对待。这被称为**函数是“一等公民” (First-class citizens)**。
+
+这带来了几个强大的特性：
+1.  **可以将函数赋值给一个变量。**
+2.  可以将函数作为参数传递给另一个函数。
+3.  可以将函数作为另一个函数的返回值。
+
+**示例：**
+```python
+def is_even(i):
+    return i % 2 == 0
+
+# 1. 将函数 is_even 赋值给新变量 my_func
+# 注意：这里没有括号！我们传递的是函数对象本身，而不是它的调用结果。
+my_func = is_even
+
+# 现在 my_func 和 is_even 指向同一个函数对象
+print(my_func(4))  # 调用 my_func，就等于调用 is_even。输出: True
+print(is_even(5))  # 输出: False
+```
+这个特性是许多高级编程技巧（如装饰器、回调函数）的基础。
 
 <!--s-->
 
