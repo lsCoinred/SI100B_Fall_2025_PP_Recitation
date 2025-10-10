@@ -618,3 +618,117 @@ def count_palindromic_substrings_manacher(s: str) -> int:
         count += (p[i] + 1) // 2
     return count
 ```
+
+# 知识回顾
+
+<!--s-->
+# Function
+
+<!--v-->
+## argument 和 parameter 的区别
+- 在中文场景下，二者混用基本没有问题, 但若要严格再进行区分，它们实际上还有各自的叫法
+- parameter：形参（formal parameter），体现在函数内部，作用域是这个函数体。
+- argument ：实参（actual parameter），调用函数实际拿来运算的值。
+- 举个例子，如下这段代码，`str` 为 argument，而 `msg` 为 parameter。
+```python
+def output_msg(msg):
+    print(id(msg)) # The same as id(str)
+
+str = "error"
+print(id(str)) 
+output_msg(str)
+``` 
+- Python 的参数传递只是让新变量与原变量指向相同的对象而已, 即形参和实参的 id 相同
+
+<!--v-->
+## 可变对象和不可变对象
+- 可变对象: 列表，字典，集合等, 可以就地修改这些对象，而无需创建新对象.
+  - 可以添加、删除或更改列表的元素
+  - 可以添加新的键值对或修改现有键值对
+- 不可变对象: 字符串，整型，元组等, 一旦创建便不可更改
+  - 更改整数变量会创建一个新的整数对象。
+  - 元组的内容一旦创建, 无法修改
+
+<!--v-->
+## 传入不可变对象
+- 参数传递使变量 a 和 b 同时指向了 1 这个对象。但当我们执行到 b = 2 时，系统会重新创建一个值为 2 的新对象，并让 b 指向它；而 a 仍然指向 1 这个对象。所以，a 的值不变，仍然为 1
+```py[]
+def foo(b):
+    print("id of b before revised", id(b))# id of b before revised 140711150165760
+    b = 2
+    print("id of b after revised", id(b))# id of b after revised 140711150165792
+ 
+a = 1
+print("id of a", id(a))# id of a 140711150165760
+foo(a)
+print(a) # 1
+```
+
+<!--v-->
+## 传入可变对象
+- 当可变对象当作参数传入函数里的时候，改变可变对象的值，就会影响所有指向它的变量
+```py[]
+def foo(l2):
+	l2.append(4)
+ 
+l1 = [1, 2, 3]
+foo(l1)
+print(l1) # [1,2,3,4]
+```
+- 函数中的 `l2` 与 `l1` 始终指向同一个对象, 改变 `l2` 的同时修改了 `l1`
+
+<!--v-->
+## 全局变量和局部变量
+
+- 函数体是一个代码块
+- 最外层无缩进的部分也是一个代码块
+- 重名了怎么办？
+```python
+def celsius_to_fahrenheit(celsius):
+   fahrenheit = celsius * 9 / 5 + 32
+   return fahrenheit
+
+# 这里也有 celsius 和 fahrenheit，但是代码还是可以运行
+celsius = 23
+fahrenheit = celsius_to_fahrenheit(celsius)
+```
+<!--v-->
+## 全局变量和局部变量
+
+- 有人提到“李华”
+  - 高考英语卷中的李华
+- 如果你身边真的有一个李华同学
+  - 你的同学李华
+
+- **全局变量（Global Variable）**：定义在最外层的变量，作用范围为全局
+
+英语卷的李华，所有人（作用域）知道他
+
+- **局部变量（Local Variable）**：定义在有缩进的区域，作用范围为当前代码块
+
+你的同学李华，只有你们学校（作用域）的人知道他
+
+- **作用域（Scope）**：变量的作用范围
+
+<!--v-->
+## 作用域
+```py[]
+which_li_hua = "高考英语卷中"
+    
+def ShanghaiTech(): 
+    which_li_hua = "上海科技大学"
+    print("上科大的", which_li_hua) # 上海科技大学
+    
+def SUSTech(): # 假设隔壁大学没有李华
+        # 隔壁大学人的第一反应肯定是高考英语卷中的李华
+    print("隔壁大学", which_li_hua) # 高考英语卷中
+    
+# 外面的人（最外层）没有听说过别的李华
+print("外面的人", which_li_hua) # 高考英语卷中
+ShanghaiTech()
+SUSTech()
+    
+# ShanghaiTech 的李华不会影响外面的人心中的李华
+print("外面的人", which_li_hua) # 高考英语卷中
+```
+
