@@ -720,7 +720,7 @@ def count_palindromic_substrings_manacher(s: str) -> int:
 <!--s-->
 <div class="middle center"><div style="width: 100%">
 
-# Function basis
+# Function Basis 函数基础
 
 </div></div>
 
@@ -755,7 +755,9 @@ else:
     *   **输入 (Input):** 一个正整数，我们叫它 `i`。
     *   **输出 (Returns):** 如果 `i` 是偶数，就返回布尔值 `True`；否则，返回 `False`。
 
-根据这个思路，我们就可以写出函数的“骨架”和它的“说明书”（也就是文档字符串，docstring）。
+根据这个思路，我们就可以写出函数的骨架和对应的说明（学名为 docstring，文档字符串）
+
+<!--v-->
 
 ```python
 def is_even(i):
@@ -767,11 +769,13 @@ def is_even(i):
 ```
 
 **语法解析：**
-*   `def`: 这是定义 (define) 函数的关键字，告诉 Python：“嘿，我要创建一个新函数了！”
-*   `is_even`: 这是我们给函数起的名字。函数名应该清晰地描述函数的功能，通常使用小写字母和下划线（蛇形命名法）。
-*   `(i)`: 括号里的是**形式参数 (formal parameters)**。它们是函数在内部使用的变量名，相当于加工厂里等待接收原材料的“容器”。
-*   `:`: 冒号表示函数头部结束，接下来是缩进的函数体。
-*   `"""..."""`: 三引号包裹的内容是**文档字符串 (docstring)**。它不是必需的，但**强烈推荐**编写。它就像电器的说明书，解释了这个函数是干什么的、需要什么输入、会返回什么输出。这是非常好的编程习惯。
+*   `def`: 用于定义 (define) 函数的关键字
+*   `is_even`: 函数名，其应清晰地描述函数的功能，通常使用小写字母和下划线（蛇形命名法，上一讲习题课有讲过）
+*   `(i)`: 括号里的是**参数 (parameters)**，为函数在内部使用的变量名
+*   `:`: 冒号表示函数头部结束，接下来是函数体（需要缩进！）
+*   `"""..."""`: 三引号包裹的内容是**文档字符串 (docstring)**
+    - 通常用来解释函数用途、需要什么输入、会返回什么输出
+    - 非必需；但后面做中大型规模的合作项目时，推荐编写和维护固定格式的 docstring
 
 <!--v-->
 ## 3. 一个完整的函数示例
@@ -787,9 +791,9 @@ def is_even(i):
 
 <!--v-->
 ## 4. 如何调用（Invoke）函数
-我们创建了函数这个“工具”，现在就要使用它。使用函数的过程称为**调用 (call)** 或 **调用 (invoke)**。
+使用函数的过程称为 **call** 或 **invoke**（中文均可翻译为“调用”）。
 
-调用非常简单：**函数名 + 括号 + 实际参数**。
+格式：**函数名 + 括号 + 实际参数**
 
 ```python
 def is_even(i):
@@ -809,12 +813,69 @@ print(result1)  # 输出: False
 print(result2)  # 输出: True
 ```
 
-**【重要】** 函数的定义和调用是两个独立的过程。**函数内部的代码，只有在函数被调用时才会执行。**
+<!--v-->
+## 4. 如何调用（Invoke）函数
+使用函数的过程称为 **call** 或 **invoke**（中文均可翻译为“调用”）。
+
+格式：**函数名 + 括号 + 实际参数**
+
+**注意：** 函数的定义和调用是两个独立的过程；**函数内部的代码，只有在函数被调用时才会执行。**
+
 
 <!--v-->
-## 5. 函数调用时，背后发生了什么？
+### 默认参数 (Default Parameters)
 
-让我们通过 `is_even(3)` 这个调用来分解一下 Python 内部的执行流程：
+有时候，一个函数的某个参数在大多数情况下都会使用一个固定的值。比如，在求平方根的函数中，我们可能需要一个表示精度的参数 `epsilon`，它通常是 `0.01`。为了方便，我们可以给它一个**默认值**。
+
+```python
+# epsilon 是一个普通参数
+def bisection_root(x, epsilon):
+    # ... 函数体 ...
+
+# 每次调用都必须提供 epsilon
+bisection_root(123, 0.01)
+bisection_root(4, 0.01)
+
+# 使用默认参数
+def bisection_root_new(x, epsilon=0.01):
+    # ... 函数体 ...
+
+# 调用时可以不提供 epsilon，它会自动使用默认值 0.01
+bisection_root_new(123)
+
+# 也可以提供一个不同的值来覆盖默认值
+bisection_root_new(123, 0.0001)
+```
+
+<!--v-->
+#### 默认参数的一些细则
+
+*   在函数定义时，**所有默认参数必须放在所有非默认参数（位置参数）的后面**。
+    ```python
+    def my_func(a, b=10): # 正确
+        pass
+    def my_func(a=10, b): # 错误! SyntaxError
+        pass
+    ```
+
+    <!--v-->
+#### 默认参数的一些细则
+*   调用函数时，可使用 **关键字参数 (Keyword Arguments)** 来指定为哪个参数传值（此情况下传入参数可乱序）
+    ```python
+    bisection_root_new(x=123, epsilon=0.1)
+    bisection_root_new(epsilon=0.1, x=123) # 使用关键字参数时，顺序不重要
+    ```
+*   位置参数必须在关键字参数的前面。
+    ```python
+    bisection_root_new(123, epsilon=0.1) # 正确
+    bisection_root_new(epsilon=0.1, 123) # 错误! SyntaxError
+    ```
+
+<!--v-->
+
+## 5. （进阶）函数调用的背后
+
+以 `is_even(3)` 为例，Python 内部的执行流程如下：
 
 1.  **绑定 (Binding):** Python 看到 `is_even(3)` 这个调用。它会暂时创建一个属于这个函数调用的“工作空间”（我们后面会称之为“作用域”或“环境”）。然后，它会将函数定义中的形式参数 `i` 与调用时提供的实际参数 `3` **绑定**在一起。在这个工作空间里，`i` 就代表了值 `3`。
 
@@ -826,6 +887,8 @@ print(result2)  # 输出: True
 
     在函数内部，i 的值被绑定为 3。
     ```
+
+<!--v-->
 
 2.  **执行 (Execution):** Python 开始执行函数体内的代码。在我们的例子中，就是执行 `return i % 2 == 0`。因为 `i` 已经被绑定为 `3`，所以这行代码就等价于 `return 3 % 2 == 0`。
     *   `3 % 2` 的结果是 `1`。
@@ -846,7 +909,7 @@ print(result2)  # 输出: True
 <!--s-->
 <div class="middle center"><div style="width: 100%">
 
-# Function
+# Function 补充知识
 
 </div></div>
 
@@ -976,7 +1039,7 @@ print("外面的人", which_li_hua) # 高考英语卷中
 <!--s-->
 <div class="middle center"><div style="width: 100%">
 
-# Scope
+# Scope 作用域
 
 </div></div>
 
@@ -1076,52 +1139,6 @@ print(x)
 # UnboundLocalError: local variable 'x' referenced before assignment
 ```
 **小结**：函数内部可以**读取**全局变量，但不能直接**修改**它。如果你试图在函数内对一个全局变量进行赋值操作，Python会默认你正在创建一个新的**局部**变量。
-
-<!--v-->
-## 默认参数 (Default Parameters)
-
-有时候，一个函数的某个参数在大多数情况下都会使用一个固定的值。比如，在求平方根的函数中，我们可能需要一个表示精度的参数 `epsilon`，它通常是 `0.01`。为了方便，我们可以给它一个**默认值**。
-
-```python
-# epsilon 是一个普通参数
-def bisection_root(x, epsilon):
-    # ... 函数体 ...
-
-# 每次调用都必须提供 epsilon
-bisection_root(123, 0.01)
-bisection_root(4, 0.01)
-
-# 使用默认参数
-def bisection_root_new(x, epsilon=0.01):
-    # ... 函数体 ...
-
-# 调用时可以不提供 epsilon，它会自动使用默认值 0.01
-bisection_root_new(123)
-
-# 也可以提供一个不同的值来覆盖默认值
-bisection_root_new(123, 0.0001)
-```
-
-<!--v-->
-## 一些细则
-
-*   在函数定义时，**所有默认参数必须放在所有非默认参数（位置参数）的后面**。
-    ```python
-    def my_func(a, b=10): # 正确
-        pass
-    def my_func(a=10, b): # 错误! SyntaxError
-        pass
-    ```
-*   调用函数时，可以使用**关键字参数 (Keyword Arguments)**来指定为哪个参数传值，这样可以不按顺序。
-    ```python
-    bisection_root_new(x=123, epsilon=0.1)
-    bisection_root_new(epsilon=0.1, x=123) # 使用关键字参数时，顺序不重要
-    ```
-*   但是，位置参数必须在关键字参数的前面。
-    ```python
-    bisection_root_new(123, epsilon=0.1) # 正确
-    bisection_root_new(epsilon=0.1, 123) # 错误! SyntaxError
-    ```
 
 <!--v-->
 ## 一切皆对象
@@ -1240,7 +1257,7 @@ print(is_even(5))  # 输出: False
     // options from URL query string
     var queryOptions = Reveal().getQueryHash() || {};
 
-    var options = extend(defaultOptions, {"_":["./materials/Recitation3_zy/images/Recitation3.md"],"static":"static/Recitation3","template":"./assets/reveal.html","preprocessor":"./assets/preproc.js","scripts":"assets/menu/menu.js,assets/inject.js"}, queryOptions);
+    var options = extend(defaultOptions, {"_":["./materials/Recitation3_zy/Recitation3.md"],"static":"static/Recitation3","template":"./assets/reveal.html","preprocessor":"./assets/preproc.js","scripts":"assets/menu/menu.js,assets/inject.js"}, queryOptions);
   </script>
 
   <script src="./_assets/assets/menu/menu.js"></script>
