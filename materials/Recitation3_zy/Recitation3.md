@@ -8,7 +8,7 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
     lecture: SI100B Fall 2025 Recitation 3
-    title: L4 L5 课堂复习 & HW1 讲解
+    title: L4 课堂复习 & HW1 讲解
     detail: SI100B 2025 Staff | 2025-10-10
 makeThanks: true
 ---
@@ -1080,7 +1080,7 @@ print(x)
 **小结**：函数内部可以**读取**全局变量，但不能直接**修改**它。如果你试图在函数内对一个全局变量进行赋值操作，Python会默认你正在创建一个新的**局部**变量。
 
 <!--v-->
-## （拓展）一切皆对象
+## 一切皆对象
 
 在 Python 中，**一切皆对象**。整数是一个对象，字符串是一个对象，函数也不例外！这意味着函数可以像其他任何数据类型一样被对待。这被称为**函数是“一等公民” (First-class citizens)**。
 
