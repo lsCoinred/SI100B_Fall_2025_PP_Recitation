@@ -685,10 +685,14 @@ More to be used in OOP...
 <!--v-->
 ## Unexpected conditions
 - 当程序执行遇到意外情况时会发生什么？
-- 出现与预期不同的异常
-    1. 试图访问超出列表限制的内容
-    2. 试图转换不合适的类型
-    3. ...
+    - 出现与预期不同的异常
+        - 试图访问超出列表限制的内容
+        - 试图转换不合适的类型
+        - ...
+- 将引发异常 (raise an exception)
+    - 部分编程语言称作抛出 (throw) 异常
+    - 可主动引发异常：使用关键字 `raise` 加异常种类
+    
 
 ```python
 # 1. IndexError
@@ -707,17 +711,16 @@ int(test)
 - Python 代码可以提供异常处理程序,方便进行 debug
 ```python
 try:    
-    # do some potentially 
-    # problematic code
+    # do something that may raise an exception
 except:
     # do something to
     # handle the problem
 finally:
     # always executed after try
 ```
-- 如果 try 块中的表达式全部成功,则继续执行 except 块之后的代码
-- try 语句主体中任何语句引发的异常均由 except 语句处理，继续执行 except 语句主体 ，然后再执行该代码块之后的其他表达式
-- 不管是否有异常触发，finally 后面的语句都会执行，这也是它
+- 如果 `try` 块中的表达式全部成功,则继续执行 `except` 块**之后**的代码
+- `try` 主体中任何语句引发的异常均由 `except` 处理：继续执行 except 语句主体 ，然后再执行该代码块之后的其他表达式
+- 不管是否有异常触发，`finally` 后面的语句都会执行
 
 <!--s-->
 <div class="middle center"><div style="width: 100%">
