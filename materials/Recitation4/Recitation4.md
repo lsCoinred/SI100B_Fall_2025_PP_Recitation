@@ -16,18 +16,61 @@ makeThanks: true
 
 <!--v-->
 ## Functions as Objects
-- Python中函数可以作为参数传递
+- 回顾：“Python 中，函数是一等公民”
+
+- 函数可以像其他数据类型一样被传递、赋值和使用
+
 - 示例：灵活折扣系统
-  - 定义主函数`apply_discount(price, discount_strategy)`
-  - `discount_strategy`是一个函数，计算折扣金额
+    - 定义主函数`apply_discount(price, discount_strategy)`
+    - `discount_strategy`是一个函数，计算折扣金额
+
+<!--v-->
+### Example: Discount Strategy System
+```py
+def apply_discount(price, discount_strategy):
+    discount = discount_strategy(price)
+    final_price = price - discount
+    return final_price
+
+# 定义一些折扣策略函数
+def fixed_discount(price):
+    """固定折扣 - 减 10 元"""
+    return 10
+
+def bulk_discount(price):
+    """批量折扣 - 满 100 打 8 折，否则 9 折"""
+    if price > 100:
+        return price * 0.2  # 20% 折扣
+    return price * 0.1     # 10% 折扣
+```
+- Lambda function 的形式？
+
+<!--v-->
+### 使用示例
+
+```py
+original_price = 150.0
+
+# 固定折扣
+apply_discount(original_price, fixed_discount) # 进行的计算：150.0 - 10
+
+# 批量折扣
+apply_discount(original_price, bulk_discount) # 150.0 - 150.0 * 0.2
+
+# 也可以直接使用 lambda 函数……
+apply_discount(original_price, lambda p: p * 0.15)  # 15% 折扣
+```
 
 <!--s-->
 # Tuple
 <!--v-->
 ## Tuples（元组）
 - 一种新的复合数据类型
+
 - 不可变（immutable）
+
 - 用圆括号`()`表示
+
 - 支持索引、切片、合并、长度、最大/最小值等操作
 
 
@@ -42,37 +85,82 @@ hello_tuple[1:3] # ("stu", 3)
 
 <!--v-->
 
+## 接受任意数量的参数
 
-## 可变数量的参数
+一些内置函数的参数数量不固定，可接受任意数量的参数，如 `min()`, `max()`, `mean()`。
 
-Python 有一些内置函数可以接受可变数量的参数，例如 `min()`。
-可以使用 `*` 符号来实现相同的功能。
-```python
+自己写函数时，可在某个参数前加 `*` 符号来实现相同功能：
+
+```py
 def mean(*args): tot = 0
+    print(type(args)) # tuple
+    print(args) # tuple
     for a in args:
         tot += a
 return tot / len(args)
-
-mean(1, 2, 3, 4, 5, 6)
+mean(1, 2, 3, 4, 5, 6) # args: tuple (1, 2, 3, 4, 5, 6)
 ```
-其中 `args` 绑定到所提供值的元组
+
+上例中，`args` 绑定到所提供的若干值组成的**元组**。
+
+<!--s-->
+# 拓展：Tuples
+<!--v-->
+## Properties of Tuples
+
+- Tuple is about immutability（不可变）
+
+- It encapsulates a _linear_ order, like a _struct_, but without field names.
+    - You don't want to accidentally modify its structure!
+    - e.g. A list of points in $\mathbb {R}^2$: `[(0.2, 0.3), (1.1, 1.2), ...]`
+
+- Is _hashable_ (if its elements are hashable), therefore can be used as keys in dictionary (`dict`).
 
 <!--v-->
+## Properties of Tuples
+- Singletons（可作为单例）
+  ```py
+  >>> 1 == (1) != (1,)
+  True
+  ```
+- Constructors（可直接构造对象）
+  `tuple()` accepts iterables
 
-
-
+- Packing and Unpacking
+  ```py
+  temperature, humidity = get_weather()
+  a, b, c = c, a, b
+  ```
+  
+<!--v-->
+Linear Operations...
+- Linear indexing, Slicing
+  ```py
+  ('a', 'b', 'c', 'd')[3] == 'd'
+  (0, 1, 2, 3, 4, 5)[1:3] == (1, 2)
+  (0, 1, 2, 3)[::-1] == (3, 2, 1, 0)
+  ```
+- Concatenation, Repeating
+  ```py
+  (1, 2, 3, 4) + (10, 11) == (1, 2, 3, 4, 10, 11)
+  (1, 2) * 3 == (1, 2, 1, 2, 1, 2)
+  ```
+- Sorting
+  ```py
+  sorted_tuple = tuple(sorted(original_tuple))
+  ```
 
 <!--s-->
 
 # List
+
 <!--v-->
-## List(列表)
+## List (列表)
 - 可变（mutable）序列
 - 用方括号`[]`表示
 - 可包含任意类型元素
 - 支持索引、切片、合并、迭代等操作
 
-例子:
 ```python
 empty_list = []
 hello_list = [2, "a", 4, [1, 2]]
@@ -81,11 +169,18 @@ hello_list[3]      # [1, 2]
 [1, 2] + [3, 4]    # [1, 2, 3, 4]
 ```
 <!--v-->
-## List(列表)
-- `append(element)`：在末尾添加元素（无返回值）
-- `sort()`：原地排序，返回None
-- `reverse()`：原地反转，返回None
-- `sorted(list)`：返回新排序列表，不修改原列表
+## 常用的 List 的方法
+- `append(element)`：在末尾添加元素；无返回值 (`None`)
+
+- `sort()`：原地对元素进行排序；无返回值 (`None`)
+    - 默认正序；加上可选参数 `reverse=True`为倒序
+    - 可指定要参照哪个关键字进行排序；详情查阅 Python 手册
+
+- `reverse()`：原地反向排列元素；无返回值 (`None`)
+
+- `sorted(list)`：返回新排序的列表；**不修改原列表**
+
+**“原地”/“就地”**：对对象本身进行修改
 <!--v-->
 ## Lists与函数
 可传递列表给函数，函数内可修改原列表（副作用）
@@ -99,32 +194,64 @@ def square_list(L):
 ## 字符串与列表互转
 字符串转列表：
 - `list(s)`：每个字符作为元素
-- `s.split(char)`：按字符分割
+- `s.split(char)`：以字符 `char` 作为分隔符，进行分割
+
 列表转字符串：
-- `''.join(L)`：合并列表为字符串
 - `'_'.join(L)`：用指定字符连接
+    - `''.join(L)`：将列表中的所有元素连成一整个字符串
 
 
 <!--s-->
-# ALIASING, CLONING
+# Aliasing & Cloning (Copying)
+
+<!--v-->
+## 回顾：可变对象和不可变对象
+- **可变 (Mutable) 对象**：如果要修改对象，可直接原地修改，不用重新创建；
+  - 常见类型：列表 `list`，字典 `dict`，集合 `set` 等
+  - 例：可直接添加、删除或更改列表的元素
+
+- **不可变 (Immutable) 对象**: 对象一旦创建便不可更改；若要修改，只能重新创建一个新的
+  - 常见类型：字符串 `string`，整型 `int`，元组 `tuple` 等
+  - 例：“修改”一个整数，实际上创建了一个新的整型对象并删除了原先的；元组一旦创建，其内容无法修改
+
 <!--v-->
 ## 为什么需要 Copy？
-- 赋值语句只是为一个对象**另起**了一个名字
+- 赋值语句只是为一个对象**另起**了一个名字（aliasing）
+
 - 对于自身可变的对象，会使目标和对象同时改变
-```py[]
+    - 许多情况下会导致意外修改
+
+```py
 l1 = [1, 2, 3]
 l2 = l1
 l2.append(4)
-print(l2)  # [1, 2, 3, 4]
+print(l2)  # [1, 2, 3, 4] modified
 print(l1)  # [1, 2, 3, 4]
 ```
-- 场景：将List作为一个参数传递给一个函数，函数有可能对List进行改变
+
+<!--v-->
+### 回顾：函数传入可变对象
+- 场景：函数可能对传入的参数进行修改
+    - 若传入了可变对象，函数对参数进行的修改将直接影响其原始对象
+
+```py
+def foo(l2):
+    print("Id of l2 before revised:", id(l2))
+    l2.append(4)
+    print("Id of l2 after revised:", id(l2)) # same
+ 
+l1 = [1, 2, 3]
+print("Id of l1:", id(l1))
+foo(l1)
+print(l1) # [1, 2, 3, 4]
+```
 
 <!--v-->
 ## 对一个列表进行 Copy
-- 改变生成的副本，不影响原始对象
-- `Lnew= Loriginal[:]` 或者 `Lnew = copy.copy(Loriginal)`
-  - 等价于创建空列表 `Lnew`, 接着将遍历 `Loriginal`，将 `Loriginal` 的每个元素依次 `append` 进 `Lnew`
+改变生成的副本不会影响原始对象
+
+`l2 = l1[:]`，或 `import copy` 后 `l2 = copy.copy(l1)`
+- 等价于：创建空列表 `l2` - 遍历 `l1`，将 `l1` 的每个元素依次 `append` 进 `l2`
 ```py[]
 l1 = [4, 5, 6]
 l2 = l1[:]
@@ -132,33 +259,23 @@ l2.append(7)
 print(l2)  # [4, 5, 6, 7]
 print(l1)  # [4, 5, 6]
 ```
-<img src="images/Tutorial4_copy.png" width="70%" style="display: block; margin: 0 auto;">
+<img src="images/Tutorial4_copy.png" width="60%" style="display: block; margin: 0 auto;">
 
 <!--v-->
-## Shallow Copy 一个嵌套的可变对象
-<img src="images/Tutorial4_copy_nested.png" style="display: block; margin: 0 auto;">
+## 有嵌套的可变对象：避免 Shallow Copy 
+- 上述 `l2 = l1[:]` 和 `l2 = copy.copy(l1)` 都属于浅拷贝（Shallow Copy）
+- 浅拷贝 **仅拷贝嵌套的第一层** ，第二层或更深（例如其中的可变对象）不会被拷贝
+
+<img src="images/Tutorial4_copy_nested.png" width="80%" style="display: block; margin: 0 auto;">
 
 <!--v--> 
-## Deep Copy
-- 使用深拷贝当列表可能包含可变元素时，以确保每个层级的每个结构都被复制。
+## 有嵌套的可变对象：Deep Copy
+- 当嵌套结构中的元素可能是可变对象时，使用**深拷贝**
+    - 确保每个嵌套层级的每个结构都被复制
 <img src="images/Tutorial4_deep_copy.png" width="90%" style="display: block; margin: 0 auto;">
 
 <!--v-->
-## 如果只拷贝 k 层呢?
-```py[]
-# Example usage
-original = [1, [2, [3, [4 , 4]]]]
-deepk_copied = k_level_copy(original, 3)
-# Modify the deep copy
-deepk_copied[1][1][0] = 'Changed'
-deepk_copied[1][1][1][1] = 'Changed'
-print(original) # [1, [2, [3, [4, 'Changed']]]]
-print(deepk_copied) # [1, [2, ['Changed', [4, 'Changed']]]]
-```
-- `k_level_copy(original, 1)` 等价于 `copy.copy(original)` 
-- `k_level_copy(original, 4)` 等价于 `copy.deepcopy(original)` 
-<!--v-->
-## 如果只拷贝 k 层呢? (Optional)
+## (Optional) 如果只拷贝 k 层呢? 
 ```py[]
 def k_level_copy(obj, k):
     if k <= 0:
@@ -173,6 +290,23 @@ def k_level_copy(obj, k):
     else:
         return obj  # Return the object if it's immutable
 ```
+
+<!--v-->
+## (Optional) 如果只拷贝嵌套的前 k 层呢?
+```py
+# Example usage
+original = [1, [2, [3, [4 , 4]]]]
+deepk_copied = k_level_copy(original, 3)
+
+# Modify the deep copy
+deepk_copied[1][1][0] = 'Changed'
+deepk_copied[1][1][1][1] = 'Changed'
+print(original) # [1, [2, [3, [4, 'Changed']]]]
+print(deepk_copied) # [1, [2, ['Changed', [4, 'Changed']]]]
+```
+- `k_level_copy(original, 1)` 等价于 `copy.copy(original)` 
+- `k_level_copy(original, 4)` 等价于 `copy.deepcopy(original)` 
+
 <!--v-->
 ## 更多例子
 ```py
@@ -205,10 +339,13 @@ def remove_all(l, val):
 def remove_dups(L1, L2):
     return [x for x in L1 if x not in L2]
 ```
+<!--s-->
+
+# 拓展：Decorators
+
 <!--v-->
-# Decorators
-<!--v-->
-_Anything in Python is an object._
+
+> Anything in Python is an object.
 
 ```py
 def nice():
@@ -229,7 +366,7 @@ hello
 
 <!--v-->
 
-_They can be arguments._
+作为对象传递：
 
 ```py
 def plus(x, y):
@@ -249,7 +386,7 @@ perform(2, 10, lambda x, y: x**y)
 
 <!--v-->
 
-_They can be returned._
+作为函数的返回值：
 ```py
 def wrapper(rapper):
     def greet():
@@ -257,13 +394,14 @@ def wrapper(rapper):
     return greet
 
 wrapper('Ken')()  
+
 ```
 ```text
 This is rapper Ken.
 ```
 
 <!--v-->
-If a function takes a function as argument and returns a function, it can actually produce a modified version of the argument function. Python allows us to perform such modification with the notation '@'.
+If a function takes a function as argument and returns a function, it can actually produce a modified version of the argument function. Python allows us to perform such modification with the notation `@`.
 
 ```py
 # The decorator 
@@ -317,14 +455,15 @@ def __main__(func):
         
 @__main__
 def main(*args):
-    print(f'mian received {len(args)} arguments')
+    print(f'main received {len(args)} arguments')
 ```
 
-```text
-(ml) zws@fugue SI100B-test % python main.py 1 2 3      
-mian received 4 arguments
+```bash
+$ python main.py 1 2 3      
+main received 4 arguments
 ```
 <!--v-->
+
 Some useful decorators, built-in or provided by modules...
 - Call the function when program terminates: `@atexit.register`
 - Checks if the values in a enum declaration is unique: `@enum.unique`
@@ -335,46 +474,3 @@ More to be used in OOP...
 - Generates `__init__` etc. (_class_ decorator!): `@dataclasses.dataclass`
 - Declare static (global/within a class) functions: `@staticmethod`, `@classmethod`
 - Getter method: `@property`
-  
-<!--s-->
-# Tuples
-<!--v-->
-
-- Tuple is about immutability.
-- It encapsulates a _linear_ order, like a _struct_, but without field names.
-    - You don't want to accidentally modify its structure!
-    - e.g. A list of points in $\mathbb {R}^2$: `[(0.2, 0.3), (1.1, 1.2), ...]`
-- Is _hashable_ (if its elements are hashable), therefore can be used as dictionary keys.
-
-<!--v-->
-
-- Singletons
-  ```py
-  >>> 1 == (1) != (1,)
-  True
-  ```
-- Constructors
-  `tuple()` accepts iterables
-- Packing and Unpacking
-  ```py
-  temperature, humidity = get_weather()
-  a, b, c = c, a, b
-  ```
-  
-<!--v-->
-Linear Operations...
-- Linear indexing, Slicing
-  ```py
-  ('a', 'b', 'c', 'd')[3] == 'd'
-  (0, 1, 2, 3, 4, 5)[1:3] == (1, 2)
-  (0, 1, 2, 3)[::-1] == (3, 2, 1, 0)
-  ```
-- Concatenation, Repeating
-  ```py
-  (1, 2, 3, 4) + (10, 11) == (1, 2, 3, 4, 10, 11)
-  (1, 2) * 3 == (1, 2, 1, 2, 1, 2)
-  ```
-- Sorting
-  ```py
-  sorted_tuple = tuple(sorted(original_tuple))
-  ```
