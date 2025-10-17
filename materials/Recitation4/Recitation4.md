@@ -8,10 +8,160 @@ css: assets/custom.css
 autoTitlePage: true
 makeTitle:
     lecture: SI100B Fall 2025 Recitation 4
-    title: L7 & L8
+    title: HW2；L7 & L8 回顾
     detail: SI100B 2025 Staff | 2025-10-17
 makeThanks: true
 ---
+
+# Homework 2 说明
+
+<!--v-->
+
+## Homework 2
+
+- 已在 OJ 上发布
+
+- Deadline：10/23（周四）21:00（外加 15 min 缓冲时间）
+
+- BlackBoard 上已发布题目的书面 PDF 版本
+    - PDF 版本的 **样例输入输出** 可能有格式问题，**建议优先参考 OJ**
+
+<!--v-->
+
+## Q1 题目说明
+
+**HW201  Calculator with lambda functions**
+
+- `get_op` 应返回一个 lambda 函数，注意检查函数**返回值是否正确**
+
+- 所提交的内容应当**仅有 `get_op` 和 `calc` 这两个函数**
+    - 除此之外不要包含其他代码（比如自己测试用的 `print`）
+
+```py[]
+def get_op(op_name):
+    # your implementation here
+
+def calc(op, x, y) -> float:
+    # your implementation here
+
+# Do not write anything else! (e.g. print(calc("add", 1, 2)) )
+```
+
+如得到 Compile Error / Runtime Error，则很可能是没有遵守这两条导致
+
+<!--v-->
+
+## Q2 题目说明
+
+**HW202  Image Linear Enhancement**
+
+- **读题**，明确概念和步骤
+
+- 注意**输入和输出格式**
+
+<!--v-->
+
+## Q3 题目说明
+
+**HW203  Simplified Match-3 Game**
+
+实现简单的三消游戏
+
+- 题目较复杂，**一定注意读题！**
+    - 包含一些“反常识”的定义，如游戏网格坐标（1-起始，左上 (1, 1)）
+
+- 注意**输入和输出格式**
+
+<!--v-->
+
+### Q3 题目样例
+开始：输入版面的行列大小和内容
+```py
+>>> 3 3
+    A B C
+    B C A
+    C B A
+# 输出当前版面的内容和得分
+# （测试时不会输入已有符合三消匹配的版面，起始得分是 0）
+A B C
+B C A
+C B A
+0
+```
+
+<!--v-->
+游戏过程：输入 *swap*，输出 ***swap* 后** 的版面内容和得分
+
+```py
+>>> swap 1 1 2 1
+# 1 行 1 列 和 2 行 1 列交换
+# 无效操作：此 swap 不能形成三消匹配
+A B C
+B C A
+C B A
+0
+
+>>> swap 2 1 2 2
+# 2 行 1 列 和 2 行 2 列交换
+# B 被交换到三个匹配的中间，构成有效操作，中间一列消去
+A . C
+C . A
+C . A
+30
+```
+
+<!--v-->
+```py
+>>> swap 1 1 3 3
+# 1 行 1 列 和 3 行 3 列交换
+# # 无效操作：不允许交换不相邻的块
+A . C
+C . A
+C . A
+30
+```
+
+退出游戏：输入 *exit*，输出最终的得分
+```py
+>>> exit
+30
+```
+
+<!--v-->
+## Q3 题目说明
+
+**HW204  F1 Race Data Analyst**
+
+根据输入的赛事数据和请求的功能，输出对应的计算结果
+
+- 题目较复杂，**注意读题**
+    - 包含许多概念和计算公式
+    - 仔细阅读需要你实现的各个命令及细节
+
+- 注意**输入和输出格式**！
+
+<!--v-->
+- 主要考察点：为每个命令编写对应的处理逻辑
+    - 推荐将不同的逻辑**封装到独立的函数中**
+        - **便于复用**、可读性更好、有利于测试和维护……
+
+    - **不要**把所有逻辑堆在一个大的分支结构中，比如类似下面这样：
+    ```py[]
+    def process_race_data(command, data):
+        if command == "lap_time":
+            # 计算单圈时间的大量代码
+            result = data['s1'] + data['s2'] + data['s3']
+            # ... 更多计算和逻辑
+            return result 
+        elif command == "total_time":
+            # 计算总时间的大量代码
+            result = data['s1'] + data['s2'] + data['s3'] + data['pit_stop']
+            # ... 更多计算和逻辑
+            return result
+        ...
+    ```
+
+<!--s-->
 # Functions as Objects
 
 <!--v-->
