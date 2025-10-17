@@ -57,7 +57,8 @@
 
 **HW201  Calculator with lambda functions**
 
-- `get_op` 应返回一个 lambda 函数，注意检查函数**返回值是否正确**
+- `get_op` 应返回一个 Lambda 表达式，注意检查函数**返回值是否正确**
+    - 稍后会简要讲解 Lambda 表达式
 
 - 所提交的内容应当**仅有 `get_op` 和 `calc` 这两个函数**
   - 除此之外不要包含其他代码（比如自己测试用的 `print`）
@@ -244,7 +245,7 @@ def bulk_discount(price):
 
 <!--v-->
 
-## 随拿随用的函数！
+## Lambda 表达式：随拿随用的“函数”
 
 假设你正在写代码，需要一个非常简单的函数，比如计算一个数的平方。这个函数你可能只会在这里用一次，之后就再也用不到了。
 
@@ -265,32 +266,34 @@ print(result) # 输出 25
 
 ## Lambda 表达式的特点
 
-**Lambda 表达式**允许我们创建**匿名的、小型的、单行的函数**。
+**Lambda 表达式**允许我们创建**匿名的、小型的、单行的函数**
 
-- **匿名 (Anonymous)**：它没有正式的名字。 不像 `def` 定义的函数那样，必须给它一个像 `square` 这样的名称。
-- **小型 (Small)**：它被设计用来执行简单的任务，通常只有一行代码。
-- **表达式 (Expression)**：Lambda 本身是一个表达式，而不是一个语句。 这意味着你可以在一个列表里定义它，或者作为参数传递给另一个函数。
+- **匿名 (Anonymous) 函数：**没有正式名字，不像 `def` 定义的函数那样必须命名
+- **小型 (Small)：**设计用来执行简单任务，通常只有一行
+- **表达式 (Expression)：**Lambda 本身是一个**表达式**，而不是一个语句
+    - 可以作为对象操作：可以在一个列表里定义它，或者作为参数传递给另一个函数，等等
+    - 注：由于使用形式与函数类似（如在括号内写参数），其有时也被俗称为“Lambda 函数”，但请注意其本质仍然是表达式
+
+
 
 <!--v-->
 
-## Lambda 表达式的语法
-
-Lambda 表达式的语法非常简洁。
+## Lambda 表达式语法
 
 ```python
 lambda arguments: expression
 ```
 
-**`arguments` (参数)**: 参数列表，和`def`函数定义中括号里的参数一样。
+**`arguments`:** 参数列表，和`def`函数定义中括号里的参数一样。
+- **没有参数**: `lambda: "Hello, World!"`
+- **一个参数**: `lambda x: x + 10`
+- **多个参数**: 用逗号`,`隔开，如 `lambda a, b: a * b`
+- 支持一般函数 (`def`) 所支持的参数形式：
+    - **默认参数：** `lambda x, y=10: x + y`
+    - **可变参数：** `lambda *args: sum(args)`
 
-    - **可以没有参数**: `lambda: "Hello, World!"`
-    - **可以有一个参数**: `lambda x: x + 10`
-    - **可以有多个参数**，用逗号`,`隔开: `lambda a, b: a * b`
-    - **支持`def`函数的参数形式**，比如默认参数、可变参数等：
-      - `lambda x, y=10: x + y`
-      - `lambda *args: sum(args)`
-
-**`expression` (表达式)**: 表达式的计算结果就是**函数的返回值**。它自带`return`效果，你不需要也不能显式地写`return`关键字。
+**`expression`:** 表达式；其计算结果是**此 lambda 表达式的返回值**（即自带 `return` 效果）
+- 不需要也不能显式地写 `return` 关键字
 
 <!--v-->
 
@@ -318,14 +321,17 @@ lambda arguments: expression
 
 ## Lambda 的应用场景
 
-Lambda 表达式最大的用处是作为参数传递给其他函数，尤其是 Python 内置的`map()`, `sorted()`等。
+一种常见的用途是作为参数传递给其他函数
+- 如内置函数 `map()`, `sorted()` 等（传入 Lambda 表达式用作操作的参照依据）
 
 **场景**：有一个数字列表，我们想得到每个数字的平方组成的新列表。
-
+- 一般写法：for 循环遍历每个数，进行平方并附加到一个新的列表
 - **使用 `lambda` 的精简写法：**
   ```python
   numbers = [1, 2, 3, 4, 5]
   squared_numbers = map(lambda x: x * x, numbers)
+  # map: 对可迭代对象 (number) 中的每个元素应用传入的 lambda 表达式，
+  # 并将其结果写到一个新对象（此处为列表）中的对应位置，最后返回这个新对象
   print(list(squared_numbers))
   ```
 
@@ -342,7 +348,7 @@ apply_discount(original_price, fixed_discount) # 进行的计算：150.0 - 10
 # 批量折扣
 apply_discount(original_price, bulk_discount) # 150.0 - 150.0 * 0.2
 
-# 也可以直接使用 lambda 函数……
+# 也可以直接使用 lambda 表达式……
 apply_discount(original_price, lambda p: p * 0.15)  # 15% 折扣
 ```
 
