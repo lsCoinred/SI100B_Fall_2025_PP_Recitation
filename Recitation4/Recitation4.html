@@ -522,6 +522,76 @@ More to be used in OOP...
 
 
 <!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# Exceptions
+
+</div></div>
+
+<!--v-->
+## Unexpected conditions
+- 当程序执行遇到意外情况时会发生什么？
+- 出现与预期不同的异常
+    1. 试图访问超出列表限制的内容
+    2. 试图转换不合适的类型
+    3. ...
+
+```python
+# 1. IndexError
+test = [1,7,4]
+test[4]
+
+# 2. TypeError
+int(test)
+
+```
+
+
+<!--v-->
+## Handling Exceptions
+- 通常，异常会导致错误发生并停止执行
+- Python 代码可以提供异常处理程序,方便进行 debug
+```python
+try:    
+    # do some potentially 
+    # problematic code
+except:
+    # do something to
+    # handle the problem
+finally:
+    # always executed after try
+```
+- 如果 try 块中的表达式全部成功,则继续执行 except 块之后的代码
+- try 语句主体中任何语句引发的异常均由 except 语句处理，继续执行 except 语句主体 ，然后再执行该代码块之后的其他表达式
+- 不管是否有异常触发，finally 后面的语句都会执行，这也是它
+
+<!--s-->
+<div class="middle center"><div style="width: 100%">
+
+# Assert
+
+</div></div>
+
+<!--v-->
+目标：想要确保计算状态的假设符合预期
+- 如果假设不成立，则使用断言语句引发 AssertionError 异常
+- 断言 <应为真的语句>，“如果不成立则打印特定的提示”
+- 断言不允许程序员控制对意外情况的响应
+- 确保在预期条件不成立时停止执行
+- 通常用于检查函数的输入
+- 可用于检查函数的输出，以避免传播错误值
+- 可以更容易地找到错误源
+- 良好防御性编程的示例
+```python
+def avg(grades):
+    assert len(grades) != 0, "No grades provided"
+    return sum(grades) / len(grades)
+````
+
+
+
+
+<!--s-->
 
 <div style="display: flex; justify-content: center; align-items: center; height: 700px;   ">
   <div style="text-align: center; padding: 40px; background-color: white; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
