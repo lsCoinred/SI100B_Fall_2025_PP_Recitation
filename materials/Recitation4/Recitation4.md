@@ -7,9 +7,9 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
-    lecture: SI100B Fall 2025 Recitation 4
-    title: HW2；L7 & L8 回顾
-    detail: SI100B 2025 Staff | 2025-10-17
+  lecture: SI100B Fall 2025 Recitation 4
+  title: HW2；L7 & L8 回顾
+  detail: SI100B 2025 Staff | 2025-10-17
 makeThanks: true
 ---
 
@@ -24,7 +24,7 @@ makeThanks: true
 - Deadline：10/23（周四）21:00（外加 15 min 缓冲时间）
 
 - BlackBoard 上已发布题目的书面 PDF 版本
-    - PDF 版本的 **样例输入输出** 可能有格式问题，**建议优先参考 OJ**
+  - PDF 版本的 **样例输入输出** 可能有格式问题，**建议优先参考 OJ**
 
 <!--v-->
 
@@ -35,7 +35,7 @@ makeThanks: true
 - `get_op` 应返回一个 lambda 函数，注意检查函数**返回值是否正确**
 
 - 所提交的内容应当**仅有 `get_op` 和 `calc` 这两个函数**
-    - 除此之外不要包含其他代码（比如自己测试用的 `print`）
+  - 除此之外不要包含其他代码（比如自己测试用的 `print`）
 
 ```py[]
 def get_op(op_name):
@@ -68,14 +68,17 @@ def calc(op, x, y) -> float:
 实现简单的三消游戏
 
 - 题目较复杂，**一定注意读题！**
-    - 包含一些“反常识”的定义，如游戏网格坐标（1-起始，左上 (1, 1)）
+
+  - 包含一些“反常识”的定义，如游戏网格坐标（1-起始，左上 (1, 1)）
 
 - 注意**输入和输出格式**
 
 <!--v-->
 
 ### Q3 题目样例
+
 开始：输入版面的行列大小和内容
+
 ```py
 >>> 3 3
     A B C
@@ -90,7 +93,8 @@ C B A
 ```
 
 <!--v-->
-游戏过程：输入 *swap*，输出 ***swap* 后** 的版面内容和得分
+
+游戏过程：输入 _swap_，输出 **_swap_ 后** 的版面内容和得分
 
 ```py
 >>> swap 1 1 2 1
@@ -111,6 +115,7 @@ C . A
 ```
 
 <!--v-->
+
 ```py
 >>> swap 1 1 3 3
 # 1 行 1 列 和 3 行 3 列交换
@@ -121,13 +126,15 @@ C . A
 30
 ```
 
-退出游戏：输入 *exit*，输出最终的得分
+退出游戏：输入 _exit_，输出最终的得分
+
 ```py
 >>> exit
 30
 ```
 
 <!--v-->
+
 ## Q3 题目说明
 
 **HW204  F1 Race Data Analyst**
@@ -135,47 +142,57 @@ C . A
 根据输入的赛事数据和请求的功能，输出对应的计算结果
 
 - 题目较复杂，**注意读题**
-    - 包含许多概念和计算公式
-    - 仔细阅读需要你实现的各个命令及细节
+
+  - 包含许多概念和计算公式
+  - 仔细阅读需要你实现的各个命令及细节
 
 - 注意**输入和输出格式**！
 
 <!--v-->
-- 主要考察点：为每个命令编写对应的处理逻辑
-    - 推荐将不同的逻辑**封装到独立的函数中**
-        - **便于复用**、可读性更好、有利于测试和维护……
 
-    - **不要**把所有逻辑堆在一个大的分支结构中，比如类似下面这样：
-    ```py[]
-    def process_race_data(command, data):
-        if command == "lap_time":
-            # 计算单圈时间的大量代码
-            result = data['s1'] + data['s2'] + data['s3']
-            # ... 更多计算和逻辑
-            return result 
-        elif command == "total_time":
-            # 计算总时间的大量代码
-            result = data['s1'] + data['s2'] + data['s3'] + data['pit_stop']
-            # ... 更多计算和逻辑
-            return result
-        ...
-    ```
+- 主要考察点：为每个命令编写对应的处理逻辑
+
+  - 推荐将不同的逻辑**封装到独立的函数中**
+
+    - **便于复用**、可读性更好、有利于测试和维护……
+
+  - **不要**把所有逻辑堆在一个大的分支结构中，比如类似下面这样：
+
+  ```py[]
+  def process_race_data(command, data):
+      if command == "lap_time":
+          # 计算单圈时间的大量代码
+          result = data['s1'] + data['s2'] + data['s3']
+          # ... 更多计算和逻辑
+          return result
+      elif command == "total_time":
+          # 计算总时间的大量代码
+          result = data['s1'] + data['s2'] + data['s3'] + data['pit_stop']
+          # ... 更多计算和逻辑
+          return result
+      ...
+  ```
 
 <!--s-->
+
 # Functions as Objects
 
 <!--v-->
+
 ## Functions as Objects
+
 - 回顾：“Python 中，函数是一等公民”
 
 - 函数可以像其他数据类型一样被传递、赋值和使用
 
 - 示例：灵活折扣系统
-    - 定义主函数`apply_discount(price, discount_strategy)`
-    - `discount_strategy`是一个函数，计算折扣金额
+  - 定义主函数`apply_discount(price, discount_strategy)`
+  - `discount_strategy`是一个函数，计算折扣金额
 
 <!--v-->
+
 ### Example: Discount Strategy System
+
 ```py
 def apply_discount(price, discount_strategy):
     discount = discount_strategy(price)
@@ -193,10 +210,99 @@ def bulk_discount(price):
         return price * 0.2  # 20% 折扣
     return price * 0.1     # 10% 折扣
 ```
-- Lambda function 的形式？
+
+- Lambda function 是什么？
 
 <!--v-->
-### 使用示例
+
+## 随拿随用的函数！
+
+假设你正在写代码，需要一个非常简单的函数，比如计算一个数的平方。这个函数你可能只会在这里用一次，之后就再也用不到了。
+
+按照常规方法，你会这样做：
+
+```python
+def square(x):
+  return x * x
+
+# 然后在需要的地方调用
+result = square(5)
+print(result) # 输出 25
+```
+
+但是这很“小题大做”
+
+<!--v-->
+
+## Lambda 表达式的特点
+
+**Lambda 表达式**允许我们创建**匿名的、小型的、单行的函数**。
+
+- **匿名 (Anonymous)**：它没有正式的名字。 不像 `def` 定义的函数那样，必须给它一个像 `square` 这样的名称。
+- **小型 (Small)**：它被设计用来执行简单的任务，通常只有一行代码。
+- **表达式 (Expression)**：Lambda 本身是一个表达式，而不是一个语句。 这意味着你可以在一个列表里定义它，或者作为参数传递给另一个函数。
+
+<!--v-->
+
+## Lambda 表达式的语法
+
+Lambda 表达式的语法非常简洁。
+
+```python
+lambda arguments: expression
+```
+
+**`arguments` (参数)**: 参数列表，和`def`函数定义中括号里的参数一样。
+
+    - **可以没有参数**: `lambda: "Hello, World!"`
+    - **可以有一个参数**: `lambda x: x + 10`
+    - **可以有多个参数**，用逗号`,`隔开: `lambda a, b: a * b`
+    - **支持`def`函数的参数形式**，比如默认参数、可变参数等：
+      - `lambda x, y=10: x + y`
+      - `lambda *args: sum(args)`
+
+**`expression` (表达式)**: 表达式的计算结果就是**函数的返回值**。它自带`return`效果，你不需要也不能显式地写`return`关键字。
+
+<!--v-->
+
+## Lambda 表达式的例子
+
+- **常规函数:**
+
+  ```python
+  def add(x, y):
+      return x + y
+  ```
+
+- **等效的 Lambda 表达式:**
+
+  ```python
+  add_lambda = lambda x, y: x + y
+
+  # 调用方式完全一样
+  print(add(3, 5))         # 输出 8
+  print(add_lambda(3, 5))  # 输出 8
+
+  ```
+
+<!--v-->
+
+## Lambda 的应用场景
+
+Lambda 表达式最大的用处是作为参数传递给其他函数，尤其是 Python 内置的`map()`, `sorted()`等。
+
+**场景**：有一个数字列表，我们想得到每个数字的平方组成的新列表。
+
+- **使用 `lambda` 的精简写法：**
+  ```python
+  numbers = [1, 2, 3, 4, 5]
+  squared_numbers = map(lambda x: x * x, numbers)
+  print(list(squared_numbers))
+  ```
+
+<!--v-->
+
+### 回到原来的使用示例
 
 ```py
 original_price = 150.0
@@ -212,9 +318,13 @@ apply_discount(original_price, lambda p: p * 0.15)  # 15% 折扣
 ```
 
 <!--s-->
+
 # Tuple
+
 <!--v-->
+
 ## Tuples（元组）
+
 - 一种新的复合数据类型
 
 - 不可变（immutable）
@@ -223,8 +333,8 @@ apply_discount(original_price, lambda p: p * 0.15)  # 15% 折扣
 
 - 支持索引、切片、合并、长度、最大/最小值等操作
 
+**Tuples 操作示例**
 
-**Tuples操作示例**
 ```python
 tuple_empty = ()      # 空元组
 tuple_short = (2,)    # 单元素元组需加逗号
@@ -254,20 +364,26 @@ mean(1, 2, 3, 4, 5, 6) # args: tuple (1, 2, 3, 4, 5, 6)
 上例中，`args` 绑定到所提供的若干值组成的**元组**。
 
 <!--s-->
+
 # 拓展：Tuples
+
 <!--v-->
+
 ## Properties of Tuples
 
 - Tuple is about immutability（不可变）
 
 - It encapsulates a _linear_ order, like a _struct_, but without field names.
-    - You don't want to accidentally modify its structure!
-    - e.g. A list of points in $\mathbb {R}^2$: `[(0.2, 0.3), (1.1, 1.2), ...]`
+
+  - You don't want to accidentally modify its structure!
+  - e.g. A list of points in $\mathbb {R}^2$: `[(0.2, 0.3), (1.1, 1.2), ...]`
 
 - Is _hashable_ (if its elements are hashable), therefore can be used as keys in dictionary (`dict`).
 
 <!--v-->
+
 ## Properties of Tuples
+
 - Singletons（可作为单例）
   ```py
   >>> 1 == (1) != (1,)
@@ -281,9 +397,11 @@ mean(1, 2, 3, 4, 5, 6) # args: tuple (1, 2, 3, 4, 5, 6)
   temperature, humidity = get_weather()
   a, b, c = c, a, b
   ```
-  
+
 <!--v-->
+
 Linear Operations...
+
 - Linear indexing, Slicing
   ```py
   ('a', 'b', 'c', 'd')[3] == 'd'
@@ -305,7 +423,9 @@ Linear Operations...
 # List
 
 <!--v-->
+
 ## List (列表)
+
 - 可变（mutable）序列
 - 用方括号`[]`表示
 - 可包含任意类型元素
@@ -318,45 +438,61 @@ hello_list[0]      # 2
 hello_list[3]      # [1, 2]
 [1, 2] + [3, 4]    # [1, 2, 3, 4]
 ```
+
 <!--v-->
+
 ## 常用的 List 的方法
+
 - `append(element)`：在末尾添加元素；无返回值 (`None`)
 
 - `sort()`：原地对元素进行排序；无返回值 (`None`)
-    - 默认正序；加上可选参数 `reverse=True`为倒序
-    - 可指定要参照哪个关键字进行排序；详情查阅 Python 手册
+
+  - 默认正序；加上可选参数 `reverse=True`为倒序
+  - 可指定要参照哪个关键字进行排序；详情查阅 Python 手册
 
 - `reverse()`：原地反向排列元素；无返回值 (`None`)
 
 - `sorted(list)`：返回新排序的列表；**不修改原列表**
 
 **“原地”/“就地”**：对对象本身进行修改
+
 <!--v-->
-## Lists与函数
+
+## Lists 与函数
+
 可传递列表给函数，函数内可修改原列表（副作用）
 示例：平方列表中所有元素
+
 ```python
 def square_list(L):
     for i in range(len(L)):
         L[i] = L[i] ** 2
 ```
+
 <!--v-->
+
 ## 字符串与列表互转
+
 字符串转列表：
+
 - `list(s)`：每个字符作为元素
 - `s.split(char)`：以字符 `char` 作为分隔符，进行分割
 
 列表转字符串：
-- `'_'.join(L)`：用指定字符连接
-    - `''.join(L)`：将列表中的所有元素连成一整个字符串
 
+- `'_'.join(L)`：用指定字符连接
+  - `''.join(L)`：将列表中的所有元素连成一整个字符串
 
 <!--s-->
+
 # Aliasing & Cloning (Copying)
 
 <!--v-->
+
 ## 回顾：可变对象和不可变对象
+
 - **可变 (Mutable) 对象**：如果要修改对象，可直接原地修改，不用重新创建；
+
   - 常见类型：列表 `list`，字典 `dict`，集合 `set` 等
   - 例：可直接添加、删除或更改列表的元素
 
@@ -365,11 +501,13 @@ def square_list(L):
   - 例：“修改”一个整数，实际上创建了一个新的整型对象并删除了原先的；元组一旦创建，其内容无法修改
 
 <!--v-->
+
 ## 为什么需要 Copy？
+
 - 赋值语句只是为一个对象**另起**了一个名字（aliasing）
 
 - 对于自身可变的对象，会使目标和对象同时改变
-    - 许多情况下会导致意外修改
+  - 许多情况下会导致意外修改
 
 ```py
 l1 = [1, 2, 3]
@@ -380,16 +518,18 @@ print(l1)  # [1, 2, 3, 4]
 ```
 
 <!--v-->
+
 ### 回顾：函数传入可变对象
+
 - 场景：函数可能对传入的参数进行修改
-    - 若传入了可变对象，函数对参数进行的修改将直接影响其原始对象
+  - 若传入了可变对象，函数对参数进行的修改将直接影响其原始对象
 
 ```py
 def foo(l2):
     print("Id of l2 before revised:", id(l2))
     l2.append(4)
     print("Id of l2 after revised:", id(l2)) # same
- 
+
 l1 = [1, 2, 3]
 print("Id of l1:", id(l1))
 foo(l1)
@@ -397,11 +537,15 @@ print(l1) # [1, 2, 3, 4]
 ```
 
 <!--v-->
+
 ## 对一个列表进行 Copy
+
 改变生成的副本不会影响原始对象
 
 `l2 = l1[:]`，或 `import copy` 后 `l2 = copy.copy(l1)`
+
 - 等价于：创建空列表 `l2` - 遍历 `l1`，将 `l1` 的每个元素依次 `append` 进 `l2`
+
 ```py[]
 l1 = [4, 5, 6]
 l2 = l1[:]
@@ -409,23 +553,29 @@ l2.append(7)
 print(l2)  # [4, 5, 6, 7]
 print(l1)  # [4, 5, 6]
 ```
+
 <img src="images/Tutorial4_copy.png" width="60%" style="display: block; margin: 0 auto;">
 
 <!--v-->
-## 有嵌套的可变对象：避免 Shallow Copy 
+
+## 有嵌套的可变对象：避免 Shallow Copy
+
 - 上述 `l2 = l1[:]` 和 `l2 = copy.copy(l1)` 都属于浅拷贝（Shallow Copy）
 - 浅拷贝 **仅拷贝嵌套的第一层** ，第二层或更深（例如其中的可变对象）不会被拷贝
 
 <img src="images/Tutorial4_copy_nested.png" width="80%" style="display: block; margin: 0 auto;">
 
-<!--v--> 
+<!--v-->
+
 ## 有嵌套的可变对象：Deep Copy
-- 当嵌套结构中的元素可能是可变对象时，使用**深拷贝**
-    - 确保每个嵌套层级的每个结构都被复制
-<img src="images/Tutorial4_deep_copy.png" width="90%" style="display: block; margin: 0 auto;">
+
+- 当嵌套结构中的元素可能是可变对象时，使用**深拷贝** - 确保每个嵌套层级的每个结构都被复制
+  <img src="images/Tutorial4_deep_copy.png" width="90%" style="display: block; margin: 0 auto;">
 
 <!--v-->
-## (Optional) 如果只拷贝 k 层呢? 
+
+## (Optional) 如果只拷贝 k 层呢?
+
 ```py[]
 def k_level_copy(obj, k):
     if k <= 0:
@@ -433,7 +583,7 @@ def k_level_copy(obj, k):
     if isinstance(obj, list):
         new_list = []
         for item in obj:
-            new_list.append(k_level_copy(item, k - 1))  
+            new_list.append(k_level_copy(item, k - 1))
         return new_list
     elif isinstance(obj, dict):
         ...
@@ -442,7 +592,9 @@ def k_level_copy(obj, k):
 ```
 
 <!--v-->
+
 ## (Optional) 如果只拷贝嵌套的前 k 层呢?
+
 ```py
 # Example usage
 original = [1, [2, [3, [4 , 4]]]]
@@ -454,11 +606,14 @@ deepk_copied[1][1][1][1] = 'Changed'
 print(original) # [1, [2, [3, [4, 'Changed']]]]
 print(deepk_copied) # [1, [2, ['Changed', [4, 'Changed']]]]
 ```
-- `k_level_copy(original, 1)` 等价于 `copy.copy(original)` 
-- `k_level_copy(original, 4)` 等价于 `copy.deepcopy(original)` 
+
+- `k_level_copy(original, 1)` 等价于 `copy.copy(original)`
+- `k_level_copy(original, 4)` 等价于 `copy.deepcopy(original)`
 
 <!--v-->
+
 ## 更多例子
+
 ```py
 import copy
 orig = ['Hi, I am ', list('Bob')]
@@ -469,26 +624,34 @@ orig[0] = 'Hi, he is'
 orig[1][0] = 'C'
 print(orig, alias, shallow, deep, sep='\n')
 ```
+
 What should be the output?
 
 <!--v-->
+
 ## 更多例子
+
 ```text
 ['Hi, he is', ['C', 'o', 'b']]
 ['Hi, he is', ['C', 'o', 'b']]
 ['Hi, I am ', ['C', 'o', 'b']]
 ['Hi, I am ', ['B', 'o', 'b']]
 ```
+
 <!--v-->
+
 ## Some cool list comprehension solutions
+
 ```py
 def remove_all(l, val):
     return [x for x in l if x != val]
 ```
+
 ```py
 def remove_dups(L1, L2):
     return [x for x in L1 if x not in L2]
 ```
+
 <!--s-->
 
 # 拓展：Decorators
@@ -525,10 +688,11 @@ def div(x, y):
     return x / y
 def perform(x, y, op):
     print(op(x, y))
-    
-perform(2, 3, div)  
-perform(2, 10, lambda x, y: x**y) 
+
+perform(2, 3, div)
+perform(2, 10, lambda x, y: x**y)
 ```
+
 ```text
 0.6666666666666666
 1024
@@ -537,24 +701,27 @@ perform(2, 10, lambda x, y: x**y)
 <!--v-->
 
 作为函数的返回值：
+
 ```py
 def wrapper(rapper):
     def greet():
         print('This is rapper ' + rapper + '.')
     return greet
 
-wrapper('Ken')()  
+wrapper('Ken')()
 
 ```
+
 ```text
 This is rapper Ken.
 ```
 
 <!--v-->
+
 If a function takes a function as argument and returns a function, it can actually produce a modified version of the argument function. Python allows us to perform such modification with the notation `@`.
 
 ```py
-# The decorator 
+# The decorator
 def triplet(f):
     def _inner(x):
         f(x)
@@ -567,12 +734,14 @@ def annihilator(f):
         pass
     return do_nothing
 ```
+
 <!--v-->
+
 ```py
 @triplet
 def say(name):
     print('hello ' + name)
-    
+
 @annihilator
 def say_goodbye(word):
     print(word)
@@ -592,6 +761,7 @@ hello world
 ```
 
 <!--v-->
+
 An example from wiki.python.org:
 
 ```py
@@ -602,44 +772,48 @@ def __main__(func):
         args = sys.argv[:]
         args[0] = os.path.abspath(args[0])
         func(*args)
-        
+
 @__main__
 def main(*args):
     print(f'main received {len(args)} arguments')
 ```
 
 ```bash
-$ python main.py 1 2 3      
+$ python main.py 1 2 3
 main received 4 arguments
 ```
+
 <!--v-->
 
 Some useful decorators, built-in or provided by modules...
+
 - Call the function when program terminates: `@atexit.register`
 - Checks if the values in a enum declaration is unique: `@enum.unique`
 - Partial function that pre-specifies some parameters: `partial()`
   e.g. `lean_print = functools.partial(print, end = '', sep = '')`
 
 More to be used in OOP...
+
 - Generates `__init__` etc. (_class_ decorator!): `@dataclasses.dataclass`
 - Declare static (global/within a class) functions: `@staticmethod`, `@classmethod`
 - Getter method: `@property`
 
-
 <!--s-->
+
 # Exceptions
 
 <!--v-->
+
 ## Unexpected conditions
+
 - 当程序执行遇到意外情况时会发生什么？
-    - 出现与预期不同的异常
-        - 试图访问超出列表限制的内容
-        - 试图转换不合适的类型
-        - ...
+  - 出现与预期不同的异常
+    - 试图访问超出列表限制的内容
+    - 试图转换不合适的类型
+    - ...
 - 将引发异常 (raise an exception)
-    - 部分编程语言称作抛出 (throw) 异常
-    - 可主动引发异常：使用关键字 `raise` 加异常种类
-    
+  - 部分编程语言称作抛出 (throw) 异常
+  - 可主动引发异常：使用关键字 `raise` 加异常种类
 
 ```python
 # 1. IndexError
@@ -651,13 +825,15 @@ int(test)
 
 ```
 
-
 <!--v-->
+
 ## Handling Exceptions
+
 - 通常，异常会导致错误发生并停止执行
 - Python 代码可以提供异常处理程序,方便进行 debug
+
 ```python
-try:    
+try:
     # do something that may raise an exception
 except:
     # do something to
@@ -665,15 +841,19 @@ except:
 finally:
     # always executed after try
 ```
+
 - 如果 `try` 块中的表达式全部成功,则继续执行 `except` 块**之后**的代码
 - `try` 主体中任何语句引发的异常均由 `except` 处理：继续执行 except 语句主体 ，然后再执行该代码块之后的其他表达式
 - 不管是否有异常触发，`finally` 后面的语句都会执行
 
 <!--s-->
+
 # Assert
 
 <!--v-->
+
 目标：想要确保计算状态的假设符合预期
+
 - 如果假设不成立，则使用断言语句引发 AssertionError 异常
 - 断言 <应为真的语句>，“如果不成立则打印特定的提示”
 - 断言不允许程序员控制对意外情况的响应
@@ -682,10 +862,9 @@ finally:
 - 可用于检查函数的输出，以避免传播错误值
 - 可以更容易地找到错误源
 - 良好防御性编程的示例
+
 ```python
 def avg(grades):
     assert len(grades) != 0, "No grades provided"
     return sum(grades) / len(grades)
-````
-
-
+```
