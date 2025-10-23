@@ -992,47 +992,4 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 
 <!--v-->
 ## Reference Implementation
-```
-from typing import List, Dict, Optional
-data_list = Dict[str, float | int | bool]
-
-eps: float = 1e-9
-
-
-def lap_data_parser(s: str) -> data_list:
-    s = s.split(',')
-    item = {"lap_number": int(s[0]),
-            "s1_time": float(s[1]),
-            "s2_time": float(s[2]),
-            "s3_time": float(s[3]),
-            "pit_stop_time": float(s[4])}
-    item["lap_time"] = item["s1_time"] + item["s2_time"] + item["s3_time"]
-    item["total_time"] = item["lap_time"] + item["pit_stop_time"]
-    return item
-
-
-L = int(input())
-data: data_list = [lap_data_parser(input()) for _ in range(L)]
-original_data: data_list = data[:]
-
-# Pre-Process
-best_lap = min(data, key=lambda x: x["lap_time"])["lap_number"]
-pit_laps: List[int] = [x["lap_number"]
-                       for x in data if x["pit_stop_time"] > eps]
-best_sector: List[float] = [0.0] * 3
-for i, item in enumerate(data):
-    if i == 0:
-        for i in range(3):
-            best_sector[i] = item[f"s{i+1}_time"]
-            item[f"is_s{i+1}_green"] = True
-    else:
-        for i in range(3):
-            item[f"is_s{i+1}_green"] = (best_sector[i] > item[f"s{i+1}_time"])
-            if item[f"is_s{i+1}_green"]:
-                best_sector[i] = item[f"s{i+1}_time"]
-
-```
-
-<!--v-->
-## Reference Implementation (Cont.)
 See Piazza/Blackboard
