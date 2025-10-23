@@ -7,7 +7,7 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true # 一级标题 `#` 开头的将自动居中并占满一页
 makeTitle: # 制作封面页
-    lecture: SI100B Fall 2025 Recitation 4
+    lecture: SI100B Fall 2025 Recitation 5
     title: L9 & L10 回顾
     detail: SI100B 2025 Staff | 2025-10-24
 makeThanks: true # 制作结尾页
@@ -771,6 +771,37 @@ def factorial_tail_recursive(n, accumulator=1):
 
 <!--v-->
 ## T2  Image Linear Enhancement 
+### 1. Common Mistakes
+
+**·** Half-away-from-zero rounding rule
+
+```python
+# Wrong way
+y_q = round(y)  # For y = 2.5, y_q = 2! 
+
+# Correct way
+y_q = floor(y + 0.5)
+```
+<!--v-->
+### 2. Reference Implementation
+```python
+from math import floor
+from typing import List
+n = int(input())
+pixels = list(map(int, input().split()))
+a, b = map(float, input().split())
+low, high = map(int, input().split())
+result: List[int] = []
+for x in pixels:
+    # Linear transform
+    y = a * x + b
+    # Quantization
+    y_q = floor(y + 0.5)
+    # Clipping
+    y_out = min(max(y_q, low), high)
+    result.append(y_out)
+print(' '.join(map(str, result)))
+```
 <!--v-->
 ## T3 Simplified Match-3 Puzzle Game
 
