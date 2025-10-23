@@ -773,10 +773,8 @@ def factorial_tail_recursive(n, accumulator=1):
 ## Reference Implementation
 ```
 from typing import Callable, Dict
-
 Number = int | float
 BinaryOp = Callable[[Number, Number], Number]
-
 op_dict: Dict[str, BinaryOp] = {
     "add": lambda x, y: x + y,
     "sub": lambda x, y: x - y,
@@ -786,16 +784,12 @@ op_dict: Dict[str, BinaryOp] = {
     "max": lambda x, y: x if x > y else y,
     "min": lambda x, y: x if x < y else y,
 }
-
-
 def get_op(name: str) -> BinaryOp:
     return op_dict[name]
-
-
 def calc(op: BinaryOp, x: Number, y: Number) -> float:
     return op(x, y)
 ```
-<!--v-->
+
 <!--v-->
 ## T2  Image Linear Enhancement 
 ### 1. Common Mistakes
@@ -985,7 +979,7 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 ```
 
 · Eliminating more than 3 blocks when there's other identical blocks on the same line
-<!--v-->
+
 
 <!--v-->
 ## T4 F1 Race Data Analyst
@@ -994,7 +988,7 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 2. How should ties be resolved?
 3. Some function’s return value should be a list of **lap_number**
 4. Calculate sector colors after 'reorder'
-<!--v-->
+
 
 <!--v-->
 ## Reference Implementation
@@ -1038,7 +1032,7 @@ for i, item in enumerate(data):
                 best_sector[i] = item[f"s{i+1}_time"]
 
 ```
-<!--v-->
+
 <!--v-->
 ## Reference Implementation (Cont.)
 ```
@@ -1071,7 +1065,7 @@ def get_pit_time_less_than(t: float) -> List[int]:
            if eps < x["pit_stop_time"] <= t]
     return sorted(res)
 ```
-<!--v-->
+
 <!--v-->
 ## Reference Implementation (Cont.)
 ```
@@ -1100,7 +1094,7 @@ def get_green_laps(s: int, start: int, end: int, step: int) -> List[int]:
     return sorted(res)
 
 ```
-<!--v-->
+
 <!--v-->
 ## Reference Implementation (Cont.)
 ```
@@ -1120,7 +1114,7 @@ def reorder(key: str, order: str):
     data.sort(key=lambda x: (x[key_dict[key]] * order_mul, x['lap_number']))
 
 ```
-<!--v-->
+
 <!--v-->
 ## Reference Implementation (Cont.)
 ```
@@ -1159,4 +1153,3 @@ for _ in range(N):
         print(e)
 
 ```
-<!--v-->
