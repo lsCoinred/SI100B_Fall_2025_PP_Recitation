@@ -98,15 +98,15 @@ def read_config_file(config_path):
         with open(config_path, 'r') as file:
             import json
             config = json.load(file)
-    
+  
             # Validate required configuration keys
             required_keys = ['database_url', 'api_key', 'timeout']
             for key in required_keys:
                 if key not in config:
                     raise KeyError(f"Missing required config key: {key}")
-    
+  
             return config
-    
+  
     except FileNotFoundError:
         print(f"❌ Config file not found: {config_path}")
         return None
@@ -167,38 +167,38 @@ def process_files_with_cleanup(file_paths):
             # Attempt to open and process each file
             with open(file_path, 'r') as file:
                 content = file.read()
-        
+    
                 # Simulate processing that might fail
                 if 'invalid' in content:
                     raise ValueError(f"Invalid content detected in {file_path}")
-        
+    
                 processed_files.append({
                     'file': file_path,
                     'content_length': len(content),
                     'status': 'processed'
                 })
-        
+    
         except FileNotFoundError:
             print(f"📁 File not found: {file_path} - skipping")
             processed_files.append({
                 'file': file_path,
                 'status': 'not_found'
             })
-    
+  
         except PermissionError:
             print(f"🔒 Permission denied: {file_path} - skipping")
             processed_files.append({
                 'file': file_path,
                 'status': 'permission_denied'
             })
-    
+  
         except ValueError as e:
             print(f"❌ Processing error: {e}")
             processed_files.append({
                 'file': file_path,
                 'status': 'processing_error'
             })
-    
+  
         except Exception as e:
             print(f"⚠️ Unexpected error with {file_path}: {e}")
             processed_files.append({
@@ -712,15 +712,15 @@ Each call waits on the stack for the result of the next call until the base case
 
 ## Head-to-Head Comparison
 
-| Feature              | Iteration                                                                         | Recursion                                                                               |
-| :------------------- | :-------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| **Definition**       | Repeats a block of code using loops.                                              | A function calls itself.                                                                |
-| **State**            | Maintains state with a**counter variable** (e.g., `i`).                           | Maintains state through**parameters** passed in each call.                              |
-| **Termination**      | Terminates when the**loop condition** becomes false.                              | Terminates when a**base case** is reached.                                              |
+| Feature                    | Iteration                                                                                     | Recursion                                                                                           |
+| :------------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- |
+| **Definition**       | Repeats a block of code using loops.                                                          | A function calls itself.                                                                            |
+| **State**            | Maintains state with a**counter variable** (e.g., `i`).                               | Maintains state through**parameters** passed in each call.                                    |
+| **Termination**      | Terminates when the**loop condition** becomes false.                                    | Terminates when a**base case** is reached.                                                    |
 | **Performance**      | Generally**faster** and more **memory-efficient**. No overhead of function calls. | Can be**slower** and use **more memory** due to function call overhead and stack usage. |
-| **Stack Usage**      | Uses a fixed amount of memory.                                                    | Uses the**call stack**; deep recursion can cause a **stack overflow**.                  |
-| **Code Readability** | Can be less readable for problems inherently recursive.                           | Often more**elegant and intuitive** for problems like tree traversal, Fibonacci, etc.   |
-| **Infinite Loop**    | Infinite loop consumes CPU but no stack overflow.                                 | Infinite recursion causes a**stack overflow** error.                                    |
+| **Stack Usage**      | Uses a fixed amount of memory.                                                                | Uses the**call stack**; deep recursion can cause a **stack overflow**.                  |
+| **Code Readability** | Can be less readable for problems inherently recursive.                                       | Often more**elegant and intuitive** for problems like tree traversal, Fibonacci, etc.         |
+| **Infinite Loop**    | Infinite loop consumes CPU but no stack overflow.                                             | Infinite recursion causes a**stack overflow** error.                                          |
 
 <!--v-->
 
@@ -751,7 +751,7 @@ There's a special case called **Tail Recursion**, where the recursive call is th
 **Non-Tail Recursive (like our factorial example):**
 `return n * factorial(n-1)` // The multiplication happens *after* the recursive call returns.
 
-**Tail Recursive Factorial (using an accumulator):**
+* [ ] **Tail Recursive Factorial (using an accumulator):**
 
 ```python
 def factorial_tail_recursive(n, accumulator=1):
@@ -763,10 +763,15 @@ def factorial_tail_recursive(n, accumulator=1):
 
 // The recursive call is the last operation. A smart language/compiler can optimize this.
 
-**Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
+* [ ] **Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
+
+<!--s-->
 
 # Homeworks
 
+<!--v-->
+## T2  Image Linear Enhancement 
+<!--v-->
 ## T3 Simplified Match-3 Puzzle Game
 
 ### 1. Key Concepts Tested
@@ -804,7 +809,7 @@ while True:  # Main game loop
 if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
     return False
 ```
-
+<!--v-->
 ### 2. Key Detail Processing Points
 
 **Adjacency Judgment**
@@ -884,7 +889,7 @@ def print_grid() -> None:
     for line in grid:
         print(' '.join(line))
 ```
-
+<!--v-->
 ### 3. Common Mistakes
 
 **·** Coordinate Index Confusion
@@ -922,3 +927,4 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 ```
 
 · Eliminating more than 3 blocks when there's other identical blocks on the same line
+<!--v-->
