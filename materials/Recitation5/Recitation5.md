@@ -768,7 +768,34 @@ def factorial_tail_recursive(n, accumulator=1):
 <!--s-->
 
 # Homeworks
+<!--v-->
+## T1 Calculator with lambda functions
+## Reference Implementation
+```
+from typing import Callable, Dict
 
+Number = int | float
+BinaryOp = Callable[[Number, Number], Number]
+
+op_dict: Dict[str, BinaryOp] = {
+    "add": lambda x, y: x + y,
+    "sub": lambda x, y: x - y,
+    "mul": lambda x, y: x * y,
+    "div": lambda x, y: x / y,
+    "pow": lambda x, y: x ** y,
+    "max": lambda x, y: x if x > y else y,
+    "min": lambda x, y: x if x < y else y,
+}
+
+
+def get_op(name: str) -> BinaryOp:
+    return op_dict[name]
+
+
+def calc(op: BinaryOp, x: Number, y: Number) -> float:
+    return op(x, y)
+```
+<!--v-->
 <!--v-->
 ## T2  Image Linear Enhancement 
 ### 1. Common Mistakes
@@ -958,4 +985,178 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 ```
 
 · Eliminating more than 3 blocks when there's other identical blocks on the same line
+<!--v-->
+
+<!--v-->
+## T4 F1 Race Data Analyst
+### Common Mistakes
+1. The index is **NOT** equal to lap_number
+2. How should ties be resolved?
+3. Some function’s return value should be a list of **lap_number**
+4. Calculate sector colors after 'reorder'
+<!--v-->
+
+<!--v-->
+## Reference Implementation
+```
+from typing import List, Dict, Optional
+data_list = Dict[str, float | int | bool]
+
+eps: float = 1e-9
+
+
+def lap_data_parser(s: str) -> data_list:
+    s = s.split(',')
+    item = {"lap_number": int(s[0]),
+            "s1_time": float(s[1]),
+            "s2_time": float(s[2]),
+            "s3_time": float(s[3]),
+            "pit_stop_time": float(s[4])}
+    item["lap_time"] = item["s1_time"] + item["s2_time"] + item["s3_time"]
+    item["total_time"] = item["lap_time"] + item["pit_stop_time"]
+    return item
+
+
+L = int(input())
+data: data_list = [lap_data_parser(input()) for _ in range(L)]
+original_data: data_list = data[:]
+
+# Pre-Process
+best_lap = min(data, key=lambda x: x["lap_time"])["lap_number"]
+pit_laps: List[int] = [x["lap_number"]
+                       for x in data if x["pit_stop_time"] > eps]
+best_sector: List[float] = [0.0] * 3
+for i, item in enumerate(data):
+    if i == 0:
+        for i in range(3):
+            best_sector[i] = item[f"s{i+1}_time"]
+            item[f"is_s{i+1}_green"] = True
+    else:
+        for i in range(3):
+            item[f"is_s{i+1}_green"] = (best_sector[i] > item[f"s{i+1}_time"])
+            if item[f"is_s{i+1}_green"]:
+                best_sector[i] = item[f"s{i+1}_time"]
+
+```
+<!--v-->
+<!--v-->
+## Reference Implementation (Cont.)
+```
+# Commands Function
+
+
+# Returns the lap number with the fastest lap time. (If tied, return the smallest lap number.)
+def get_best_lap() -> int:
+    return best_lap
+
+
+# Returns a list of all lap numbers where a pit stop occurred. (ascending order)
+def get_pit_laps() -> List[int]:
+    return pit_laps
+
+
+# Returns the lap time with lap number i.
+def get_lap_time(i: int) -> float:
+    return original_data[i]["lap_time"]
+
+
+# Returns the all-time personal best time for Sector s.
+def get_best_sector(s: int) -> float:
+    return best_sector[s-1]
+
+
+# Returns a list of lap numbers where a pit stop occurred with time ≤ t (ascending order).
+def get_pit_time_less_than(t: float) -> List[int]:
+    res = [x["lap_number"] for x in data
+           if eps < x["pit_stop_time"] <= t]
+    return sorted(res)
+```
+<!--v-->
+<!--v-->
+## Reference Implementation (Cont.)
+```
+# Returns the average lap time of laps within the slice [start:end:step].
+def get_avg_lap(start: int, end: int, step: int) -> float:
+    data_slice = data[start:end:step]
+    if not data_slice:
+        raise ValueError("Querying on empty list!")
+    return sum(x["lap_time"] for x in data_slice) / len(data_slice)
+
+
+# Returns the sum of total time for laps in the slice.
+def get_stint_time(start: int, end: int, step: int) -> float:
+    data_slice = data[start:end:step]
+    if not data_slice:
+        raise ValueError("Querying on empty list!")
+    return sum(x["total_time"] for x in data_slice)
+
+
+# Returns the list of lap numbers where Sector s was green within the slice (ascending order).
+def get_green_laps(s: int, start: int, end: int, step: int) -> List[int]:
+    data_slice = data[start:end:step]
+    if not data_slice:
+        raise ValueError("Querying on empty list!")
+    res = [x["lap_number"] for x in data_slice if x[f"is_s{s}_green"]]
+    return sorted(res)
+
+```
+<!--v-->
+<!--v-->
+## Reference Implementation (Cont.)
+```
+# Returns the pit-stop rate = (number of pit-stop laps) ÷ (slice length).
+def get_pit_rate(start: int, end: int, step: int) -> float:
+    data_slice = data[start:end:step]
+    if not data_slice:
+        raise ValueError("Querying on empty list!")
+    return sum(1 for x in data_slice if x["pit_stop_time"] > eps) / len(data_slice)
+
+
+# Reorders the current lap dataset by key in ascending (ASC) or descending (DESC) order. (Ties resolved by lap number ascending.) This command has no output. Possible keys: lap_time, total_time, s1, s2, s3.
+def reorder(key: str, order: str):
+    key_dict = {"lap_time": "lap_time", "total_time": "total_time",
+                "s1": "s1_time", "s2": "s2_time", "s3": "s3_time"}
+    order_mul = -1 if order == "DESC" else 1
+    data.sort(key=lambda x: (x[key_dict[key]] * order_mul, x['lap_number']))
+
+```
+<!--v-->
+<!--v-->
+## Reference Implementation (Cont.)
+```
+# Query Loop
+N = int(input())
+for _ in range(N):
+    cmd = input().split(',')
+    if not cmd:
+        continue
+
+    try:
+        if cmd[0] == "best_lap":
+            print(get_best_lap())
+        elif cmd[0] == "pit_laps":
+            print(get_pit_laps())
+        elif cmd[0] == "lap_time":
+            print(f"{get_lap_time(int(cmd[1])):.2f}")
+        elif cmd[0] == "best_sector":
+            print(f"{get_best_sector(int(cmd[1])):.2f}")
+        elif cmd[0] == "pit_time":
+            print(get_pit_time_less_than(float(cmd[1])))
+        elif cmd[0] == "avg_lap":
+            print(f"{get_avg_lap(int(cmd[1]), int(cmd[2]), int(cmd[3])):.2f}")
+        elif cmd[0] == "stint_time":
+            print(f"{get_stint_time(int(cmd[1]),
+                                    int(cmd[2]), int(cmd[3])):.2f}")
+        elif cmd[0] == "green_laps":
+            print(get_green_laps(int(cmd[1]), int(cmd[2]),
+                                 int(cmd[3]), int(cmd[4])))
+        elif cmd[0] == "pit_rate":
+            print(f"{get_pit_rate(int(cmd[1]),
+                                  int(cmd[2]), int(cmd[3])):.2f}")
+        elif cmd[0] == "reorder":
+            reorder(cmd[1], cmd[2])
+    except ValueError as e:
+        print(e)
+
+```
 <!--v-->
