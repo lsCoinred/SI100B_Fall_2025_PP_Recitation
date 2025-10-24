@@ -33,7 +33,6 @@ def get_op(op_name: str):
         return lambda x, y: x if x >= y else y 
     elif op_name == "min":
         return lambda x, y: x if x <= y else y
-
 def calc(op, x: float, y: float) -> float:
     return op(x, y)
 ```
@@ -115,6 +114,8 @@ def get_grid(x: int, y: int) -> str:
 ```
 
 <!--v-->
+### 1. Key Concepts Tested
+
 #### Algorithmic Thinking
 
 - Input Parsing and Game Simutation：Parse commands and execute game flow step by step according to rules
@@ -137,7 +138,7 @@ if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
 <!--v-->
 ### 2. Key Detail Processing Points
 
-**Adjacency Judgment**
+#### Adjacency Judgment
 
 ```python
 def is_adjacent(x1, y1, x2, y2):
@@ -188,20 +189,23 @@ def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
         cnt = 0
         # Try to swap first
         swap_grid(x1, y1, x2, y2)
+```
+
+<!--v-->
+### 2. Key Detail Processing Points
+
+#### Match Checking
+```python
         # Check if y1 column can be mathced
         if get_grid(x1-1, y1) == get_grid(x1, y1) and \
                 get_grid(x1, y1) == get_grid(x1+1, y1):
-            cnt += 1
-            grid[x1-2][y1-1] = '.'
-            grid[x1-1][y1-1] = '.'
-            grid[x1][y1-1] = '.'
+            cnt += 1;                   grid[x1-2][y1-1] = '.'
+            grid[x1-1][y1-1] = '.';     grid[x1][y1-1] = '.'
         # Check if y2 column can be mathced
         if get_grid(x1-1, y2) == get_grid(x1, y2) and \
                 get_grid(x1, y2) == get_grid(x1+1, y2):
-            cnt += 1
-            grid[x1-2][y2-1] = '.'
-            grid[x1-1][y2-1] = '.'
-            grid[x1][y2-1] = '.'
+            cnt += 1;                   grid[x1-2][y2-1] = '.'; 
+            grid[x1-1][y2-1] = '.';     grid[x1][y2-1] = '.'
         # If invaild, recover
         if cnt == 0:
             swap_grid(x1, y1, x2, y2)
