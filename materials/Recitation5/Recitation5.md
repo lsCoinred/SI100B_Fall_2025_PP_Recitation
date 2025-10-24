@@ -12,11 +12,14 @@ makeTitle: # 制作封面页
     detail: SI100B 2025 Staff | 2025-10-24
 makeThanks: true # 制作结尾页
 ---
-
 # Homeworks
+
 <!--v-->
+
 ## T1 Calculator with lambda functions
+
 ### Reference Implementation
+
 ```
 def get_op(op_name: str):
     if op_name == "add":
@@ -38,7 +41,9 @@ def calc(op, x: float, y: float) -> float:
 ```
 
 <!--v-->
+
 ### Reference Implementation (Advance)
+
 ```
 from typing import Callable, Dict
 Number = int | float
@@ -58,9 +63,10 @@ def calc(op: BinaryOp, x: Number, y: Number) -> float:
     return op(x, y)
 ```
 
-
 <!--v-->
-## T2  Image Linear Enhancement 
+
+## T2  Image Linear Enhancement
+
 ### 1. Common Mistakes
 
 **·** Half-away-from-zero rounding rule
@@ -74,8 +80,11 @@ y_q = round(y + 0.5) if y >= 0 else -round(-y + 0.5)
 # or
 y_q = math.floor(y + 0.5)
 ```
+
 <!--v-->
+
 ### 2. Reference Implementation
+
 ```python
 from math import floor
 from typing import List
@@ -94,7 +103,9 @@ for x in pixels:
     result.append(y_out)
 print(' '.join(map(str, result)))
 ```
+
 <!--v-->
+
 ## T3 Simplified Match-3 Puzzle Game
 
 ### 1. Key Concepts Tested
@@ -113,8 +124,7 @@ def get_grid(x: int, y: int) -> str:
      return grid[x-1][y-1] # Convert to 0-based index
 ```
 
-<!--v-->
-### 1. Key Concepts Tested
+<!--v--
 
 #### Algorithmic Thinking
 
@@ -135,8 +145,8 @@ while True:  # Main game loop
 if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
     return False
 ```
+
 <!--v-->
-### 2. Key Detail Processing Points
 
 #### Adjacency Judgment
 
@@ -149,12 +159,12 @@ def is_adjacent(x1, y1, x2, y2):
 ```
 
 <!--v-->
+
 ### 2. Key Detail Processing Points
 
 #### Special Matching Rules
 
 - Swapped block must become the **middle position** of the match
-
 - A match occurs when **exactly 3 identical blocks** line up horizontally or vertically. (Only consider eliminating 3 blocks if they make a valid match and neglecting more identical blocks even if they are on the same line.)
 
 ```python
@@ -169,13 +179,9 @@ def is_center_match(x, y):
     return False
 ```
 
-<!--v-->
-### 2. Key Detail Processing Points
-
 #### Match Checking
 
 - Check if the swap makes a valid match, both horizontally and vertically, for both swapped blocks.
-
 - Check if the swapped blocks are empty (Mentioned in Hints).
 
 ```python
@@ -191,31 +197,6 @@ def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
         swap_grid(x1, y1, x2, y2)
 ```
 
-<!--v-->
-### 2. Key Detail Processing Points
-
-#### Match Checking
-```python
-        # Check if y1 column can be mathced
-        if get_grid(x1-1, y1) == get_grid(x1, y1) == get_grid(x1+1, y1):
-            cnt += 1;                   grid[x1-2][y1-1] = '.'
-            grid[x1-1][y1-1] = '.';     grid[x1][y1-1] = '.'
-        # Check if y2 column can be mathced
-        if get_grid(x1-1, y2) == get_grid(x1, y2) == get_grid(x1+1, y2):
-            cnt += 1;                   grid[x1-2][y2-1] = '.'; 
-            grid[x1-1][y2-1] = '.';     grid[x1][y2-1] = '.'
-        # If invaild, recover
-        if cnt == 0:
-            swap_grid(x1, y1, x2, y2)
-        return cnt
-# Similar for columns
-    else:
-        return 0
-```
-
-<!--v-->
-### 2. Key Detail Processing Points
-
 #### Output Processing
 
 - Print the grid by line, split blocks with empty space.
@@ -225,7 +206,9 @@ def print_grid() -> None:
     for line in grid:
         print(' '.join(line))
 ```
+
 <!--v-->
+
 ### 3. Common Mistakes
 
 - Coordinate Index Confusion
@@ -246,10 +229,7 @@ if not match_found:
     swap(x1, y1, x2, y2)  # Rollback
 ```
 
-<!--v-->
-### 3. Common Mistakes
-
-- Counting both valid swaps
+·Counting both valid swaps
 
 ```python
 # Wrong: Only check one swap position
@@ -267,28 +247,28 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 
 - Eliminating more than 3 blocks when there's other identical blocks on the same line
 
-
 <!--v-->
+
 ## T4 F1 Race Data Analyst
+
 ### Common Mistakes
+
 1. The index is **NOT** equal to lap_number
 2. How should ties be resolved?
 3. Some function’s return value should be a list of **lap_number**
 4. Calculate sector colors after 'reorder'
 
-
 <!--v-->
+
 ## Reference Implementation
+
 See Piazza/Blackboard
 
 Compare `T4_basic.py` and `T4.py`, and reflect on the following:
 
 - The compactness and efficiency of list/tuple comprehensions in programming
-
 - The strong synergy between lambda expressions and higher-order functions
-
 - The improvement in program readability when using dictionaries to organize data or handle multi-branch conditions
-
 - The necessity of exception handling in certain situations
 
 <!--s-->
@@ -448,17 +428,17 @@ def process_files_with_cleanup(file_paths):
             # Attempt to open and process each file
             with open(file_path, 'r') as file:
                 content = file.read()
-    
+  
                 # Simulate processing that might fail
                 if 'invalid' in content:
                     raise ValueError(f"Invalid content detected in {file_path}")
-    
+  
                 processed_files.append({
                     'file': file_path,
                     'content_length': len(content),
                     'status': 'processed'
                 })
-    
+  
         except FileNotFoundError:
             print(f"📁 File not found: {file_path} - skipping")
             processed_files.append({
@@ -1045,5 +1025,3 @@ def factorial_tail_recursive(n, accumulator=1):
 // The recursive call is the last operation. A smart language/compiler can optimize this.
 
 * [ ] **Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
-
-
