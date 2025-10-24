@@ -222,13 +222,11 @@ def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
 #### Match Checking
 ```python
         # Check if y1 column can be mathced
-        if get_grid(x1-1, y1) == get_grid(x1, y1) and \
-                get_grid(x1, y1) == get_grid(x1+1, y1):
+        if get_grid(x1-1, y1) == get_grid(x1, y1) == get_grid(x1+1, y1):
             cnt += 1;                   grid[x1-2][y1-1] = '.'
             grid[x1-1][y1-1] = '.';     grid[x1][y1-1] = '.'
         # Check if y2 column can be mathced
-        if get_grid(x1-1, y2) == get_grid(x1, y2) and \
-                get_grid(x1, y2) == get_grid(x1+1, y2):
+        if get_grid(x1-1, y2) == get_grid(x1, y2) == get_grid(x1+1, y2):
             cnt += 1;                   grid[x1-2][y2-1] = '.'; 
             grid[x1-1][y2-1] = '.';     grid[x1][y2-1] = '.'
         # If invaild, recover
@@ -307,6 +305,16 @@ if is_center_match(x1, y1) or is_center_match(x2, y2):
 <!--v-->
 ## Reference Implementation
 See Piazza/Blackboard
+
+Compare `T4_basic.py` and `T4.py`, and reflect on the following:
+
+- The compactness and efficiency of list/tuple comprehensions in programming
+
+- The strong synergy between lambda expressions and higher-order functions
+
+- The improvement in program readability when using dictionaries to organize data or handle multi-branch conditions
+
+- The necessity of exception handling in certain situations
 
 <!--s-->
 
