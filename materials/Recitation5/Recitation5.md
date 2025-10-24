@@ -124,7 +124,9 @@ def get_grid(x: int, y: int) -> str:
      return grid[x-1][y-1] # Convert to 0-based index
 ```
 
-<!--v--
+<!--v-->
+
+### 1. Key Concepts Tested
 
 #### Algorithmic Thinking
 
@@ -147,6 +149,8 @@ if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
 ```
 
 <!--v-->
+
+### 2. Key Detail Processing Points
 
 #### Adjacency Judgment
 
@@ -179,6 +183,10 @@ def is_center_match(x, y):
     return False
 ```
 
+<!--v-->
+
+### 2. Key Detail Processing Points
+
 #### Match Checking
 
 - Check if the swap makes a valid match, both horizontally and vertically, for both swapped blocks.
@@ -196,6 +204,34 @@ def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
         # Try to swap first
         swap_grid(x1, y1, x2, y2)
 ```
+
+<!--v-->
+
+### 2. Key Detail Processing Points
+
+#### Match Checking
+
+```python
+        # Check if y1 column can be mathced
+        if get_grid(x1-1, y1) == get_grid(x1, y1) == get_grid(x1+1, y1):
+            cnt += 1;                   grid[x1-2][y1-1] = '.'
+            grid[x1-1][y1-1] = '.';     grid[x1][y1-1] = '.'
+        # Check if y2 column can be mathced
+        if get_grid(x1-1, y2) == get_grid(x1, y2) == get_grid(x1+1, y2):
+            cnt += 1;                   grid[x1-2][y2-1] = '.'; 
+            grid[x1-1][y2-1] = '.';     grid[x1][y2-1] = '.'
+        # If invaild, recover
+        if cnt == 0:
+            swap_grid(x1, y1, x2, y2)
+        return cnt
+# Similar for columns
+    else:
+        return 0
+```
+
+<!--v-->
+
+### 2. Key Detail Processing Points
 
 #### Output Processing
 
@@ -229,7 +265,11 @@ if not match_found:
     swap(x1, y1, x2, y2)  # Rollback
 ```
 
-·Counting both valid swaps
+<!--v-->
+
+### 3. Common Mistakes
+
+- Counting both valid swaps
 
 ```python
 # Wrong: Only check one swap position
