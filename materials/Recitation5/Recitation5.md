@@ -76,8 +76,6 @@ def calc(op: BinaryOp, x: Number, y: Number) -> float:
 y_q = round(y)  # For y = 2.5, y_q = 2! 
 
 # Correct way
-y_q = round(y + 0.5) if y >= 0 else -round(-y + 0.5)
-# or
 y_q = math.floor(y + 0.5)
 ```
 
