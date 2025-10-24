@@ -12,6 +12,275 @@ makeTitle: # 制作封面页
     detail: SI100B 2025 Staff | 2025-10-24
 makeThanks: true # 制作结尾页
 ---
+
+# Homeworks
+<!--v-->
+## T1 Calculator with lambda functions
+### Reference Implementation
+```
+def get_op(op_name: str):
+    if op_name == "add":
+        return lambda x, y: x + y
+    elif op_name == "sub":
+        return lambda x, y: x - y
+    elif op_name == "mul":
+        return lambda x, y: x * y
+    elif op_name == "div":
+        return lambda x, y: x / y
+    elif op_name == "pow":
+        return lambda x, y: x ** y
+    elif op_name == "max":
+        return lambda x, y: x if x >= y else y 
+    elif op_name == "min":
+        return lambda x, y: x if x <= y else y
+
+def calc(op, x: float, y: float) -> float:
+    return op(x, y)
+```
+
+<!--v-->
+### Reference Implementation (Advance)
+```
+from typing import Callable, Dict
+Number = int | float
+BinaryOp = Callable[[Number, Number], Number]
+op_dict: Dict[str, BinaryOp] = {
+    "add": lambda x, y: x + y,
+    "sub": lambda x, y: x - y,
+    "mul": lambda x, y: x * y,
+    "div": lambda x, y: x / y,
+    "pow": lambda x, y: x ** y,
+    "max": lambda x, y: x if x > y else y,
+    "min": lambda x, y: x if x < y else y,
+}
+def get_op(name: str) -> BinaryOp:
+    return op_dict[name]
+def calc(op: BinaryOp, x: Number, y: Number) -> float:
+    return op(x, y)
+```
+
+
+<!--v-->
+## T2  Image Linear Enhancement 
+### 1. Common Mistakes
+
+**·** Half-away-from-zero rounding rule
+
+```python
+# Wrong way
+y_q = round(y)  # For y = 2.5, y_q = 2! 
+
+# Correct way
+y_q = round(y + 0.5) if y >= 0 else -round(-y + 0.5)
+# or
+y_q = math.floor(y + 0.5)
+```
+<!--v-->
+### 2. Reference Implementation
+```python
+from math import floor
+from typing import List
+n = int(input())
+pixels = list(map(int, input().split()))
+a, b = map(float, input().split())
+low, high = map(int, input().split())
+result: List[int] = []
+for x in pixels:
+    # Linear transform
+    y = a * x + b
+    # Quantization
+    y_q = floor(y + 0.5)
+    # Clipping
+    y_out = min(max(y_q, low), high)
+    result.append(y_out)
+print(' '.join(map(str, result)))
+```
+<!--v-->
+## T3 Simplified Match-3 Puzzle Game
+
+### 1. Key Concepts Tested
+
+#### 2D Array/List Operations
+
+- 2D Grid representation
+  ```python
+  n, m = map(int, input().split())
+  grid: List[List[str]] = [input().split() for _ in range(n)]
+  ```
+- Coordinate conversion (1-based to 0-based indexing)
+
+```python
+def get_grid(x: int, y: int) -> str:
+     return grid[x-1][y-1] # Convert to 0-based index
+```
+
+<!--v-->
+#### Algorithmic Thinking
+
+- Input Parsing and Game Simutation：Parse commands and execute game flow step by step according to rules
+
+```python
+while True:  # Main game loop
+    cmd = input().split()
+    if cmd[0] == "exit":
+        break
+    elif cmd[0] == "swap":
+        # Handle swap logic
+```
+
+- Boundary Condition Handling:  Grid boundaries, invalid operations
+
+```python
+if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
+    return False
+```
+<!--v-->
+### 2. Key Detail Processing Points
+
+**Adjacency Judgment**
+
+```python
+def is_adjacent(x1, y1, x2, y2):
+    """Check if two positions are adjacent"""
+    dx = abs(x1 - x2)
+    dy = abs(y1 - y2)
+    return (dx == 1 and dy == 0) or (dx == 0 and dy == 1)
+```
+
+<!--v-->
+### 2. Key Detail Processing Points
+
+#### Special Matching Rules
+
+- Swapped block must become the **middle position** of the match
+
+- A match occurs when **exactly 3 identical blocks** line up horizontally or vertically. (Only consider eliminating 3 blocks if they make a valid match and neglecting more identical blocks even if they are on the same line.)
+
+```python
+def is_center_match(x, y):
+    """Check if (x,y) becomes match center"""
+    # Horizontal direction check
+    if 1 < y < m and grid[x-1][y-2] == grid[x-1][y-1] == grid[x-1][y]:
+        return True
+    # Vertical direction check
+    if 1 < x < n and grid[x-2][y-1] == grid[x-1][y-1] == grid[x][y-1]:
+        return True
+    return False
+```
+
+<!--v-->
+### 2. Key Detail Processing Points
+
+#### Match Checking
+
+- Check if the swap makes a valid match, both horizontally and vertically, for both swapped blocks.
+
+- Check if the swapped blocks are empty (Mentioned in Hints).
+
+```python
+def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
+    if get_grid(x1, y1) == '.' or get_grid(x2, y2) == '.':
+        return 0
+    if x1 == x2 and abs(y1 - y2) == 1:
+    # Check swap in row direction
+        if x1 == 1 or x1 == n:
+            return 0
+        cnt = 0
+        # Try to swap first
+        swap_grid(x1, y1, x2, y2)
+        # Check if y1 column can be mathced
+        if get_grid(x1-1, y1) == get_grid(x1, y1) and \
+                get_grid(x1, y1) == get_grid(x1+1, y1):
+            cnt += 1
+            grid[x1-2][y1-1] = '.'
+            grid[x1-1][y1-1] = '.'
+            grid[x1][y1-1] = '.'
+        # Check if y2 column can be mathced
+        if get_grid(x1-1, y2) == get_grid(x1, y2) and \
+                get_grid(x1, y2) == get_grid(x1+1, y2):
+            cnt += 1
+            grid[x1-2][y2-1] = '.'
+            grid[x1-1][y2-1] = '.'
+            grid[x1][y2-1] = '.'
+        # If invaild, recover
+        if cnt == 0:
+            swap_grid(x1, y1, x2, y2)
+        return cnt
+# Similar for columns
+    else:
+        return 0
+```
+
+<!--v-->
+### 2. Key Detail Processing Points
+
+#### Output Processing
+
+- Print the grid by line, split blocks with empty space.
+
+```python
+def print_grid() -> None:
+    for line in grid:
+        print(' '.join(line))
+```
+<!--v-->
+### 3. Common Mistakes
+
+- Coordinate Index Confusion
+
+```python
+# Wrong way
+grid[x1][y1] = value  # Forgot -1 conversion
+
+# Correct way
+grid[x1-1][y1-1] = value
+```
+
+- Missing Rollback Operation
+
+```python
+# Must remember to rollback invalid swaps
+if not match_found:
+    swap(x1, y1, x2, y2)  # Rollback
+```
+
+<!--v-->
+### 3. Common Mistakes
+
+- Counting both valid swaps
+
+```python
+# Wrong: Only check one swap position
+if is_center_match(x1, y1):
+  if is_valid_match(x1, y1):
+	point += 30
+
+# Correct: Check both swap positions
+if is_center_match(x1, y1) or is_center_match(x2, y2):
+      if is_valid_match(x1, y1):
+	point += 30
+      if is_valid_match(x2, y2):
+	point += 30
+```
+
+- Eliminating more than 3 blocks when there's other identical blocks on the same line
+
+
+<!--v-->
+## T4 F1 Race Data Analyst
+### Common Mistakes
+1. The index is **NOT** equal to lap_number
+2. How should ties be resolved?
+3. Some function’s return value should be a list of **lap_number**
+4. Calculate sector colors after 'reorder'
+
+
+<!--v-->
+## Reference Implementation
+See Piazza/Blackboard
+
+<!--s-->
+
 # Exceptions
 
 <!--v-->
@@ -712,15 +981,15 @@ Each call waits on the stack for the result of the next call until the base case
 
 ## Head-to-Head Comparison
 
-| Feature                    | Iteration                                                                                     | Recursion                                                                                           |
-| :------------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- |
-| **Definition**       | Repeats a block of code using loops.                                                          | A function calls itself.                                                                            |
-| **State**            | Maintains state with a**counter variable** (e.g., `i`).                               | Maintains state through**parameters** passed in each call.                                    |
-| **Termination**      | Terminates when the**loop condition** becomes false.                                    | Terminates when a**base case** is reached.                                                    |
+| Feature              | Iteration                                                                         | Recursion                                                                               |
+| :------------------- | :-------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
+| **Definition**       | Repeats a block of code using loops.                                              | A function calls itself.                                                                |
+| **State**            | Maintains state with a**counter variable** (e.g., `i`).                           | Maintains state through**parameters** passed in each call.                              |
+| **Termination**      | Terminates when the**loop condition** becomes false.                              | Terminates when a**base case** is reached.                                              |
 | **Performance**      | Generally**faster** and more **memory-efficient**. No overhead of function calls. | Can be**slower** and use **more memory** due to function call overhead and stack usage. |
-| **Stack Usage**      | Uses a fixed amount of memory.                                                                | Uses the**call stack**; deep recursion can cause a **stack overflow**.                  |
-| **Code Readability** | Can be less readable for problems inherently recursive.                                       | Often more**elegant and intuitive** for problems like tree traversal, Fibonacci, etc.         |
-| **Infinite Loop**    | Infinite loop consumes CPU but no stack overflow.                                             | Infinite recursion causes a**stack overflow** error.                                          |
+| **Stack Usage**      | Uses a fixed amount of memory.                                                    | Uses the**call stack**; deep recursion can cause a **stack overflow**.                  |
+| **Code Readability** | Can be less readable for problems inherently recursive.                           | Often more**elegant and intuitive** for problems like tree traversal, Fibonacci, etc.   |
+| **Infinite Loop**    | Infinite loop consumes CPU but no stack overflow.                                 | Infinite recursion causes a**stack overflow** error.                                    |
 
 <!--v-->
 
@@ -765,231 +1034,4 @@ def factorial_tail_recursive(n, accumulator=1):
 
 * [ ] **Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
 
-<!--s-->
 
-# Homeworks
-<!--v-->
-## T1 Calculator with lambda functions
-## Reference Implementation
-```
-from typing import Callable, Dict
-Number = int | float
-BinaryOp = Callable[[Number, Number], Number]
-op_dict: Dict[str, BinaryOp] = {
-    "add": lambda x, y: x + y,
-    "sub": lambda x, y: x - y,
-    "mul": lambda x, y: x * y,
-    "div": lambda x, y: x / y,
-    "pow": lambda x, y: x ** y,
-    "max": lambda x, y: x if x > y else y,
-    "min": lambda x, y: x if x < y else y,
-}
-def get_op(name: str) -> BinaryOp:
-    return op_dict[name]
-def calc(op: BinaryOp, x: Number, y: Number) -> float:
-    return op(x, y)
-```
-
-<!--v-->
-## T2  Image Linear Enhancement 
-### 1. Common Mistakes
-
-**·** Half-away-from-zero rounding rule
-
-```python
-# Wrong way
-y_q = round(y)  # For y = 2.5, y_q = 2! 
-
-# Correct way
-y_q = floor(y + 0.5)
-```
-<!--v-->
-### 2. Reference Implementation
-```python
-from math import floor
-from typing import List
-n = int(input())
-pixels = list(map(int, input().split()))
-a, b = map(float, input().split())
-low, high = map(int, input().split())
-result: List[int] = []
-for x in pixels:
-    # Linear transform
-    y = a * x + b
-    # Quantization
-    y_q = floor(y + 0.5)
-    # Clipping
-    y_out = min(max(y_q, low), high)
-    result.append(y_out)
-print(' '.join(map(str, result)))
-```
-<!--v-->
-## T3 Simplified Match-3 Puzzle Game
-
-### 1. Key Concepts Tested
-
-  **2D Array/List Operations**
-
-- 2D Grid representation
-  ```python
-  n, m = map(int, input().split())
-  grid: List[List[str]] = [input().split() for _ in range(n)]
-  ```
-- Coordinate conversion (1-based to 0-based indexing)
-
-```python
-def get_grid(x: int, y: int) -> str:
-     return grid[x-1][y-1] # Convert to 0-based index
-```
-
-**Algorithmic Thinking**
-
-**·** Input Parsing and Game Simutation：Parse commands and execute game flow step by step according to rules
-
-```python
-while True:  # Main game loop
-    cmd = input().split()
-    if cmd[0] == "exit":
-        break
-    elif cmd[0] == "swap":
-        # Handle swap logic
-```
-
-**·** Boundary Condition Handling:  Grid boundaries, invalid operations
-
-```python
-if not (1 <= x1 <= n and 1 <= y1 <= m):  # Check coordinate validity
-    return False
-```
-<!--v-->
-### 2. Key Detail Processing Points
-
-**Adjacency Judgment**
-
-```python
-def is_adjacent(x1, y1, x2, y2):
-    """Check if two positions are adjacent"""
-    dx = abs(x1 - x2)
-    dy = abs(y1 - y2)
-    return (dx == 1 and dy == 0) or (dx == 0 and dy == 1)
-```
-
-**Special Matching Rules**
-
-· Swapped block must become the **middle position** of the match
-
-· A match occurs when **exactly 3 identical blocks** line up horizontally or vertically. (Only consider eliminating 3 blocks if they make a valid match and neglecting more identical blocks even if they are on the same line.)
-
-```python
-def is_center_match(x, y):
-    """Check if (x,y) becomes match center"""
-    # Horizontal direction check
-    if 1 < y < m and grid[x-1][y-2] == grid[x-1][y-1] == grid[x-1][y]:
-        return True
-    # Vertical direction check
-    if 1 < x < n and grid[x-2][y-1] == grid[x-1][y-1] == grid[x][y-1]:
-        return True
-    return False
-```
-
-**Match Checking**
-
-· Check if the swap makes a valid match, both horizontally and vertically, for both swapped blocks.
-
-· Check if the swapped blocks are empty (Mentioned in Hints).
-
-```python
-def do_swap(x1: int, y1: int, x2: int, y2: int) -> int:
-    if get_grid(x1, y1) == '.' or get_grid(x2, y2) == '.':
-        return 0
-    if x1 == x2 and abs(y1 - y2) == 1:
-    # Check swap in row direction
-        if x1 == 1 or x1 == n:
-            return 0
-        cnt = 0
-        # Try to swap first
-        swap_grid(x1, y1, x2, y2)
-        # Check if y1 column can be mathced
-        if get_grid(x1-1, y1) == get_grid(x1, y1) and \
-                get_grid(x1, y1) == get_grid(x1+1, y1):
-            cnt += 1
-            grid[x1-2][y1-1] = '.'
-            grid[x1-1][y1-1] = '.'
-            grid[x1][y1-1] = '.'
-        # Check if y2 column can be mathced
-        if get_grid(x1-1, y2) == get_grid(x1, y2) and \
-                get_grid(x1, y2) == get_grid(x1+1, y2):
-            cnt += 1
-            grid[x1-2][y2-1] = '.'
-            grid[x1-1][y2-1] = '.'
-            grid[x1][y2-1] = '.'
-        # If invaild, recover
-        if cnt == 0:
-            swap_grid(x1, y1, x2, y2)
-        return cnt
-# Similar for columns
-    else:
-        return 0
-```
-
-**Output Processing**
-
-· Print the grid by line, split blocks with empty space.
-
-```python
-def print_grid() -> None:
-    for line in grid:
-        print(' '.join(line))
-```
-<!--v-->
-### 3. Common Mistakes
-
-**·** Coordinate Index Confusion
-
-```python
-# Wrong way
-grid[x1][y1] = value  # Forgot -1 conversion
-
-# Correct way
-grid[x1-1][y1-1] = value
-```
-
-· Missing Rollback Operation
-
-```python
-# Must remember to rollback invalid swaps
-if not match_found:
-    swap(x1, y1, x2, y2)  # Rollback
-```
-
-· Counting both valid swaps
-
-```python
-# Wrong: Only check one swap position
-if is_center_match(x1, y1):
-  if is_valid_match(x1, y1):
-	point += 30
-
-# Correct: Check both swap positions
-if is_center_match(x1, y1) or is_center_match(x2, y2):
-      if is_valid_match(x1, y1):
-	point += 30
-      if is_valid_match(x2, y2):
-	point += 30
-```
-
-· Eliminating more than 3 blocks when there's other identical blocks on the same line
-
-
-<!--v-->
-## T4 F1 Race Data Analyst
-### Common Mistakes
-1. The index is **NOT** equal to lap_number
-2. How should ties be resolved?
-3. Some function’s return value should be a list of **lap_number**
-4. Calculate sector colors after 'reorder'
-
-
-<!--v-->
-## Reference Implementation
-See Piazza/Blackboard
