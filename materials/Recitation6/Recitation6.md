@@ -15,7 +15,7 @@ makeThanks: true
 
 # Homework 3 Preview
 <!--v-->
-## Homework 2
+## Homework 3
 - 已在 OJ 上发布
 - Deadline 2025-11-6 21:15
 - The problems should be solved <strong>individually</strong>.
@@ -26,7 +26,7 @@ makeThanks: true
 - Questions are tooooo long $\longrightarrow$ spend more time on generating ideas than coding.
 
 <!--v-->
-## Question 1 **Nested List Flattener**
+## Question 1: **Nested List Flattener**
 Implement a function that can flatten nested lists of arbitrary depth into a one-dimensional list.
 
 实现一个函数，该函数可以将任意深度的嵌套列表展平为一维列表。
@@ -49,7 +49,7 @@ def flatten_nested_list(nested) -> list:
 ```
 
 <!--v-->
-## Question 2 **Sublist Operation**
+## Question 2: **Sublist Operation**
 1. 反转 reverse_sublist
 ```python
 def reverse_sublist(lst, l, r, inplace):
@@ -70,7 +70,7 @@ def reverse_sublist(lst, l, r, inplace):
 ```
 
 <!--v-->
-## Question 2 **Sublist Operation**
+## Question 2: **Sublist Operation**
 2. 旋转 rotate_sublist
 ```python
 def rotate_sublist(lst, l, r, k, inplace):
@@ -92,7 +92,7 @@ def rotate_sublist(lst, l, r, k, inplace):
 ```
 
 <!--v-->
-## Question 2 **Sublist Operation**
+## Question 2: **Sublist Operation**
 3. 交换 swap_sublist
 ```python
 def swap_sublist(lst, l1, r1, l2, r2, inplace):
@@ -117,18 +117,18 @@ def swap_sublist(lst, l1, r1, l2, r2, inplace):
     """
 ```
 <!--v-->
-## Question 3 **Document Keyword**
+## Question 3: **Document Keyword**
 1. Compute TF (Term Frequency) for each word in a document:
    
-$\mathrm{TF}_{t,d} = \log_{10} \left( \mathrm{count}(t, d) + 1 \right)$
+$$\text{TF}_{t,d} = \log_{10} \left( \text{count}(t, d) + 1 \right)$$
 
 2. Compute IDF (Inverse Document Frequency) across all documents:
    
-$\mathrm{IDF}_{t} = \log_{10} \left( \dfrac{N}{\mathrm{DF}_{t}}  \right)$
+$$\text{IDF}_{t} = \log_{10} \left( \dfrac{N}{\text{DF}_{t}}  \right)$$
 
 3. Combine TF and IDF to obtain the TF-IDF score for each word in each document:
    
-$\mathrm{TF\text{-}IDF}_{t,d} = \mathrm{TF}_{t,d} \times \mathrm{IDF}_{t} $
+$$\text{TF-IDF}_{t,d} = \text{TF}_{t,d} \times \text{IDF}_{t} $$
 
 <!--s-->
 
@@ -189,12 +189,13 @@ person.clear()        # Remove all items
 ```python
 for key in person:
     print(key, person[key])
-
 # Or use items() to get both keys and values
 for key, value in person.items():
     print(f"{key}: {value}")
 ```
 
+<!--v-->
+## Common Operations
 5. Merging and Copying
 ```python
 a = {"x": 1, "y": 2}
@@ -202,8 +203,12 @@ b = {"y": 3, "z": 4}
 
 a.update(b)   # Merge b into a
 print(a)      # {'x': 1, 'y': 3, 'z': 4}
-
+```
+```python
 c = a.copy()  # Shallow copy
+
+import copy
+d = copy.deepcopy(a) # Deep copy
 ```
 
 <!--v-->
@@ -285,18 +290,16 @@ def binary_search(a, target, l=0, r=None):
 
 <!--v-->
 ## Common Mistakes
-Missing base case --> Function never stops
+Missing base case $\longrightarrow$ Function never stops
 
-Not reducing problem size --> Infinite recursion
+Not reducing problem size $\longrightarrow$ Infinite recursion
 
 <!--s-->
 
 # Class
 
 <!--v-->
-## What Are Classes and Objects?
-
-### Class
+## Class
 A class is a blueprint or template for creating objects.
 
 It defines what attributes (data) and methods (functions) its objects will have.
@@ -310,6 +313,8 @@ class Dog:
     def bark(self):         # Method
         print(f"{self.name} says woof!")
 ```
+
+<!--v-->
 ### Object
 An object is an instance of a class.
 
@@ -327,10 +332,10 @@ my_dog.bark()
 
 It initializes the object’s attributes.
 
-## Methods and self
-self represents the instance of the class itself.
+## Methods and `self`
+`self` represents the instance of the class itself.
 
-All instance methods must include self as the first parameter.
+All instance methods must include `self` as the first parameter.
 
 <!--v-->
 ## Inheritance and Method Overriding
@@ -352,7 +357,6 @@ kitty.speak()  # Output: Meow
 
 <!--v-->
 ## Dunder Methods
-### What Are Dunder Methods?
 Dunder methods (short for “double underscore”) are special methods in Python that begin and end with two underscores, like `__init__`, `__str__`, or `__add__`.
 
 They let you customize how objects behave with built-in Python operations:
