@@ -21,11 +21,11 @@ makeThanks: true
 - The problems should be solved <strong>individually</strong>.
 <!--v-->
 ## Some Tricks
-- English written question --> online translation.
-- Lack of test cases --> generate more or get exception from friends or TAs.
-- Questions are tooooo long --> spend more time on generating ideas than coding.
-<!--v-->
+- English written question $\longrightarrow$ online translation.
+- Lack of test cases $\longrightarrow$ generate more or get exception from friends or TAs.
+- Questions are tooooo long $\longrightarrow$ spend more time on generating ideas than coding.
 
+<!--v-->
 ## Question 1 **Nested List Flattener**
 Implement a function that can flatten nested lists of arbitrary depth into a one-dimensional list.
 
@@ -46,17 +46,14 @@ def flatten_nested_list(nested) -> list:
         list: A flattened one-dimensional list whose elements are in the same order 
               as they appear from left to right in the printed original list.
     """
-    pass
 ```
 <!--v-->
 ## Question 2 **Sublist Operation**
-Implement three functions:
 1. 反转 reverse_sublist
 ```
 def reverse_sublist(lst, l, r, inplace):
     """
     Reverse the elements in the sublist [l:r] of a list.
-
     Args:
         lst (list): The input list to be processed.
         l (int): The starting index of the sublist (inclusive).
@@ -64,22 +61,19 @@ def reverse_sublist(lst, l, r, inplace):
         inplace (bool): 
             If True, modifies the list in place and returns the same list.  
             If False, returns a new list with the specified sublist reversed.
-
     Returns:
         list: The list with the specified sublist reversed.
-
     Raises:
         AssertionError: If l or r is out of range, or if l >= r.
     """
-    pass
 ```
 <!--v-->
+## Question 2 **Sublist Operation**
 2. 旋转 rotate_sublist
 ```
 def rotate_sublist(lst, l, r, k, inplace):
     """
     Rotate the elements in the sublist [l:r] of a list to the left by k positions.
-
     Args:
         lst (list): The input list to be processed.
         l (int): The starting index of the sublist (inclusive).
@@ -88,22 +82,19 @@ def rotate_sublist(lst, l, r, k, inplace):
         inplace (bool): 
             If True, modifies the list in place and returns the same list.  
             If False, returns a new list with the specified sublist rotated.
-
     Returns:
         list: The list with the specified sublist rotated left by k positions.
-
     Raises:
         AssertionError: If l or r is out of range, or if l >= r.
     """
-    pass
 ```
 <!--v-->
+## Question 2 **Sublist Operation**
 3. 交换 swap_sublist
 ```
 def swap_sublist(lst, l1, r1, l2, r2, inplace):
     """
     Swap two sublists [l1:r1] and [l2:r2] of a list.
-
     Args:
         lst (list): The input list to be processed.
         l1 (int): The starting index of the first sublist (inclusive).
@@ -113,35 +104,37 @@ def swap_sublist(lst, l1, r1, l2, r2, inplace):
         inplace (bool): 
             If True, modifies the list in place and returns the same list.  
             If False, returns a new list with the specified sublists swapped.
-
     Returns:
         list: The list with the specified sublists swapped.
-
     Raises:
         AssertionError: 
-            If the sublist indices are out of range,  
-            if l1 >= r1 or l2 >= r2,  
+            If the sublist indices are out of range, if l1 >= r1 or l2 >= r2,  
             if the two sublists are not of the same length
             or the two sublists overlap.
     """
-    pass
 ```
 <!--v-->
 ## Question 3 **Document Keyword**
 1. Compute TF (Term Frequency) for each word in a document:
-
-$ TF_{t,d} = log_{10}(count(t,d)+1)$
+$$
+\mathrm{TF}_{t,d} = \log_{10} \left( \mathrm{count}(t, d) + 1 \right)
+$$
 
 2. Compute IDF (Inverse Document Frequency) across all documents:
-
-$ IDF_{t} = log_{10}(\frac{N}{DT})$
+$$
+\mathrm{IDF}_{t} = \log_{10} \left( \dfrac{N}{\mathrm{DF}_{t}}  \right)
+$$
 
 3. Combine TF and IDF to obtain the TF-IDF score for each word in each document:
+$$
+\mathrm{TF\text{-}IDF}_{t,d} = \mathrm{TF}_{t,d} \times \mathrm{IDF}_{t} 
+$$
 
-$TF-IDF_{t,d} = TF_{t,d} * IDF_{t}$
-<!--v-->
+<!--s-->
 
 # Dictionary
+
+<!--v-->
 ## Basic Concept
 A dictionary (dict) in Python is a data structure that stores key–value pairs.
 
@@ -161,8 +154,8 @@ Characteristics:
 - Values can be of any data type
 
 - Dictionaries are unordered (though in Python 3.7+, they preserve insertion order)
+  
 <!--v-->
-
 ## Common Operations
 1. Creating Dictionaries
 ```
@@ -173,6 +166,8 @@ person = {"name": "Bob", "age": 25}
 person = dict(name="Bob", age=25)
 ```
 
+<!--v-->
+## Common Operations
 2. Accessing and Modifying Elements
 ```
 print(person["name"])       # Access
@@ -183,13 +178,16 @@ person["city"] = "Beijing"  # Add new key-value pair
 ```
 print(person.get("gender", "Not specified"))
 ```
-<!--v-->
+
 3. Deleting Elements
 ```
 del person["age"]     # Delete a key
 person.pop("city")    # Remove and return a value
 person.clear()        # Remove all items
 ```
+
+<!--v-->
+## Common Operations
 4. Iterating Over a Dictionary
 ```
 for key in person:
@@ -210,6 +208,7 @@ print(a)      # {'x': 1, 'y': 3, 'z': 4}
 
 c = a.copy()  # Shallow copy
 ```
+
 <!--v-->
 ## Useful Tricks
 1. Dictionary Comprehension
@@ -218,6 +217,7 @@ squares = {x: x**2 for x in range(5)}
 print(squares)
 # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 ```
+
 2. Reverse Keys and Values
 ```
 person = {"Alice": 25, "Bob": 30}
@@ -225,14 +225,21 @@ inverted = {v: k for k, v in person.items()}
 print(inverted)
 # {25: 'Alice', 30: 'Bob'}
 ```
-<!--v-->
+
+<!--s-->
+
 # Recursion
+
+<!--v-->
+## Definition
 Recursion is when a function calls itself to solve a problem by breaking it into smaller subproblems of the same structure.
-## Two essential components:
+
+**Two essential components**:
 1. Base case – the simplest form of the problem that can be solved directly (stops recursion).
 2. Recursive case – reduces the problem size and calls itself.
 
-General Recursion Template:
+<!--v-->
+## General Recursion Template
 ```
 def solve(problem, params...):
     # 1. Base case
@@ -248,6 +255,7 @@ def solve(problem, params...):
     # 4. Combine results
     return combine(subanswers)
 ```
+
 <!--v-->
 ## Classic Examples
 1. Factorial
@@ -264,6 +272,9 @@ def fib(n):
         return n
     return fib(n-1) + fib(n-2)
 ```
+
+<!--v-->
+## Classic Examples
 3. Binary Search
 ```
 def binary_search(a, target, l=0, r=None):
@@ -274,16 +285,20 @@ def binary_search(a, target, l=0, r=None):
     if a[m] < target:  return binary_search(a, target, m+1, r)
     else:              return binary_search(a, target, l, m-1)
 ```
-<!--v-->
 
+<!--v-->
 ## Common Mistakes
 Missing base case --> Function never stops
 
 Not reducing problem size --> Infinite recursion
-<!--v-->
+
+<!--s-->
 
 # Class
+
+<!--v-->
 ## What Are Classes and Objects?
+
 ### Class
 A class is a blueprint or template for creating objects.
 
@@ -307,10 +322,11 @@ You create an object by “calling” the class.
 my_dog = Dog("Buddy", 3)
 my_dog.bark()
 ```
-<!--v-->
-## The \_\_init__() Constructor
 
-\_\_init__() is a special method that runs automatically when you create an object.
+<!--v-->
+## The `__init__()` Constructor
+
+`__init__()` is a special method that runs automatically when you create an object.
 
 It initializes the object’s attributes.
 
@@ -318,6 +334,7 @@ It initializes the object’s attributes.
 self represents the instance of the class itself.
 
 All instance methods must include self as the first parameter.
+
 <!--v-->
 ## Inheritance and Method Overriding
 
@@ -335,9 +352,10 @@ class Cat(Animal):
 kitty = Cat()
 kitty.speak()  # Output: Meow
 ```
+
 <!--v-->
-# Dunder Methods
-## What Are Dunder Methods?
+## Dunder Methods
+### What Are Dunder Methods?
 Dunder methods (short for “double underscore”) are special methods in Python that begin and end with two underscores, like \_\_init__, \_\_str__, or \_\_add__.
 
 They let you customize how objects behave with built-in Python operations:
@@ -350,6 +368,9 @@ They let you customize how objects behave with built-in Python operations:
 - Length checking (\_\_len__)
 
 - Iteration (\_\_iter__, \_\_next__)
+
+<!--v-->
+## Dunder Methods
 ```
 class Dog:
     def __init__(self, name):
@@ -362,4 +383,3 @@ buddy = Dog("Buddy")
 print(buddy)  # Output: Dog named Buddy
 ```
 Here \_\_str__ defines how the object is represented when printed.
-<!--v-->
