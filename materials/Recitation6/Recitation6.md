@@ -315,7 +315,7 @@ class Dog:
 ```
 
 <!--v-->
-### Object
+## Object
 An object is an instance of a class.
 
 You create an object by “calling” the class.
