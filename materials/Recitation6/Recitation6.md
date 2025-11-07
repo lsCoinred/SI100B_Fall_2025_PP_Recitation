@@ -118,17 +118,23 @@ def swap_sublist(lst, l1, r1, l2, r2, inplace):
 ```
 <!--v-->
 ## Question 3: **Document Keyword**
-1. Compute TF (Term Frequency) for each word in a document:
+**Step 1:** Compute TF (Term Frequency) for each word in a document:
    
-$$\text{TF}_{t,d} = \log_{10} \left( \text{count}(t, d) + 1 \right)$$
+$$
+\mathrm{TF}\raisebox{-0.4ex}{\scriptsize $t,d$ } = \log_{10} \left( \mathrm{count}(t, d) + 1 \right)
+$$
 
-2. Compute IDF (Inverse Document Frequency) across all documents:
+**Step 2:** Compute IDF (Inverse Document Frequency) across all documents:
    
-$$\text{IDF}_{t} = \log_{10} \left( \dfrac{N}{\text{DF}_{t}}  \right)$$
+$$
+\mathrm{IDF}\raisebox{-0.4ex}{\scriptsize $t$ } = \log_{10} \left( \dfrac{N}{\mathrm{DF}\raisebox{-0.4ex}{\scriptsize $t$ }}  \right)
+$$
 
-3. Combine TF and IDF to obtain the TF-IDF score for each word in each document:
+**Step 3:** Combine TF and IDF to obtain the TF-IDF score for each word in each document:
    
-$$\text{TF-IDF}_{t,d} = \text{TF}_{t,d} \times \text{IDF}_{t} $$
+$$
+\mathrm{TF\text{-}IDF}\raisebox{-0.4ex}{\scriptsize $t,d$ } = \mathrm{TF}\raisebox{-0.4ex}{\scriptsize $t,d$ } \times \mathrm{IDF}_{t} 
+$$
 
 <!--s-->
 

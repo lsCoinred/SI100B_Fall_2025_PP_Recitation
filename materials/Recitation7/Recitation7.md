@@ -1,0 +1,373 @@
+---
+title: SI100B_Fall_2024_Recitation_7
+separator: <!--s-->
+verticalSeparator: <!--v-->
+theme: simple
+highlightTheme: github
+css: assets/custom.css
+autoTitlePage: true
+makeTitle:
+    lecture: SI100B Fall 2024 Recitation 7
+    title: Homework 3 & Mid-term Review
+    detail: SI100B 2024 Staff | 2025-11-07
+makeThanks: true
+---
+
+# Mid-term Exam
+<!--v-->
+
+## Mid-term Exam
+- 形式：上机测试，OJ评测
+- 可以带一张 A4 大小 Cheatsheet
+- 三轮考试（分配另行通知）：
+  - Nov. 12 (Wednesday) Class 3-4
+  - Nov. 14 (Friday) Class 3-4
+  - Nov. 14 (Friday) Class 11-12
+  - 地点：信息学院机房 3-101、1A-109
+- 下周一周二晚上 18:00 到 21:30 开放考场机房熟悉环境
+
+<!--s-->
+
+# Homework 3
+
+<!--v-->
+## Question 1: **Nested List Flattener**
+实现一个函数，该函数可以将任意深度的嵌套列表展平为一维列表。
+
+- 分析问题，找出问题本身的递归结构
+  - 展开外层列表套着里层列表的结构，有一致的处理方法
+- 注意递归终止条件
+  - 非列表
+- 注意递归过程中传递/改变的参数
+  - 传递子元素，每次放在已经展平的列表末尾
+
+<!--v-->
+## Question 1: **Nested List Flattener**
+```python
+def flatten_nested_list(nested: list) -> list:
+    res = []
+    for elem in nested:
+        if type(elem) == list:      # or isinstance(x, list)
+            res.extend(flatten_nested_list(elem))
+        else:
+            res.append(elem)
+    return res
+```
+
+<!--v-->
+## Question 2: **Sublist Operation**
+#### Operation 1: 反转 reverse_sublist
+- `lst[::-1]` 可以反转列表
+- 拷贝：`lst[:]` 或者 `lst.copy()`; `new_lst = lst` 只是 alias
+- `lst[l:r]` 可以直接赋值修改，代表原地修改
+- `assert` 相当于 `raise AssertionError`
+
+```python
+def reverse_sublist(lst, l, r, inplace):
+    assert 0 <= l < r <= len(lst), "Invalid sublist"
+
+    new_lst = lst if inplace else lst.copy()
+    new_lst[l:r] = new_lst[l:r][::-1]
+    return new_lst
+```
+
+<!--v-->
+## Question 2: **Sublist Operation**
+#### Operation 2: 旋转 rotate_sublist
+- 注意细节即可
+```python
+def rotate_sublist(lst, l, r, k, inplace):
+    assert 0 <= l < r <= len(lst), "Invalid sublist"
+
+    k %= r-l
+    new_lst = lst if inplace else lst.copy()
+    new_lst[l:r] = new_lst[l+k:r] + new_lst[l:l+k]
+    return new_lst
+```
+
+<!--v-->
+## Question 2: **Sublist Operation**
+#### Operation 3: 交换 swap_sublist
+- 交换：`x, y = y, x`
+```python
+def swap_sublist(lst, l1, r1, l2, r2, inplace):
+    assert 0 <= l1 < r1 <= l2 < r2 <= len(lst), "Invalid sublist"
+    assert r1-l1 == r2-l2, "Invalid sublist"
+
+    new_lst = lst if inplace else lst.copy()
+    new_lst[l1:r1], new_lst[l2:r2] = new_lst[l2:r2], new_lst[l1:r1]
+    return new_lst
+```
+
+<!--v-->
+## Question 2: **Sublist Operation**
+- 可以有很多的实现
+- In `PA3_Solution.zip` (See Piazza/Blackboard):
+  - `T2_inplace.py`: 拷贝后 inplace 修改
+  - `T2_concate.py`: 生成新的列表后直接返回或重新赋值
+  - （`T2_reverse.py`: EXTRA Solution. 拷贝后 inplace 修改，但是用 `reverse` 实现后两个操作，从而实现 $O(1)$ 额外空间的 inplace 操作）
+
+<!--v-->
+## Question 3: **Document Keyword**
+
+**Step 1:** Compute TF (Term Frequency) for each word in a document:
+   
+$$
+\mathrm{TF}\raisebox{-0.4ex}{\scriptsize $t,d$ } = \log_{10} \left( \mathrm{count}(t, d) + 1 \right)
+$$
+
+**Step 2:** Compute IDF (Inverse Document Frequency) across all documents:
+   
+$$
+\mathrm{IDF}\raisebox{-0.4ex}{\scriptsize $t$ } = \log_{10} \left( \dfrac{N}{\mathrm{DF}\raisebox{-0.4ex}{\scriptsize $t$ }}  \right)
+$$
+
+**Step 3:** Combine TF and IDF to obtain the TF-IDF score for each word in each document:
+   
+$$
+\mathrm{TF\text{-}IDF}\raisebox{-0.4ex}{\scriptsize $t,d$ } = \mathrm{TF}\raisebox{-0.4ex}{\scriptsize $t,d$ } \times \mathrm{IDF}_{t} 
+$$
+
+<!--v-->
+## Question 3: **Document Keyword**
+
+- 字典的 key 的类型随意 $\longrightarrow$ 利用字典表示某个词的某个对应值（如 $\text{TF-IDF}_{t,d}$）
+- 字典的 key 是唯一的 $\longrightarrow$ 利用字典统计词频
+```python
+if term in freq:
+    freq[term] += 1
+else:
+    freq[term] = 1
+# Or just simply:
+freq[word] = freq.get(word, 0) + 1
+```
+
+- 计算新的字典：直接循环修改或者使用列表生成式
+
+<!--v-->
+## Question 3: **Document Keyword**
+
+- In `PA3_Solution.zip` (See Piazza/Blackboard):
+  - `T3_basic.py`: 关键逻辑主要使用循环结构实现
+  - `T3.py`: 尽可能运用列表/字典生成式
+
+<!--s-->
+
+# 期中复习
+<!--v-->
+## 说明
+- 此处快速回顾一些知识点，仅用于查漏补缺
+- 请以**完整的课件和考试范围**作为复习标准
+
+<!--v--> 
+## Recall: 考试范围内的课程内容
+- Core Elements of Programs (basic type, I/O, ...)
+- Program Flow (branch, loop)
+- Iteration, Simple Programs, Simple Algorithms
+- Functions, More Functions as Objects, 
+  - Keyword Arguments, Default Arguments
+- Tuples and Lists
+  - List Operations, Mutability
+  - Aliasing and Cloning, List Comprehensions
+- Exceptions, Assertions, Debugging
+- Dictionaries
+- Recursion
+
+<!--v-->
+## 数值类型
+- `int`：整数
+- `float`：浮点数，存在一定误差
+  - 尽量不使用 `==` 对浮点数做判断！
+  - 比较浮点数时可以采用 `abs(a-b) < 1e-10` 这样的写法
+    - `1e-10` 是科学计数法表示 $10^{-10}$
+
+<!--v--> 
+## Strings
+- 字符串单双引号都可以
+- 可以使用加法、乘法等，例：`"a"+"b"`, `"a"*3`
+- `int()` 可以将字符串转换为数字，例：`int("3")=3`
+- `len()` 可以返回字符串的长度
+- 可以通过 `s[index]` 来访问某一个字符
+- 从前到后 index 从 `0` 开始，反之下标从 `-1` 开始
+- 不可变(immutable)类型， 例：`s[0]='1'` 会报错
+<!--v--> 
+
+## Slice
+- `s[start:stop:step]` 可以获得字符串的子串/子序列等
+- `s = "0123456"`, `s[1:3]` 返回 `"12"` ，`s[1:6:2]` 返回 `"135"`
+- `s[::-1]` 返回 `"6543210"`
+<!--v--> 
+
+## Input/Output
+- 使用 `print()` 输出
+- `print(a, b, c)` 会使用空格分开
+- 使用 `str()` 将别的类型转换成字符串输出，例：`print("ans="+str(ans))`
+- `print` 不换行：`print("...", end="")` 
+- `temp = input("Input:")`，打印提示文字并读取字符串到 `temp`
+  - 注意：OJ 上不要打印额外的提示文字
+- 使用 `int()` 等将输入字符串转换成需要的类型
+- `print(f'{x} factorial is {factorial}')` 格式化输出，在字符串中插入变量
+  - `print(f'{x:.2f}')` 输出小数点后保留两位
+<!--v--> 
+
+## 条件语句与分支结构
+- 注意区分赋值符 `=` 和比较运算符 `==`
+- `not`, `and`, `or`
+- `if...else...`
+- `if...elif...`
+- `if...elif...else...`
+<!--v-->
+
+## 循环与迭代
+- `while` 循环：`while condition: ...`，设定正确的条件或者break避免一直循环
+- `break` 可以退出当前循环
+- `for` 循环：`for variable in sequences: ...`
+- `range(start, stop, step)`：生成一个数字的序列（类比切片）
+- 经典迭代算法（了解即可）：
+  - 二分查找：在一个区间里寻找需要的答案，答案在区间内有单调性
+    - 每次根据中点的结果将搜索范围减少一半
+  - 牛顿迭代法：近似求平方根以及其它方程的解的方法
+<!--v-->
+
+## Function
+- `def func(args):` 定义函数，`return` 返回
+  - 没有返回值时默认返回 `None`
+- 用函数描述自己算法的子过程（面向过程）
+- 函数内有自己的作用域，局部变量仅在该函数的作用域中
+  - 如果涉及全局变量的修改，要使用 `global` 声明该变量是全局变量
+<!--v-->
+
+## 作用域（scope）
+- 变量需要先初始化再使用
+```python
+def sum_odd(a, b): 
+	sum_of_odds = 0 # If deleted: UnboundLocalError
+	i = a
+	while i <= b:
+		sum_of_odds += i 
+	    i += 1
+	return sum_of_odds
+```
+<!--v-->
+
+## 作用域（scope）
+- 函数内的同名变量
+```python
+x = 5
+
+def test(): 
+	x = 1
+	print(x)
+
+test()
+print(x)
+```
+
+<!--v-->
+
+## 高阶函数
+- 函数在 Python 也是对象
+  - Remember: Everything in Python is an object.
+- 函数可以作为参数传递
+  - `map(func, ...)`, `sorted(..., key=func)`, ...
+- 函数可以返回函数
+  - 调用 `make_prod` 会返回一个函数对象
+```python
+def make_prod(a):
+	def g(b):
+		return a*b
+	return g
+```
+<!--v-->
+
+## Lambda Functions
+例：有一个函数apply接受一个函数和一个数字作为参数：`apply(is_even, 10)`
+```python
+def is_even(x):
+	return x % 2 == 0
+```
+可以写成：`apply(lambda x: x % 2 == 0, 10)`
+<!--v-->
+
+## Tuples
+- `tuple` 是一种不可变的类型
+- 创建空的 `tuple`：`temp = ()`
+- 创建只有一个元素的 `tuple`：`temp = (1,)`
+- 同样支持 slice 等操作
+- 可以用于交换：`x, y = y, x`
+  - 等价于：`(x, y) = (y, x)`
+- 函数参数列表中使用 `*args` 依次将所有参数打包成一个元组
+<!--v-->
+
+## Lists
+- `list` 是一种可变(mutable)的类型
+- 同样支持 slice 等操作
+- 可以使用 `+` 将两个列表连接
+- 可以直接使用 index 修改 `list` 中的某个值
+- 用 `for x in L:` 遍历列表元素
+  - 可迭代对象：`enumerate(L)`, `zip(L1, L2)`, ...
+  - 注意：不要在循环内修改正在迭代的列表！
+- 对一个 `list` 使用 `append` 等函数可以直接修改这个 `list`，例：`L.append(5)`
+  - `L.reverse()`, `L.sort()`, `L.remove(x)`, `L.pop()`, ...
+  - 区分 `L.sort()` 和 `sorted(L)`
+  - 区分 `L.remove(x)` 和 `del L[i]`
+- `s.split(' ')` 可以根据字符将 `string` 转换成 `list`
+- `'_'.join(L)` 可以将 `list` 中每个元素用字符连接，转换成字符串
+<!--v-->
+
+## Aliasing, Cloning
+- 区分 `L1 = L[:]` (Cloning) 和 `L2 = L` (Aliasing)
+```python
+L = [1, 2, 3]
+L1 = L[:]
+L2 = L
+L.append(4)
+print(L1, L2)
+```
+- 注意 `new_list = copy.copy(old_list)` 的用法
+- 注意 `new_list = copy.deepcopy(old_list)` 的用法
+- Remember: Everything in Python is an object.
+<!--v-->
+
+## 列表推导式
+- 根据原有列表生成新列表
+```python
+L = [1, 2, 3, 4, 5]
+L1 = [e**2 for e in L] # [1, 4, 9, 16, 25] 
+L2 = [e**2 for e in L if e%2==1] # [1, 9, 25] 
+```
+<!--v-->
+
+## Exceptions, Assertions
+- 使用 `try...except...else...finally...` 来处理异常
+- 可以分别处理不同类型的异常，例：`except TypeError:`
+- `finally` 是在异常处理之后总会被执行的语句
+- Raise 抛出自定义异常
+- Assert 的用法：`assert statement, "message"`
+<!--v-->
+
+## Dictionaries
+- 一个 key 对应一个 value，key 和 value 都是无序的
+- `del(dict[key])` 删除某个元素，dict将会被改变
+- `key in dict` 判断是否在字典中
+- `dict.keys(), dict.values()`
+- `for k, v in dict.items()`
+- `dict.copy()` 
+- 字典推导式
+<!--v-->
+
+## Recursion
+- 分析问题，找出问题本身的递归结构
+- 注意递归终止条件
+- 注意递归过程中传递/改变的参数
+- 可以通过模拟递归函数运行来分析
+<!--v-->
+
+## Tips
+- 认真读题，胆大心细
+  - Thinking Twice, Coding Once. 
+- 多使用print输出一些值帮助调试（提交的时候记得删）
+- 学会阅读报错信息
+- 写循环的时候注意不要写错列表的 `index`、循环变量等
+- 自定义函数时不要忘记 `return`
+- 拷贝对象时（特别是传参），注意区分是 `clone` 还是 `alias` 
