@@ -63,11 +63,11 @@
 ## Question 1: **Nested List Flattener**
 实现一个函数，该函数可以将任意深度的嵌套列表展平为一维列表。
 
-1. 分析问题，找出问题本身的递归结构
+- 分析问题，找出问题本身的递归结构
   - 展开外层列表套着里层列表的结构，有一致的处理方法
-2. 注意递归终止条件
+- 注意递归终止条件
   - 非列表
-3. 注意递归过程中传递/改变的参数
+- 注意递归过程中传递/改变的参数
   - 传递子元素，每次放在已经展平的列表末尾
 
 <!--v-->
@@ -141,15 +141,15 @@ def swap_sublist(lst, l1, r1, l2, r2, inplace):
 
 1. Compute TF (Term Frequency) for each word in a document:
    
-$$\text{TF}_{t,d} = \log_{10} \left( \text{count}(t, d) + 1 \right)$$
+$\text{TF}_{t,d} = \log_{10} \left( \text{count}(t, d) + 1 \right)$ 
 
 2. Compute IDF (Inverse Document Frequency) across all documents:
    
-$$\text{IDF}_{t} = \log_{10} \left( \dfrac{N}{\text{DF}_{t}}  \right)$$
+$\text{IDF}_{t} = \log_{10} \left( \dfrac{N}{\text{DF}_{t}}  \right)$ 
 
-3. Combine TF and IDF to obtain the TF-IDF score for each word in each document:
+1. Combine TF and IDF to obtain the TF-IDF score for each word in each document:
    
-$$\text{TF-IDF}_{t,d} = \text{TF}_{t,d} \times \text{IDF}_{t} $$
+$\text{TF-IDF}_{t,d} = \text{TF}_{t,d} \times \text{IDF}_{t} $ 
 
 <!--v-->
 ## Question 3: **Document Keyword**
@@ -247,7 +247,7 @@ freq[word] = freq.get(word, 0) + 1
 
 ## 循环与迭代
 - `while` 循环：`while condition: ...`，设定正确的条件或者break避免一直循环
-- break可以退出当前循环
+- `break` 可以退出当前循环
 - `for` 循环：`for variable in sequences: ...`
 - `range(start, stop, step)`：生成一个数字的序列（类比切片）
 - 经典迭代算法（了解即可）：
@@ -298,13 +298,13 @@ print(x)
 - 函数可以作为参数传递
   - `map(func, ...)`, `sorted(..., key=func)`, ...
 - 函数可以返回函数
+  - 调用 `make_prod` 会返回一个函数对象
 ```python
 def make_prod(a):
 	def g(b):
 		return a*b
 	return g
 ```
-  - 调用 `make_prod` 会返回一个函数对象
 <!--v-->
 
 ## Lambda Functions
