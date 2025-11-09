@@ -1075,13 +1075,50 @@ Each call waits on the stack for the result of the next call until the base case
 
 <!--v-->
 
-## Head-to-Head Comparison
+## Iteration vs. Recursion
 
-| Feature         | Iteration                                                | Recursion                                                   |
-| :-------------- | :------------------------------------------------------- | :---------------------------------------------------------- |
-| **Definition**  | Repeats a block of code using loops.                     | A function calls itself.                                    |
-| **State**       | Maintains state with a **counter variable** (e.g., `i`). | Maintains state through **parameters** passed in each call. |
-| **Termination** | Terminates when the **loop condition** becomes false.    | Terminates when a **base case** is reached.                 |
+**Definition:**
+
+* **Iteration** repeats a block of code using loops.
+* **Recursion** occurs when a function calls itself.
+
+**State:**
+
+* **Iteration** maintains state with a **counter variable** (e.g., `i`).
+* **Recursion** maintains state through **parameters** passed in each call.
+
+**Termination:**
+
+* **Iteration** terminates when the **loop condition** becomes false.
+* **Recursion** terminates when a **base case** is reached.
+
+<!--v-->
+
+## Iteration vs. Recursion
+
+**Performance:**
+
+* **Iteration** is generally **faster** and more **memory-efficient** since it has no function call overhead.
+* **Recursion** can be **slower** and use **more memory** due to function call overhead and stack usage.
+
+**Stack Usage:**
+
+* **Iteration** uses a fixed amount of memory.
+* **Recursion** uses the **call stack**; deep recursion can cause a **stack overflow**.
+
+<!--v-->
+
+## Iteration vs. Recursion
+
+**Code Readability:**
+
+* **Iteration** can be less readable for problems that are inherently recursive.
+* **Recursion** is often more **elegant and intuitive** for problems like tree traversal or computing Fibonacci numbers.
+
+**Infinite Loop:**
+
+* An **infinite loop** consumes CPU but does not cause a stack overflow.
+* **Infinite recursion** causes a **stack overflow** error.
 
 
 <!--v-->
