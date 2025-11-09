@@ -358,16 +358,20 @@ def process_user_data(user_data):
         username = user_data['username']
         age = int(user_data['age'])
         email = user_data['email']
-  
+
         # Process the data
         user_profile = {
             'username': username.upper(),
             'age': age + 1,  # For demonstration
             'email': email.lower()
         }
-  
+
         return user_profile
-  
+```
+
+<!--v-->
+
+```python 
     except KeyError as e:
         print(f"Missing required field: {e}")
         return None
@@ -393,36 +397,39 @@ print(process_user_data(test_data1))
 
 ```python
 def read_config_file(config_path):
-    try:
-        with open(config_path, 'r') as file:
-            import json
-            config = json.load(file)
+  try:
+    with open(config_path, 'r') as file:
+      import json
+      config = json.load(file)
+      
+      # Validate required configuration keys
+      required_keys = ['database_url', 'api_key', 'timeout']
+      for key in required_keys:
+        if key not in config:
+          raise KeyError(f"Missing required config key: {key}")
   
-            # Validate required configuration keys
-            required_keys = ['database_url', 'api_key', 'timeout']
-            for key in required_keys:
-                if key not in config:
-                    raise KeyError(f"Missing required config key: {key}")
-  
-            return config
-  
-    except FileNotFoundError:
-        print(f"❌ Config file not found: {config_path}")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON in config file: {e}")
-        return None
-    except KeyError as e:
-        print(f"❌ Configuration error: {e}")
-        return None
-    except Exception as e:
-        print(f"❌ Unexpected error reading config: {e}")
-        return None
+      return config
+```
+<!--v-->
+
+```python
+  except FileNotFoundError:
+    print(f"❌ Config file not found: {config_path}")
+    return None
+  except json.JSONDecodeError as e:
+    print(f"❌ Invalid JSON in config file: {e}")
+    return None
+  except KeyError as e:
+    print(f"❌ Configuration error: {e}")
+    return None
+  except Exception as e:
+    print(f"❌ Unexpected error reading config: {e}")
+    return None
 
 # Test
 config = read_config_file("nonexistent_config.json")
 if config is None:
-    print("Using default configuration instead...")
+  print("Using default configuration instead...")
 ```
 
 <!--v-->
@@ -433,7 +440,6 @@ if config is None:
 # Inevitable approach
 def divide_unsafe(a, b):
     return a / b  # Crashes if b=0
-
 # Avoidable approach
 def divide_safe(a, b):
     try:
@@ -444,7 +450,6 @@ def divide_safe(a, b):
     except TypeError:
         print("Error: Inputs must be numbers")
         return None
-
 # Test
 print(divide_safe(10, 2))  # 5.0
 print(divide_safe(10, 0))  # None, program continues
@@ -452,61 +457,59 @@ print(divide_safe(10, 0))  # None, program continues
 
 <!--v-->
 
-## Preventing Program Crashes from Trivial Errors
+## Avoiding Program Crashes from Trivial Errors
 
 ```python
 def process_files_with_cleanup(file_paths):
-    """
-    Process multiple files with automatic cleanup on errors
-    """
-    processed_files = []
-  
-    for file_path in file_paths:
-        try:
-            # Attempt to open and process each file
-            with open(file_path, 'r') as file:
-                content = file.read()
-  
-                # Simulate processing that might fail
-                if 'invalid' in content:
-                    raise ValueError(f"Invalid content detected in {file_path}")
-  
-                processed_files.append({
-                    'file': file_path,
-                    'content_length': len(content),
-                    'status': 'processed'
-                })
-  
-        except FileNotFoundError:
-            print(f"📁 File not found: {file_path} - skipping")
-            processed_files.append({
-                'file': file_path,
-                'status': 'not_found'
-            })
-  
-        except PermissionError:
-            print(f"🔒 Permission denied: {file_path} - skipping")
-            processed_files.append({
-                'file': file_path,
-                'status': 'permission_denied'
-            })
-  
-        except ValueError as e:
-            print(f"❌ Processing error: {e}")
-            processed_files.append({
-                'file': file_path,
-                'status': 'processing_error'
-            })
-  
-        except Exception as e:
-            print(f"⚠️ Unexpected error with {file_path}: {e}")
-            processed_files.append({
-                'file': file_path,
-                'status': 'unexpected_error'
-            })
-  
-    return processed_files
+  """
+  Process multiple files with automatic cleanup on errors
+  """
+  processed_files = []
+  for file_path in file_paths:
+    try:
+      # Attempt to open and process each file
+      with open(file_path, 'r') as file:
+        content = file.read()
+        # Simulate processing that might fail
+        if 'invalid' in content:
+          raise ValueError(f"Invalid content detected in {file_path}")
 
+        processed_files.append({
+                'file': file_path,
+                'content_length': len(content),
+                'status': 'processed'})
+```
+
+<!--v-->
+
+```python  
+    except FileNotFoundError:
+      print(f"📁 File not found: {file_path} - skipping")
+      processed_files.append({
+                'file': file_path,
+                'status': 'not_found'})
+    except PermissionError:
+      print(f"🔒 Permission denied: {file_path} - skipping")
+      processed_files.append({
+                'file': file_path,
+                'status': 'permission_denied'})
+    except ValueError as e:
+      print(f"❌ Processing error: {e}")
+      processed_files.append({
+                'file': file_path,
+                'status': 'processing_error'})
+    except Exception as e:
+      print(f"⚠️ Unexpected error with {file_path}: {e}")
+      processed_files.append({
+                'file': file_path,
+                'status': 'unexpected_error'})
+
+  return processed_files
+```
+
+<!--v-->
+
+```python  
 # Test with various file scenarios
 files = [
     "existing_file.txt",
@@ -525,7 +528,7 @@ for result in results:
 
 ## More about Exceptions?
 
-- exception_hierarchy
+- Exception hierarchy
 - Define exception by yourself
 - Exception Chaining
 
@@ -535,9 +538,9 @@ for result in results:
 
 <!--v-->
 
-A special exception for defensive programming.
+## Assertion
 
-## assertion
+It's special exception for defensive programming.
 
 ```python
 def divide(a, b):
@@ -564,9 +567,15 @@ result = divide(10, 2)  # Returns 5.0
 
 ## Dict
 
-Dictionaries are unordered, mutable collections of key-value pairs that provide extremely fast data retrieval. They are one of Python's most powerful and commonly used data structures.
+Dictionaries are:
+- unordered, mutable collections of key-value pairs
+- provide extremely fast data retrieval. 
 
-### Key Characteristics
+They are one of Python's most powerful and commonly used data structures.
+
+<!--v-->
+
+## Key Characteristics
 
 - Unordered: Items have no defined order (though insertion order is preserved in Python 3.7+)
 - Mutable: Can be modified after creation
@@ -610,17 +619,23 @@ print(f"dict: {dict_time:.6f}s")
 
 <!--v-->
 
-## Why Dictionary Lookup is O(1)
+<div class="middle center">
 
-# Why Python Dictionary Lookup is O(1)
+$$
+\LARGE\text{Why Python Dictionary Lookup is $O(1)$?}
+$$
+
+</div>
+
+<!--v-->
 
 ## The Magic: Hash Tables
 
 Dictionaries use **hash tables** underneath, which enables constant-time operations.
 
-## How It Works
+### How It Works? 
 
-### 1. **Hashing**
+#### 1. Hashing
 
 ```python
 # Every key is converted to a hash value
@@ -628,14 +643,17 @@ key = "name"
 hash_value = hash(key)  # Returns a fixed-size integer
 ```
 
-### 2. **Direct Index Calculation**
+<!--v-->
+## How It Works? 
+
+#### 2. Direct Index Calculation
 
 ```python
 # Hash value determines the storage location
 index = hash(key) % array_size  # Direct array access
 ```
 
-### 3. **Instant Access**
+#### 3. Instant Access
 
 - No searching through all elements
 - Go directly to calculated index
@@ -665,13 +683,13 @@ Index 4: None
 
 <!--v-->
 
-## Why It's Always O(1)
+## Why It's Always $O(1)$?
 
 - **10 items**: 1 step to find value
 - **10,000 items**: 1 step to find value
 - **1,000,000 items**: 1 step to find value
 
-The lookup time **doesn't increase** with dictionary size - that's the definition of O(1) constant time complexity.
+The lookup time **doesn't increase** with dictionary size - that's the definition of $O(1)$ constant time complexity.
 
 ### Real-World Analogy
 
@@ -681,7 +699,7 @@ Think of a **library with numbered shelves**:
 - Don't need to check every shelf
 - Same time to find a book in small or large library
 
-That's how dictionaries achieve O(1) magic!
+That's how dictionaries achieve $O(1)$ magic!
 
 <!--v-->
 
@@ -884,6 +902,10 @@ factorial(n) = n × factorial(n-1)
 
 We can break down a huge difficult problem to many small and easy ones. (The base case will be very easy.)
 
+<!--v-->
+
+## Recursion is a way of thinking
+
 - "If I can solve for n-1, I can solve for n"
 
 ```python
@@ -899,10 +921,10 @@ print(factorial_iterative(5))  # Output: 120
 
 <!--v-->
 
-## Recursion: fibonacci
+## Recursion: Fibonacci
 
-0,1,1,2,3,5,8,13...
-fibonacci(n) = fibonacci(n-1) + fibonacci(n-2)
+- $0,1,1,2,3,5,8,13...$ 
+- $\mathrm{fibonacci}(n) = \mathrm{fibonacci}(n-1) + \mathrm{fibonacci}(n-2)$
 
 ```python
 def fibonacci(n):
@@ -913,11 +935,11 @@ def fibonacci(n):
 
 <!--v-->
 
-## Recursion: permutations
+## Recursion: Permutations
 
-The permutation of n elements = the first element of each permetation + the full permutation of the remaining n-1 elements.
+- The permutation of n elements = the first element of each permetation + the full permutation of the remaining n-1 elements.
 
-n个元素的排列 = 每个元素开头 + 剩下n-1个元素的全排列
+- n个元素的排列 = 每个元素开头 + 剩下n-1个元素的全排列
 
 ```python
 def permutations(nums):
@@ -943,8 +965,9 @@ def permutations(nums):
 
 ## Visual Example: Calculating Factorial
 
-The factorial of a number `n` (n!) is the product of all positive integers up to `n`.
-`5! = 5 * 4 * 3 * 2 * 1 = 120`
+- The factorial of a number $n$ (e.g. $n!$) is the product of all positive integers up to $n$.
+
+- Example: `5! = 5 * 4 * 3 * 2 * 1 = 120`
 
 <!--v-->
 
@@ -1009,17 +1032,51 @@ Each call waits on the stack for the result of the next call until the base case
 
 <!--v-->
 
-## Head-to-Head Comparison
+## Iteration vs. Recursion
 
-| Feature              | Iteration                                                                         | Recursion                                                                               |
-| :------------------- | :-------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| **Definition**       | Repeats a block of code using loops.                                              | A function calls itself.                                                                |
-| **State**            | Maintains state with a**counter variable** (e.g., `i`).                           | Maintains state through**parameters** passed in each call.                              |
-| **Termination**      | Terminates when the**loop condition** becomes false.                              | Terminates when a**base case** is reached.                                              |
-| **Performance**      | Generally**faster** and more **memory-efficient**. No overhead of function calls. | Can be**slower** and use **more memory** due to function call overhead and stack usage. |
-| **Stack Usage**      | Uses a fixed amount of memory.                                                    | Uses the**call stack**; deep recursion can cause a **stack overflow**.                  |
-| **Code Readability** | Can be less readable for problems inherently recursive.                           | Often more**elegant and intuitive** for problems like tree traversal, Fibonacci, etc.   |
-| **Infinite Loop**    | Infinite loop consumes CPU but no stack overflow.                                 | Infinite recursion causes a**stack overflow** error.                                    |
+**Definition:**
+
+* **Iteration** repeats a block of code using loops.
+* **Recursion** occurs when a function calls itself.
+
+**State:**
+
+* **Iteration** maintains state with a **counter variable** (e.g., `i`).
+* **Recursion** maintains state through **parameters** passed in each call.
+
+**Termination:**
+
+* **Iteration** terminates when the **loop condition** becomes false.
+* **Recursion** terminates when a **base case** is reached.
+
+<!--v-->
+
+## Iteration vs. Recursion
+
+**Performance:**
+
+* **Iteration** is generally **faster** and more **memory-efficient** since it has no function call overhead.
+* **Recursion** can be **slower** and use **more memory** due to function call overhead and stack usage.
+
+**Stack Usage:**
+
+* **Iteration** uses a fixed amount of memory.
+* **Recursion** uses the **call stack**; deep recursion can cause a **stack overflow**.
+
+<!--v-->
+
+## Iteration vs. Recursion
+
+**Code Readability:**
+
+* **Iteration** can be less readable for problems that are inherently recursive.
+* **Recursion** is often more **elegant and intuitive** for problems like tree traversal or computing Fibonacci numbers.
+
+**Infinite Loop:**
+
+* An **infinite loop** consumes CPU but does not cause a stack overflow.
+* **Infinite recursion** causes a **stack overflow** error.
+
 
 <!--v-->
 
@@ -1031,6 +1088,9 @@ Each call waits on the stack for the result of the next call until the base case
 * **The problem is naturally iterative:** For example, processing each element in a simple list.
 * **Deep recursion is a risk:** If the problem size is large, iteration avoids stack overflows.
 * **Memory is limited:** Embedded systems often favor iteration.
+<!--v-->
+
+## When to Use Which?
 
 ### Use **Recursion** when:
 
@@ -1043,23 +1103,33 @@ Each call waits on the stack for the result of the next call until the base case
 
 <!--v-->
 
-## Tips: Tail Recursion
+## Additional: Tail Recursion
 
 There's a special case called **Tail Recursion**, where the recursive call is the *very last thing* the function does. A good compiler can optimize tail recursion to use constant stack space, effectively turning it into an iteration. This eliminates the main performance drawback of recursion.
 
 **Non-Tail Recursive (like our factorial example):**
-`return n * factorial(n-1)` // The multiplication happens *after* the recursive call returns.
+```python
+def factorial_recursive(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        # The multiplication happens AFTER the recursive call returns.
+        return n * factorial_recursive(n - 1)
+```
+<!--v-->
 
-* [ ] **Tail Recursive Factorial (using an accumulator):**
+## Additional: Tail Recursion
+
+* **Tail Recursive Factorial (using an accumulator):**
 
 ```python
 def factorial_tail_recursive(n, accumulator=1):
     if n == 0:
         return accumulator
     else:
+        # The recursive call is the last operation.
+        # A smart language/compiler can optimize this.
         return factorial_tail_recursive(n - 1, n * accumulator)
 ```
 
-// The recursive call is the last operation. A smart language/compiler can optimize this.
-
-* [ ] **Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
+* **Note:** Python does not perform tail call optimization, but languages like Scala, Haskell, and functional languages often do.
