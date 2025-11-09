@@ -1,5 +1,5 @@
 ---
-title: SI100B_Fall_2024_Recitation_7
+title: SI100B_Fall_2025_Recitation_7
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
@@ -7,9 +7,9 @@ highlightTheme: github
 css: assets/custom.css
 autoTitlePage: true
 makeTitle:
-    lecture: SI100B Fall 2024 Recitation 7
+    lecture: SI100B Fall 2025 Recitation 7
     title: Homework 3 & Mid-term Review
-    detail: SI100B 2024 Staff | 2025-11-07
+    detail: SI100B 2025 Staff | 2025-11-07
 makeThanks: true
 ---
 
